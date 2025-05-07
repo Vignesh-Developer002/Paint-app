@@ -25,7 +25,7 @@ const StoreContext = ({ children }) => {
   const isPaint = useRef(false); // mouseRef
   const stageRef = useRef(null); // stage ref
 
-  console.log(polygons, drawPolygon);
+  // console.log(polygons, drawPolygon);
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name) {
@@ -118,9 +118,9 @@ const StoreContext = ({ children }) => {
         id: uuidv4(),
         points: [x, y, x, y],
         fill: fillColor || "gray",
-        strokecolor: strokeColor || "#000000",
+        stroke: strokeColor || "#000000",
         strokeWidth: 5,
-        closed,
+        closed: true,
         rotation: 0,
       });
       console.log(x, y, polygons);
@@ -174,15 +174,6 @@ const StoreContext = ({ children }) => {
         ...prev,
         points: [...(prev.points || []), x, y],
       }));
-
-      // setPolygons(() => {
-      //   ...polygons,
-      //   points: [
-      //     ...polygons.points,
-      //     (polygons.points[2] = x || 0),
-      //     (polygons.points[3] = y || 0),
-      //   ],
-      // });
     }
   }
 

@@ -6,8 +6,7 @@ import { globalStore } from "../../StoreContext/StoreContext";
 const ShowPolygon = () => {
   const { handleTransformetMouseDown, drawPolygon } = useContext(globalStore);
   //getting the local storage data
-  // let res = JSON.parse(localStorage.getItem("polygon"));
-  console.log(drawPolygon);
+  // let res = JSON.parse(localStorage.getItem("polygon"))
   function handlePolygonDrag(e, id) {
     let x = e.target.x();
     let y = e.target.y();
@@ -26,7 +25,6 @@ const ShowPolygon = () => {
     let x = e.target.x();
     let y = e.target.y();
     let rotate = e.target.rotation();
-    console.log(x, y, rotate);
     let localData = JSON.parse(localStorage.getItem(name));
     let res = localData.map((d) =>
       d.id === id ? { ...d, x: x, y: y, rotation: rotate } : d
@@ -39,6 +37,7 @@ const ShowPolygon = () => {
         drawPolygon.map((p, idx) => (
           <Line
             key={idx}
+            id={p.id}
             points={p.points}
             fill={p.fill}
             name={p.name}

@@ -20,8 +20,7 @@ export const actions = {
 };
 
 const StrokeColor = () => {
-  const { fillColor, setFillColor, strokeColor, setStrokeColor } =
-    useContext(globalStore);
+  const { strokeColor, setStrokeColor } = useContext(globalStore);
   //function for handle the color changes
 
   function handleColorChanges(e) {

@@ -8,6 +8,7 @@ const DrawPolygon = () => {
     <>
       {Object.values(polygons) && (
         <Line
+          id={polygons?.id}
           points={polygons?.points}
           fill={polygons?.fill}
           stroke={polygons?.stroke}
