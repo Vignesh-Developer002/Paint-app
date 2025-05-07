@@ -14,6 +14,7 @@
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
     "react-konva": "^19.0.3",
+    "react-tooltip": "^5.28.1",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

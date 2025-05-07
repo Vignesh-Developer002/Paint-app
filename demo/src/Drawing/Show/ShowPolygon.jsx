@@ -6,8 +6,8 @@ import { globalStore } from "../../StoreContext/StoreContext";
 const ShowPolygon = () => {
   const { handleTransformetMouseDown, drawPolygon } = useContext(globalStore);
   //getting the local storage data
-  let res = JSON.parse(localStorage.getItem("polygon"));
-
+  // let res = JSON.parse(localStorage.getItem("polygon"));
+  console.log(drawPolygon);
   function handlePolygonDrag(e, id) {
     let x = e.target.x();
     let y = e.target.y();

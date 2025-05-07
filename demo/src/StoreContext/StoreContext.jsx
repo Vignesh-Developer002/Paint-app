@@ -20,9 +20,12 @@ const StoreContext = ({ children }) => {
   const [drawPolygon, setDrawPolygon] = useState([]); //polygon
   const transformerRef = useRef(null);
   const [btnName, setBtnName] = useState("");
-  const [color, setColor] = useState("black");
+  const [fillColor, setFillColor] = useState(""); // fillColor
+  const [strokeColor, setStrokeColor] = useState(""); // strokeColor
   const isPaint = useRef(false); // mouseRef
   const stageRef = useRef(null); // stage ref
+
+  console.log(polygons, drawPolygon);
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name) {
@@ -49,8 +52,8 @@ const StoreContext = ({ children }) => {
         y,
         width: 1,
         height: 1,
-        fill: color,
-        stroke: color,
+        fill: fillColor || "gray",
+        stroke: strokeColor || "#000000",
         strokeWidth: 4,
         rotation: 0,
       }));
@@ -66,8 +69,8 @@ const StoreContext = ({ children }) => {
         y: y,
         name: btnName,
         radius: 1,
-        fill: color,
-        stroke: color,
+        fill: fillColor || "gray",
+        stroke: strokeColor || "#000000",
         strokeWidth: 4,
         rotation: 0,
       });
@@ -80,7 +83,8 @@ const StoreContext = ({ children }) => {
         id: uuidv4(),
         name: btnName,
         points: [x, y, x, y],
-        stroke: color,
+        stroke: strokeColor || "#000000",
+        fill: fillColor || "gray",
         strokeWidth: 4,
         lineCap: "round",
         lineJoin: "round",
@@ -98,7 +102,8 @@ const StoreContext = ({ children }) => {
         y: y,
         name: btnName,
         points: [x, y, x, y],
-        stroke: color,
+        stroke: strokeColor || "#000000",
+        fill: fillColor || "gray",
         strokeWidth: 4,
         lineJoin: "round",
         rotation: 0,
@@ -112,14 +117,16 @@ const StoreContext = ({ children }) => {
       setPolygons({
         id: uuidv4(),
         points: [x, y, x, y],
-        fill: color,
-        strokecolor: color,
+        fill: fillColor || "gray",
+        strokecolor: strokeColor || "#000000",
         strokeWidth: 5,
         closed,
         rotation: 0,
       });
+      console.log(x, y, polygons);
     }
   }
+
   // onStageMouseMove
   function onStageMouseMove(e) {
     if (btnName === actions.select) {
@@ -163,14 +170,19 @@ const StoreContext = ({ children }) => {
       let pos = e.target.getStage().getPointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
-      setPolygons({
-        ...polygons,
-        points: [
-          ...polygons.points,
-          (polygons.points[2] = x || 0),
-          (polygons.points[3] = y || 0),
-        ],
-      });
+      setPolygons((prev) => ({
+        ...prev,
+        points: [...(prev.points || []), x, y],
+      }));
+
+      // setPolygons(() => {
+      //   ...polygons,
+      //   points: [
+      //     ...polygons.points,
+      //     (polygons.points[2] = x || 0),
+      //     (polygons.points[3] = y || 0),
+      //   ],
+      // });
     }
   }
 
@@ -190,13 +202,19 @@ const StoreContext = ({ children }) => {
     } else if (btnName === actions.line) {
       setDrawLine((prev) => [...prev, lines]);
       setLines({});
+    } else if (btnName === actions.polygon) {
+      setDrawPolygon((pre) => [...pre, polygons]);
+      setPolygons({});
     }
   }
 
   const contextValue = {
     btnName,
     setBtnName,
-    color,
+    fillColor,
+    setFillColor,
+    strokeColor,
+    setStrokeColor,
     transformerRef,
     handleTransformetMouseDown,
     currentlyDrawnShap,

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Line } from "react-konva";
-import { globalStore } from "../../StoreContext/StoreContext";
+import { globalStore } from "../../StoreContext/StoreContext.jsx";
 
 const DrawPolygon = () => {
   const { polygons } = useContext(globalStore);
