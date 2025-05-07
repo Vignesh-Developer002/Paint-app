@@ -16,8 +16,11 @@ const StoreContext = ({ children }) => {
   const [drawScribble, setDrawScribble] = useState([]); //scribble
   const [drawLine, setDrawLine] = useState([]); //line
   const [lines, setLines] = useState({}); //line
-  const [polygons, setPolygons] = useState({}); // polygons
+  const [polygons, setPolygons] = useState({}); // on Mous down initial point update polygons
+  const [nextPoint, setNextPoints] = useState({}); // polygon points update
   const [drawPolygon, setDrawPolygon] = useState([]); //polygon
+  const [isComplete, setIsComplete] = useState(false);
+  // const [points, setPoints] = useState([]);
   const transformerRef = useRef(null);
   const [btnName, setBtnName] = useState("");
   const [fillColor, setFillColor] = useState(""); // fillColor
@@ -25,7 +28,7 @@ const StoreContext = ({ children }) => {
   const isPaint = useRef(false); // mouseRef
   const stageRef = useRef(null); // stage ref
 
-  // console.log(polygons, drawPolygon);
+  console.log(polygons,nextPoint, drawPolygon);
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name) {
@@ -36,6 +39,18 @@ const StoreContext = ({ children }) => {
       return;
     }
   }
+
+  // polygon circle onClick
+  function handleAnchorClick() {
+    if (btnName === actions.polygon && polygons.closed) {
+      setDrawPolygon( [...drawPolygon, polygons]);
+      // setPolygons({});
+      // setNextPoints({});
+    }
+    setPolygons((prev) => ({ ...prev, closed: true }));
+    setIsComplete(true);
+  }
+
   // onStageMouseDown
   function onStageMouseDown(e) {
     if (btnName === actions.select) {
@@ -109,21 +124,22 @@ const StoreContext = ({ children }) => {
         rotation: 0,
       });
     } else if (btnName === actions.polygon) {
-      isPaint.current = true;
-      let pos = e.target.getStage().getPointerPosition();
-      let x = pos.x || 0;
-      let y = pos.y || 0;
-
-      setPolygons({
-        id: uuidv4(),
-        points: [x, y, x, y],
-        fill: fillColor || "gray",
-        stroke: strokeColor || "#000000",
-        strokeWidth: 5,
-        closed: true,
-        rotation: 0,
-      });
-      console.log(x, y, polygons);
+      if (!isComplete) {
+        console.log();
+        let pos = e.target.getStage().getPointerPosition();
+        let x = pos.x || 0;
+        let y = pos.y || 0;
+        setPolygons((prev) => ({
+          ...prev,
+          id: uuidv4(),
+          points: Array.isArray(prev?.points) ? [...prev.points, x, y] : [x, y],
+          fill: fillColor || "gray",
+          stroke: strokeColor || "#000000",
+          strokeWidth: 5,
+          closed: polygons?.closed || false,
+          rotation: 0,
+        }));
+      }
     }
   }
 
@@ -167,13 +183,12 @@ const StoreContext = ({ children }) => {
         points: [lines.points[0] || 0, lines.points[1] || 1, x, y],
       });
     } else if (btnName === actions.polygon) {
-      let pos = e.target.getStage().getPointerPosition();
-      let x = pos.x || 0;
-      let y = pos.y || 0;
-      setPolygons((prev) => ({
-        ...prev,
-        points: [...(prev.points || []), x, y],
-      }));
+      if (!isComplete) {
+        let pos = e.target.getStage().getPointerPosition();
+        let x = pos.x || 0;
+        let y = pos.y || 0;
+        setNextPoints({ x: x, y: y });
+      }
     }
   }
 
@@ -193,13 +208,20 @@ const StoreContext = ({ children }) => {
     } else if (btnName === actions.line) {
       setDrawLine((prev) => [...prev, lines]);
       setLines({});
-    } else if (btnName === actions.polygon) {
-      setDrawPolygon((pre) => [...pre, polygons]);
-      setPolygons({});
     }
+    // else if (btnName === actions.polygon) {
+    //   if (polygons.closed === true) {
+    //     setDrawPolygon((pre) => [...pre, polygons]);
+    //   }
+    // }
   }
 
   const contextValue = {
+    handleAnchorClick,
+    isComplete,
+    setIsComplete,
+    nextPoint,
+    setNextPoints,
     btnName,
     setBtnName,
     fillColor,
