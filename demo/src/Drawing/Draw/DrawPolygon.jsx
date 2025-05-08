@@ -3,10 +3,11 @@ import { Circle, Line } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext.jsx";
 
 const DrawPolygon = () => {
-  const { polygons, nextPoint, handleAnchorClick } = useContext(globalStore);
+  const { polygons, nextPoint, handleAnchorClick, isComplete } =
+    useContext(globalStore);
   return (
     <>
-      {Object.values(polygons) && (
+      {Object.keys(polygons) && (
         <Line
           id={polygons?.id}
           points={polygons?.points?.concat([nextPoint.x, nextPoint.y])}
@@ -16,14 +17,17 @@ const DrawPolygon = () => {
           closed={polygons?.closed}
         />
       )}
-      {polygons.closed === false && (
+      {/* isComplete */}
+      {!isComplete ? (
         <Circle
-          x={polygons?.points[0] || null}
-          y={polygons?.points[1] || null}
-          fill={"red"}
+          x={polygons?.points?.[0] ?? 0}
+          y={polygons?.points?.[1] ?? 0}
+          fill="red"
           radius={5}
-          onClick={() => handleAnchorClick()}
+          onClick={handleAnchorClick}
         />
+      ) : (
+        <></>
       )}
     </>
   );

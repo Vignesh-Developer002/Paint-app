@@ -12,8 +12,8 @@ const ShowPolygon = () => {
     setPolygons,
     setIsComplete,
   } = useContext(globalStore);
-  console.log(drawPolygon);
 
+  console.log(drawPolygon);
   function handlePolygonDrag(e, id) {
     let x = e.target.x();
     let y = e.target.y();
@@ -50,9 +50,9 @@ const ShowPolygon = () => {
             closed={p.closed}
             draggable={true}
             rotation={p.rotation || 0}
-            onDragEnd={(e) => handlePolygonDrag(e, p.id)}
-            onTransformEnd={(e) => handletransformEnd(e, p.id, p.name)}
-            onMouseDown={(e) => handleTransformetMouseDown(e, p.id, p.name)}
+            // onDragEnd={(e) => handlePolygonDrag(e, p.id)}
+            // onTransformEnd={(e) => handletransformEnd(e, p.id, p.name)}
+            // onMouseDown={(e) => handleTransformetMouseDown(e, p.id, p.name)}
           />
         ))}
     </>

@@ -1,9 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { actions } from "../Actions/Action";
 import { v4 as uuidv4 } from "uuid";
 
-console.log(uuidv4());
 export const globalStore = createContext();
 
 const StoreContext = ({ children }) => {
@@ -19,16 +18,14 @@ const StoreContext = ({ children }) => {
   const [polygons, setPolygons] = useState({}); // on Mous down initial point update polygons
   const [nextPoint, setNextPoints] = useState({}); // polygon points update
   const [drawPolygon, setDrawPolygon] = useState([]); //polygon
+  const [closed, setClosed] = useState(false); // for tracking the polygon circle is completed or not
   const [isComplete, setIsComplete] = useState(false);
-  // const [points, setPoints] = useState([]);
   const transformerRef = useRef(null);
   const [btnName, setBtnName] = useState("");
   const [fillColor, setFillColor] = useState(""); // fillColor
   const [strokeColor, setStrokeColor] = useState(""); // strokeColor
   const isPaint = useRef(false); // mouseRef
   const stageRef = useRef(null); // stage ref
-
-  console.log(polygons,nextPoint, drawPolygon);
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name) {
@@ -42,14 +39,19 @@ const StoreContext = ({ children }) => {
 
   // polygon circle onClick
   function handleAnchorClick() {
-    if (btnName === actions.polygon && polygons.closed) {
-      setDrawPolygon( [...drawPolygon, polygons]);
-      // setPolygons({});
-      // setNextPoints({});
-    }
+    setClosed(true); // for tracking the circle is clicked or not
     setPolygons((prev) => ({ ...prev, closed: true }));
-    setIsComplete(true);
   }
+
+  // useEffect for pushing the polygon data to the array and clearing the polygon object
+  useEffect(() => {
+    if (Object.keys(polygons).length>0) {
+      setDrawPolygon((prev) => [...prev, polygons]);
+      setPolygons({});
+    }
+    
+    setClosed(false); // for tracking the circle is clicked or not
+  }, [closed]);
 
   // onStageMouseDown
   function onStageMouseDown(e) {
@@ -124,8 +126,8 @@ const StoreContext = ({ children }) => {
         rotation: 0,
       });
     } else if (btnName === actions.polygon) {
+      //--------Now----------------------------------------
       if (!isComplete) {
-        console.log();
         let pos = e.target.getStage().getPointerPosition();
         let x = pos.x || 0;
         let y = pos.y || 0;
@@ -210,10 +212,8 @@ const StoreContext = ({ children }) => {
       setLines({});
     }
     // else if (btnName === actions.polygon) {
-    //   if (polygons.closed === true) {
-    //     setDrawPolygon((pre) => [...pre, polygons]);
-    //   }
-    // }
+    //      setIsComplete(false)
+    //     }
   }
 
   const contextValue = {

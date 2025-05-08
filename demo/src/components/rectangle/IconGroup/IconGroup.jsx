@@ -5,7 +5,6 @@ import { globalStore } from "../../../StoreContext/StoreContext.jsx";
 
 const IconGroup = () => {
   const { btnName, setBtnName } = useContext(globalStore);
-  console.log(btnName);
   //function for findinfd the name of the perticular clicked button
   function handleAction(id) {
     setBtnName(id);
