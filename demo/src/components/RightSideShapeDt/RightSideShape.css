@@ -1,0 +1,45 @@
+.right-side-container{
+    border: 1px solid;
+    width: 500px;
+    height: 100vh;
+    position: fixed;
+    right: 0;
+    top: 5px;
+    background: #00000036;
+    padding: 10px;
+    z-index: 1;
+}
+.inner-content{
+    border: 1px solid #ffffff;
+    margin-top: 10px;
+}
+.heading{
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.main-content{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 10px;
+}
+.stroke-color, .fill-color, .stroke-width, .circle-radius, .height, .width{
+    display:flex ;
+    flex-direction: column;
+    gap: 5px;
+}
+.stroke-color p, .fill-color p, .stroke-width p, .circle-radius p, .height p, .width p{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.stroke-color input, .fill-color input, .stroke-width input, .circle-radius input, .height input, .width input{
+    padding: 8px 10px;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    border-radius:4px;
+   
+}

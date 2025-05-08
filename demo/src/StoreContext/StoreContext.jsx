@@ -24,14 +24,126 @@ const StoreContext = ({ children }) => {
   const [btnName, setBtnName] = useState("");
   const [fillColor, setFillColor] = useState(""); // fillColor
   const [strokeColor, setStrokeColor] = useState(""); // strokeColor
+  const [initialRadius, setinitialRadius] = useState(5); // initial circle radius state
   const isPaint = useRef(false); // mouseRef
   const stageRef = useRef(null); // stage ref
+  // state for handle the right side input values
+  const [sideBar, setSideBar] = useState({
+    strokeWidth: "",
+    radius: "",
+    height: "",
+    width: "",
+  });
+  const [currentShap, setCurrentShape] = useState(); // for assigning the current selected shape name
+
+  // function for handle the input field logic
+  function handleInputValue(e) {
+    const { name, value } = e.target;
+    setSideBar((prev) => ({ ...prev, [name]: value }));
+  }
+
+  // function for handle the perticular shape click
+
+  function handleSelect(id, name) {
+    const totalShape = [
+      ...drawing,
+      ...drawCircle,
+      ...drawLine,
+      ...drawScribble,
+      ...drawPolygon,
+    ].find((shape) => shape.id === id);
+
+    if (totalShape["name"] === "rectangle") {
+      let name, width, height, fill, stroke, strokeWidth;
+
+      name = totalShape["name"];
+      width = totalShape["width"];
+      height = totalShape["height"];
+      fill = totalShape["fill"];
+      stroke = totalShape["stroke"];
+      strokeWidth = totalShape["strokeWidth"];
+      setCurrentShape(name);
+      setSideBar({
+        strokeWidth: strokeWidth,
+        height: height,
+        width: width,
+      });
+      setFillColor(fill);
+      setStrokeColor(stroke);
+    } else if (totalShape["name"] === "circle") {
+      let name, fill, stroke, strokeWidth, radius;
+
+      name = totalShape["name"];
+      fill = totalShape["fill"];
+      stroke = totalShape["stroke"];
+      strokeWidth = totalShape["strokeWidth"];
+      radius = totalShape["radius"];
+      setCurrentShape(name);
+      setSideBar({
+        strokeWidth: strokeWidth,
+        radius: radius,
+        height: "-",
+        width: "-",
+      });
+      setFillColor(fill);
+      setStrokeColor(stroke);
+    } else if (totalShape["name"] === "scrible") {
+      let name, stroke, fill, strokeWidth;
+
+      name = totalShape["name"];
+      stroke = totalShape["stroke"];
+      fill = totalShape["fill"];
+      strokeWidth = totalShape["strokeWidth"];
+      setCurrentShape(name);
+      setSideBar({
+        strokeWidth: strokeWidth,
+        radius: "-",
+        height: "-",
+        width: "-",
+      });
+      setFillColor(fill);
+      setStrokeColor(stroke);
+    } else if (totalShape["name"] === "line") {
+      let name, stroke, fill, strokeWidth;
+
+      name = totalShape["name"];
+      stroke = totalShape["stroke"];
+      fill = totalShape["fill"];
+      strokeWidth = totalShape["strokeWidth"];
+      setCurrentShape(name);
+      setSideBar({
+        strokeWidth: strokeWidth,
+        radius: "-",
+        height: "-",
+        width: "-",
+      });
+      setFillColor(fill);
+      setStrokeColor(stroke);
+    } else if (totalShape["name"] === "polygon") {
+      let name, fill, stroke, strokeWidth;
+
+      name = totalShape["name"];
+      fill = totalShape["fill"];
+      stroke = totalShape["stroke"];
+      strokeWidth = totalShape["strokeWidth"];
+      setCurrentShape(name);
+      setSideBar({
+        strokeWidth: strokeWidth,
+        radius: "-",
+        height: "-",
+        width: "-",
+      });
+      setFillColor(fill);
+      setStrokeColor(stroke);
+    }
+  }
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name) {
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
       transformerRef.current.nodes([transformerNode]);
+      handleSelect(id, name);
     } else {
       return;
     }
@@ -39,17 +151,23 @@ const StoreContext = ({ children }) => {
 
   // polygon circle onClick
   function handleAnchorClick() {
-    setClosed(true); // for tracking the circle is clicked or not
-    setPolygons((prev) => ({ ...prev, closed: true }));
+    if (polygons["points"].length > 4) {
+      setClosed(true); // for tracking the circle is clicked or not
+      setPolygons((prev) => ({ ...prev, closed: true }));
+    } else {
+      return;
+    }
   }
 
   // useEffect for pushing the polygon data to the array and clearing the polygon object
   useEffect(() => {
-    if (Object.keys(polygons).length>0) {
-      setDrawPolygon((prev) => [...prev, polygons]);
-      setPolygons({});
+    if (Object.keys(polygons).length > 0) {
+      if (polygons["points"].length > 4) {
+        setDrawPolygon((prev) => [...prev, polygons]);
+        setPolygons({});
+      }
     }
-    
+
     setClosed(false); // for tracking the circle is clicked or not
   }, [closed]);
 
@@ -67,6 +185,7 @@ const StoreContext = ({ children }) => {
         id: uuidv4(),
         x,
         y,
+        name: btnName,
         width: 1,
         height: 1,
         fill: fillColor || "gray",
@@ -112,7 +231,6 @@ const StoreContext = ({ children }) => {
       let pos = e.target.getStage().getPointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
-
       setLines({
         id: uuidv4(),
         x: x,
@@ -126,13 +244,14 @@ const StoreContext = ({ children }) => {
         rotation: 0,
       });
     } else if (btnName === actions.polygon) {
-      //--------Now----------------------------------------
+      // setIsComplete(false); //--------Now----------------------------------------
       if (!isComplete) {
         let pos = e.target.getStage().getPointerPosition();
         let x = pos.x || 0;
         let y = pos.y || 0;
         setPolygons((prev) => ({
           ...prev,
+          name: btnName,
           id: uuidv4(),
           points: Array.isArray(prev?.points) ? [...prev.points, x, y] : [x, y],
           fill: fillColor || "gray",
@@ -182,7 +301,7 @@ const StoreContext = ({ children }) => {
       let y = pos.y || 0;
       setLines({
         ...lines,
-        points: [lines.points[0] || 0, lines.points[1] || 1, x, y],
+        points: [lines?.points?.[0] || 0, lines?.points?.[1] || 0, x, y],
       });
     } else if (btnName === actions.polygon) {
       if (!isComplete) {
@@ -211,12 +330,15 @@ const StoreContext = ({ children }) => {
       setDrawLine((prev) => [...prev, lines]);
       setLines({});
     }
-    // else if (btnName === actions.polygon) {
-    //      setIsComplete(false)
-    //     }
   }
 
   const contextValue = {
+    currentShap,
+    handleInputValue,
+    sideBar,
+    setSideBar,
+    initialRadius,
+    setinitialRadius,
     handleAnchorClick,
     isComplete,
     setIsComplete,

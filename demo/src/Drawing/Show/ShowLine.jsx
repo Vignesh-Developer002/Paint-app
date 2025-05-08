@@ -31,15 +31,11 @@ const ShowLine = () => {
     let x = e.target.x();
     let y = e.target.y();
     let rotate = e.target.rotation();
-    // let localData = JSON.parse(localStorage.getItem(name));
-    // let res = localData
-    // );
     setDrawLine((prev) =>
       prev.map((d) =>
         d.id === id ? { ...d, x: x, y: y, rotation: rotate } : d
       )
     );
-    // localStorage.setItem(name, JSON.stringify(res));
   }
 
   return (

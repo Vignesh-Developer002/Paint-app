@@ -35,8 +35,8 @@ const StrokeColor = () => {
         value={strokeColor}
         onChange={(e) => handleColorChanges(e)}
         style={{
-          width: "30px",
-          height: "27px",
+          width: "100px",
+          height: "50px",
           border: "none",
           cursor: "pointer",
         }}
@@ -47,7 +47,7 @@ const StrokeColor = () => {
 
 export default StrokeColor;
 
-const FillColor = () => {
+export const FillColor = () => {
   const { fillColor, setFillColor } = useContext(globalStore);
 
   // function for handle fill color logic
@@ -63,8 +63,8 @@ const FillColor = () => {
         value={fillColor}
         onChange={(e) => handleFillColor(e)}
         style={{
-          width: "30px",
-          height: "27px",
+          width: "100px",
+          height: "50px",
           border: "none",
           cursor: "pointer",
         }}
@@ -134,9 +134,9 @@ export const drawData = [
       />
     ),
   },
-  {
-    id: actions.StrokeColor,
-    icons: <StrokeColor />,
-  },
-  { id: actions.fillColor, icons: <FillColor /> },
+  // {
+  //   id: actions.StrokeColor,
+  //   icons: <StrokeColor />,
+  // },
+  // { id: actions.fillColor, icons: <FillColor /> },
 ];

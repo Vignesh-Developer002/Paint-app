@@ -1,10 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Circle, Line } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext.jsx";
 
 const DrawPolygon = () => {
-  const { polygons, nextPoint, handleAnchorClick, isComplete } =
-    useContext(globalStore);
+  const {
+    polygons,
+    nextPoint,
+    handleAnchorClick,
+    isComplete,
+    initialRadius,
+    setinitialRadius,
+  } = useContext(globalStore);
+
   return (
     <>
       {Object.keys(polygons) && (
@@ -15,15 +22,16 @@ const DrawPolygon = () => {
           stroke={polygons?.stroke}
           strokeWidth={polygons?.strokeWidth}
           closed={polygons?.closed}
+          name={polygons?.name}
         />
       )}
       {/* isComplete */}
       {!isComplete ? (
         <Circle
-          x={polygons?.points?.[0] ?? 0}
-          y={polygons?.points?.[1] ?? 0}
+          x={polygons?.points?.[0] ?? ""}
+          y={polygons?.points?.[1] ?? ""}
           fill="red"
-          radius={5}
+          radius={!isComplete ? initialRadius : 0}
           onClick={handleAnchorClick}
         />
       ) : (

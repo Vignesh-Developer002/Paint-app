@@ -24,7 +24,7 @@ const ShowPolygon = () => {
   }
 
   //function for handletransformEnd i.e) rotation
-  function handletransformEnd(e, id, name) {
+  function handletransformEnd(e, id) {
     let x = e.target.x();
     let y = e.target.y();
     let rotate = e.target.rotation();
@@ -50,9 +50,9 @@ const ShowPolygon = () => {
             closed={p.closed}
             draggable={true}
             rotation={p.rotation || 0}
-            // onDragEnd={(e) => handlePolygonDrag(e, p.id)}
-            // onTransformEnd={(e) => handletransformEnd(e, p.id, p.name)}
-            // onMouseDown={(e) => handleTransformetMouseDown(e, p.id, p.name)}
+            onDragEnd={(e) => handlePolygonDrag(e, p.id)}
+            onTransformEnd={(e) => handletransformEnd(e, p.id, p.name)}
+            onMouseDown={(e) => handleTransformetMouseDown(e, p.id, p.name)}
           />
         ))}
     </>
