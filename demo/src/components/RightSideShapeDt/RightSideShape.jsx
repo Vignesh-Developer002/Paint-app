@@ -19,9 +19,11 @@ const RightSideShape = () => {
   return (
     <>
       {idName.id && idName.Name && (
-        <div className="right-side-container" id="right-side-container">
+        <div className="right-side-container">
           <div className="inner-content">
-            <h1 className="heading">{currentShap ? currentShap.toUpperCase() : ""}</h1>
+            <h1 className="heading">
+              {currentShap ? currentShap.toUpperCase() : ""}
+            </h1>
             {/* flex-column */}
             <div className="main-content">
               <div className="stroke-color">
