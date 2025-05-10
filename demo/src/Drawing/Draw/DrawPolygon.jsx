@@ -9,7 +9,6 @@ const DrawPolygon = () => {
     handleAnchorClick,
     isComplete,
     initialRadius,
-    setinitialRadius,
   } = useContext(globalStore);
 
   return (

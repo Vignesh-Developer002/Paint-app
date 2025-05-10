@@ -23,8 +23,7 @@ export const actions = {
 };
 
 const StrokeColor = () => {
-  const { sideBar, setSideBar, strokeColor, setStrokeColor, handleInputValue } =
-    useContext(globalStore);
+  const { sideBar, handleInputValue } = useContext(globalStore);
   return (
     <>
       <input
@@ -48,8 +47,7 @@ const StrokeColor = () => {
 export default StrokeColor;
 
 export const FillColor = () => {
-  const { sideBar, setSideBar, fillColor, setFillColor, handleInputValue } =
-    useContext(globalStore);
+  const { sideBar, handleInputValue } = useContext(globalStore);
 
   return (
     <>
@@ -70,8 +68,6 @@ export const FillColor = () => {
     </>
   );
 };
-
-
 
 export const drawData = [
   {
@@ -166,6 +162,6 @@ export const drawData = [
   },
   {
     id: actions.Clear,
-    icons:<Clear/>,
+    icons: <Clear />,
   },
 ];

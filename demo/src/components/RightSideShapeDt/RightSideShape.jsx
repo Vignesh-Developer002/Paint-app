@@ -4,17 +4,8 @@ import StrokeColor, { FillColor } from "../../Actions/Action";
 import { globalStore } from "../../StoreContext/StoreContext";
 
 const RightSideShape = () => {
-  const {
-    strokeColor,
-    fillColor,
-    sideBar,
-    setSideBar,
-    handleInputValue,
-    currentShap,
-    idName,
-    btn,
-    setBtn,
-  } = useContext(globalStore);
+  const { sideBar, handleInputValue, currentShap, idName } =
+    useContext(globalStore);
 
   return (
     <>

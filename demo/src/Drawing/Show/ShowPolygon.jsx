@@ -4,14 +4,8 @@ import { Circle, Line } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext";
 
 const ShowPolygon = () => {
-  const {
-    polygons,
-    handleTransformetMouseDown,
-    drawPolygon,
-    setDrawPolygon,
-    setPolygons,
-    setIsComplete,
-  } = useContext(globalStore);
+  const { handleTransformetMouseDown, drawPolygon, setDrawPolygon } =
+    useContext(globalStore);
 
   function handlePolygonDrag(e, id) {
     let x = e.target.x();

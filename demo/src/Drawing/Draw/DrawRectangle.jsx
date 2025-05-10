@@ -3,8 +3,7 @@ import { globalStore } from "../../StoreContext/StoreContext";
 import { Rect } from "react-konva";
 
 const DrawRectangle = () => {
-  const { currentlyDrawnShap, setCurrentlyDrawnShape, drawing, setDrawing } =
-    useContext(globalStore);
+  const { currentlyDrawnShap } = useContext(globalStore);
 
   return (
     <>

@@ -7,7 +7,6 @@ const ShowCircle = () => {
   const {
     handleTransformetMouseDown,
     drawCircle,
-    setCurrentlyDrawnCircle,
     setDrawCircle,
   } = useContext(globalStore);
   // const lStorageCircle = localStorage.getItem("circle");
