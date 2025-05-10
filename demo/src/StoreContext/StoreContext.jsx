@@ -67,6 +67,8 @@ const StoreContext = ({ children }) => {
     stroke
   );
 
+  // function for handle the input field value changes
+
   function handleInputValue(e) {
     const { name, value } = e.target;
     setSideBar((prev) => ({ ...prev, [name]: value }));
@@ -86,7 +88,7 @@ const StoreContext = ({ children }) => {
         )
       );
     } else if (names === "circle") {
-      console.log("input changes", name);
+      console.log("input changes", names);
       setDrawCircle((prev) =>
         prev.map((d) =>
           d.id === ids
@@ -101,7 +103,7 @@ const StoreContext = ({ children }) => {
         )
       );
     } else if (names === "scrible") {
-      console.log("input changes", name);
+      console.log("input changes", names);
       setDrawScribble((prev) =>
         prev.map((d) =>
           d.id === ids
@@ -114,6 +116,29 @@ const StoreContext = ({ children }) => {
             : d
         )
       );
+    } else if (names === "line") {
+      console.log("input changes", names);
+      setDrawLine((prev) =>
+        prev.map((d) =>
+          d.id === ids
+            ? {
+                ...d,
+                strokeWidth: strokeWidth,
+                fill: fill,
+                stroke: stroke,
+              }
+            : d
+        )
+      );
+    } else if (names === "polygon") {
+      console.log("input changes", names);
+      setDrawPolygon((prev) =>
+        prev.map((d) =>
+          d.id === ids
+            ? { ...d, strokeWidth: strokeWidth, stroke: stroke, fill: fill }
+            : d
+        )
+      );
     }
   }
 
@@ -122,10 +147,10 @@ const StoreContext = ({ children }) => {
   function handleSelect(id, name) {
     console.log(id, name);
     if (name === "rectangle") {
-      let numId, nm, height, width, stroke, fill, radius, strokeWidth;
+      let Id, nm, height, width, stroke, fill, radius, strokeWidth;
       const totalShape = drawing.find((d) => d.id === id);
       nm = totalShape["name"];
-      numId = totalShape["id"];
+      Id = totalShape["id"];
       radius = totalShape["radius"];
       height = totalShape["height"];
       width = totalShape["width"];
@@ -171,6 +196,40 @@ const StoreContext = ({ children }) => {
       });
     } else if (name === "scrible") {
       let totalShape = drawScribble.find((d) => d.id === id);
+      console.log(totalShape);
+      let name = totalShape["name"];
+      let fill = totalShape["fill"];
+      let stroke = totalShape["stroke"];
+      let strokeWidth = totalShape["strokeWidth"];
+      setCurrentShape(name);
+      setSideBar({
+        name: name,
+        strokeWidth: strokeWidth,
+        radius: "0",
+        height: "0",
+        width: "0",
+        fill: fill,
+        stroke: stroke,
+      });
+    } else if (name === "line") {
+      let totalShape = drawLine.find((d) => d.id === id);
+      console.log(totalShape);
+      let name = totalShape["name"];
+      let fill = totalShape["fill"];
+      let stroke = totalShape["stroke"];
+      let strokeWidth = totalShape["strokeWidth"];
+      setCurrentShape(name);
+      setSideBar({
+        name: name,
+        strokeWidth: strokeWidth,
+        radius: "0",
+        height: "0",
+        width: "0",
+        fill: fill,
+        stroke: stroke,
+      });
+    } else if (name === "polygon") {
+      let totalShape = drawPolygon.find((d) => d.id === id);
       console.log(totalShape);
       let name = totalShape["name"];
       let fill = totalShape["fill"];
