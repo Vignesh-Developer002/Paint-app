@@ -13,7 +13,6 @@ const ShowPolygon = () => {
     setIsComplete,
   } = useContext(globalStore);
 
-  console.log(drawPolygon);
   function handlePolygonDrag(e, id) {
     let x = e.target.x();
     let y = e.target.y();

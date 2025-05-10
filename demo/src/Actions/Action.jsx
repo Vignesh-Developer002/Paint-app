@@ -20,20 +20,17 @@ export const actions = {
 };
 
 const StrokeColor = () => {
-  const { strokeColor, setStrokeColor } = useContext(globalStore);
-  //function for handle the color changes
-
-  function handleColorChanges(e) {
-    setStrokeColor(e.target.value);
-  }
+  const { sideBar, setSideBar, strokeColor, setStrokeColor, handleInputValue } =
+    useContext(globalStore);
   return (
     <>
       <input
-        data-tooltip-id="color"
-        data-tooltip-content="Stroke Color"
+        // data-tooltip-id="color"
+        // data-tooltip-content="Stroke Color"
         type="color"
-        value={strokeColor}
-        onChange={(e) => handleColorChanges(e)}
+        value={sideBar.stroke}
+        name="stroke"
+        onChange={(e) => handleInputValue(e)}
         style={{
           width: "100px",
           height: "50px",
@@ -48,20 +45,18 @@ const StrokeColor = () => {
 export default StrokeColor;
 
 export const FillColor = () => {
-  const { fillColor, setFillColor } = useContext(globalStore);
+  const { sideBar, setSideBar, fillColor, setFillColor, handleInputValue } =
+    useContext(globalStore);
 
-  // function for handle fill color logic
-  function handleFillColor(e) {
-    setFillColor(e.target.value);
-  }
   return (
     <>
       <input
-        data-tooltip-id="color"
-        data-tooltip-content="Fill Color"
+        // data-tooltip-id="color"
+        // data-tooltip-content="Fill Color"
         type="color"
-        value={fillColor}
-        onChange={(e) => handleFillColor(e)}
+        name="fill"
+        value={sideBar.fill}
+        onChange={(e) => handleInputValue(e)}
         style={{
           width: "100px",
           height: "50px",

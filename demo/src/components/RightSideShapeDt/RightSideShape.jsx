@@ -4,33 +4,39 @@ import StrokeColor, { FillColor } from "../../Actions/Action";
 import { globalStore } from "../../StoreContext/StoreContext";
 
 const RightSideShape = () => {
-  const { strokeColor, fillColor, sideBar, setSideBar, handleInputValue,currentShap } =
-    useContext(globalStore);
+  const {
+    strokeColor,
+    fillColor,
+    sideBar,
+    setSideBar,
+    handleInputValue,
+    currentShap,
+  } = useContext(globalStore);
 
   return (
     <div className="right-side-container">
       <div className="inner-content">
-        <h1 className="heading">{currentShap?currentShap :""}</h1>
+        <h1 className="heading">{currentShap ? currentShap : ""}</h1>
         {/* flex-column */}
         <div className="main-content">
           <div className="stroke-color">
             <p>
               Stroke color :{" "}
-              {strokeColor ? `(${strokeColor})` : "(No Color Selected)"}
+              {sideBar["stroke"] ? `(${sideBar["stroke"] })` : "(No Color Selected)"}
             </p>
             <StrokeColor />
           </div>
           <div className="fill-color">
             <p>
               Fill color :{" "}
-              {fillColor ? `(${fillColor})` : "(No Color Selected)"}
+              {sideBar["fill"] ? `(${sideBar["fill"]})` : "(No Color Selected)"}
             </p>
             <FillColor />
           </div>
           <div className="stroke-width">
             <p>Stroke Width</p>
             <input
-              type="text"
+              type="number"
               name="strokeWidth"
               value={sideBar.strokeWidth}
               onChange={(e) => handleInputValue(e)}
@@ -39,7 +45,7 @@ const RightSideShape = () => {
           <div className="circle-radius">
             <p> Radius</p>
             <input
-              type="text"
+              type="number"
               name="radius"
               value={sideBar.radius}
               onChange={(e) => handleInputValue(e)}
@@ -48,7 +54,7 @@ const RightSideShape = () => {
           <div className="height">
             <p>Height</p>
             <input
-              type="text"
+              type="number"
               name="height"
               value={sideBar.height}
               onChange={(e) => handleInputValue(e)}
@@ -57,7 +63,7 @@ const RightSideShape = () => {
           <div className="width">
             <p>Width</p>
             <input
-              type="text"
+              type="number"
               name="width"
               value={sideBar.width}
               onChange={(e) => handleInputValue(e)}

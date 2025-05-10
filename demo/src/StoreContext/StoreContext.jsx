@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { actions } from "../Actions/Action";
 import { v4 as uuidv4 } from "uuid";
+import { RiCoinsLine } from "react-icons/ri";
 
 export const globalStore = createContext();
 
@@ -27,114 +28,164 @@ const StoreContext = ({ children }) => {
   const [initialRadius, setinitialRadius] = useState(5); // initial circle radius state
   const isPaint = useRef(false); // mouseRef
   const stageRef = useRef(null); // stage ref
+  const [mouseDown, setMouseDown] = useState(false); // for tracking the mouse for useEffect run
+  const [idName, setIdName] = useState({ id: "", Name: "" }); // for setting the name and id in handle select
   // state for handle the right side input values
+
   const [sideBar, setSideBar] = useState({
     strokeWidth: "",
     radius: "",
     height: "",
     width: "",
+    fill: "",
+    stroke: "",
   });
+
   const [currentShap, setCurrentShape] = useState(); // for assigning the current selected shape name
 
   // function for handle the input field logic
+
+  let ids = idName.id;
+  let strokeWidth = Number(sideBar.strokeWidth);
+  let height = Number(sideBar.height);
+  let width = Number(sideBar.width);
+  let radius = Number(sideBar.radius);
+  let fill = sideBar.fill;
+  let stroke = sideBar.stroke;
+  let names = idName.Name;
+
+  console.log(
+    "idName.id",
+    ids,
+    "idName.Name",
+    names,
+    strokeWidth,
+    height,
+    width,
+    radius,
+    fill,
+    stroke
+  );
+
   function handleInputValue(e) {
     const { name, value } = e.target;
     setSideBar((prev) => ({ ...prev, [name]: value }));
+    if (names === "rectangle") {
+      setDrawing((prev) =>
+        prev.map((d) =>
+          d.id === ids
+            ? {
+                ...d,
+                height: height,
+                width: width,
+                strokeWidth: strokeWidth,
+                fill: fill,
+                stroke: stroke,
+              }
+            : d
+        )
+      );
+    } else if (names === "circle") {
+      console.log("input changes", name);
+      setDrawCircle((prev) =>
+        prev.map((d) =>
+          d.id === ids
+            ? {
+                ...d,
+                strokeWidth: strokeWidth,
+                fill: fill,
+                stroke: stroke,
+                radius: radius,
+              }
+            : d
+        )
+      );
+    } else if (names === "scrible") {
+      console.log("input changes", name);
+      setDrawScribble((prev) =>
+        prev.map((d) =>
+          d.id === ids
+            ? {
+                ...d,
+                strokeWidth: strokeWidth,
+                fill: fill,
+                stroke: stroke,
+              }
+            : d
+        )
+      );
+    }
   }
 
   // function for handle the perticular shape click
 
   function handleSelect(id, name) {
-    const totalShape = [
-      ...drawing,
-      ...drawCircle,
-      ...drawLine,
-      ...drawScribble,
-      ...drawPolygon,
-    ].find((shape) => shape.id === id);
-
-    if (totalShape["name"] === "rectangle") {
-      let name, width, height, fill, stroke, strokeWidth;
-
-      name = totalShape["name"];
-      width = totalShape["width"];
+    console.log(id, name);
+    if (name === "rectangle") {
+      let numId, nm, height, width, stroke, fill, radius, strokeWidth;
+      const totalShape = drawing.find((d) => d.id === id);
+      nm = totalShape["name"];
+      numId = totalShape["id"];
+      radius = totalShape["radius"];
       height = totalShape["height"];
-      fill = totalShape["fill"];
-      stroke = totalShape["stroke"];
+      width = totalShape["width"];
       strokeWidth = totalShape["strokeWidth"];
-      setCurrentShape(name);
-      setSideBar({
+      stroke = totalShape["stroke"];
+      fill = totalShape["fill"];
+      setCurrentShape(nm);
+
+      setSideBar((prev) => ({
+        ...prev,
+        name: nm,
         strokeWidth: strokeWidth,
+        radius: radius ? radius : 0,
         height: height,
         width: width,
-      });
-      setFillColor(fill);
-      setStrokeColor(stroke);
-    } else if (totalShape["name"] === "circle") {
-      let name, fill, stroke, strokeWidth, radius;
+        fill: fill,
+        stroke: stroke,
+      }));
+    } else if (name === "circle") {
+      const totalShape = drawCircle.find((d) => d.id === id);
+      console.log(totalShape);
+      let name = totalShape["name"];
+      let ids = totalShape["id"];
+      let radius = totalShape["radius"];
+      let height = totalShape["height"];
+      let width = totalShape["width"];
+      let strokeWidth = totalShape["strokeWidth"];
+      let stroke = totalShape["stroke"];
+      let fill = totalShape["fill"];
+      console.log(
+        `name ${name}, id ${ids} radius ${radius} height${height} width ${width} strokeWidth ${strokeWidth} stroke${stroke} fill ${fill}`
+      );
 
-      name = totalShape["name"];
-      fill = totalShape["fill"];
-      stroke = totalShape["stroke"];
-      strokeWidth = totalShape["strokeWidth"];
-      radius = totalShape["radius"];
       setCurrentShape(name);
       setSideBar({
+        name: name,
         strokeWidth: strokeWidth,
         radius: radius,
-        height: "-",
-        width: "-",
+        height: "0",
+        width: "0",
+        fill: fill,
+        stroke: stroke,
       });
-      setFillColor(fill);
-      setStrokeColor(stroke);
-    } else if (totalShape["name"] === "scrible") {
-      let name, stroke, fill, strokeWidth;
-
-      name = totalShape["name"];
-      stroke = totalShape["stroke"];
-      fill = totalShape["fill"];
-      strokeWidth = totalShape["strokeWidth"];
+    } else if (name === "scrible") {
+      let totalShape = drawScribble.find((d) => d.id === id);
+      console.log(totalShape);
+      let name = totalShape["name"];
+      let fill = totalShape["fill"];
+      let stroke = totalShape["stroke"];
+      let strokeWidth = totalShape["strokeWidth"];
       setCurrentShape(name);
       setSideBar({
+        name: name,
         strokeWidth: strokeWidth,
-        radius: "-",
-        height: "-",
-        width: "-",
+        radius: "0",
+        height: "0",
+        width: "0",
+        fill: fill,
+        stroke: stroke,
       });
-      setFillColor(fill);
-      setStrokeColor(stroke);
-    } else if (totalShape["name"] === "line") {
-      let name, stroke, fill, strokeWidth;
-
-      name = totalShape["name"];
-      stroke = totalShape["stroke"];
-      fill = totalShape["fill"];
-      strokeWidth = totalShape["strokeWidth"];
-      setCurrentShape(name);
-      setSideBar({
-        strokeWidth: strokeWidth,
-        radius: "-",
-        height: "-",
-        width: "-",
-      });
-      setFillColor(fill);
-      setStrokeColor(stroke);
-    } else if (totalShape["name"] === "polygon") {
-      let name, fill, stroke, strokeWidth;
-
-      name = totalShape["name"];
-      fill = totalShape["fill"];
-      stroke = totalShape["stroke"];
-      strokeWidth = totalShape["strokeWidth"];
-      setCurrentShape(name);
-      setSideBar({
-        strokeWidth: strokeWidth,
-        radius: "-",
-        height: "-",
-        width: "-",
-      });
-      setFillColor(fill);
-      setStrokeColor(stroke);
     }
   }
 
@@ -143,6 +194,8 @@ const StoreContext = ({ children }) => {
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
       transformerRef.current.nodes([transformerNode]);
+      console.log("handleTransform", id, name);
+      setIdName((prev) => ({ ...prev, id: id, Name: name }));
       handleSelect(id, name);
     } else {
       return;
@@ -188,8 +241,8 @@ const StoreContext = ({ children }) => {
         name: btnName,
         width: 1,
         height: 1,
-        fill: fillColor || "gray",
-        stroke: strokeColor || "#000000",
+        fill: sideBar.fill ? sideBar.fill : "gray",
+        stroke: sideBar.stroke ? sideBar.stroke : "#000000",
         strokeWidth: 4,
         rotation: 0,
       }));
@@ -205,8 +258,8 @@ const StoreContext = ({ children }) => {
         y: y,
         name: btnName,
         radius: 1,
-        fill: fillColor || "gray",
-        stroke: strokeColor || "#000000",
+        fill: sideBar.fill || "gray",
+        stroke: sideBar.stroke || "#000000",
         strokeWidth: 4,
         rotation: 0,
       });
@@ -219,8 +272,8 @@ const StoreContext = ({ children }) => {
         id: uuidv4(),
         name: btnName,
         points: [x, y, x, y],
-        stroke: strokeColor || "#000000",
-        fill: fillColor || "gray",
+        stroke: sideBar.stroke || "#000000",
+        fill: sideBar.fill || "gray",
         strokeWidth: 4,
         lineCap: "round",
         lineJoin: "round",
@@ -237,8 +290,8 @@ const StoreContext = ({ children }) => {
         y: y,
         name: btnName,
         points: [x, y, x, y],
-        stroke: strokeColor || "#000000",
-        fill: fillColor || "gray",
+        stroke: sideBar.stroke || "#000000",
+        fill: sideBar.fill || "gray",
         strokeWidth: 4,
         lineJoin: "round",
         rotation: 0,
@@ -254,8 +307,8 @@ const StoreContext = ({ children }) => {
           name: btnName,
           id: uuidv4(),
           points: Array.isArray(prev?.points) ? [...prev.points, x, y] : [x, y],
-          fill: fillColor || "gray",
-          stroke: strokeColor || "#000000",
+          fill: sideBar.fill || "gray",
+          stroke: sideBar.stroke || "#000000",
           strokeWidth: 5,
           closed: polygons?.closed || false,
           rotation: 0,
@@ -333,6 +386,8 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    sideBar,
+    setSideBar,
     currentShap,
     handleInputValue,
     sideBar,
