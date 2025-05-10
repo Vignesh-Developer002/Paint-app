@@ -12,18 +12,14 @@ const RightSideShape = () => {
     handleInputValue,
     currentShap,
     idName,
+    btn,
+    setBtn,
   } = useContext(globalStore);
 
   return (
     <>
       {idName.id && idName.Name && (
-        <div
-          className={
-            idName.id || idName.Name
-              ? "right-side-conatainer-show"
-              : "right-side-container"
-          }
-        >
+        <div className="right-side-container" id="right-side-container">
           <div className="inner-content">
             <h1 className="heading">{currentShap ? currentShap : ""}</h1>
             {/* flex-column */}
@@ -55,33 +51,43 @@ const RightSideShape = () => {
                   onChange={(e) => handleInputValue(e)}
                 />
               </div>
-              <div className="circle-radius">
-                <p> Radius</p>
-                <input
-                  type="number"
-                  name="radius"
-                  value={sideBar.radius}
-                  onChange={(e) => handleInputValue(e)}
-                />
-              </div>
-              <div className="height">
-                <p>Height</p>
-                <input
-                  type="number"
-                  name="height"
-                  value={sideBar.height}
-                  onChange={(e) => handleInputValue(e)}
-                />
-              </div>
-              <div className="width">
-                <p>Width</p>
-                <input
-                  type="number"
-                  name="width"
-                  value={sideBar.width}
-                  onChange={(e) => handleInputValue(e)}
-                />
-              </div>
+              {idName.Name === "circle" ? (
+                <div className="circle-radius">
+                  <p> Radius</p>
+                  <input
+                    type="number"
+                    name="radius"
+                    value={sideBar.radius}
+                    onChange={(e) => handleInputValue(e)}
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
+              {idName.Name === "rectangle" ? (
+                <>
+                  <div className="height">
+                    <p>Height</p>
+                    <input
+                      type="number"
+                      name="height"
+                      value={sideBar.height}
+                      onChange={(e) => handleInputValue(e)}
+                    />
+                  </div>
+                  <div className="width">
+                    <p>Width</p>
+                    <input
+                      type="number"
+                      name="width"
+                      value={sideBar.width}
+                      onChange={(e) => handleInputValue(e)}
+                    />
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         </div>

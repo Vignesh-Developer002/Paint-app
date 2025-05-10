@@ -2,12 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { actions } from "../Actions/Action";
 import { v4 as uuidv4 } from "uuid";
-import { RiCoinsLine } from "react-icons/ri";
 
 export const globalStore = createContext();
 
 const StoreContext = ({ children }) => {
-  // state for set the value
+  const [btn, setBtn] = useState(false);
   const [currentlyDrawnShap, setCurrentlyDrawnShape] = useState({}); // rectangle
   const [drawing, setDrawing] = useState([]); // rectangle
   const [currentlyDrawnCircle, setCurrentlyDrawnCircle] = useState({}); //circle

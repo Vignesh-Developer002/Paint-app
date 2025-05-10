@@ -1,16 +1,5 @@
 .right-side-container{
     border: 1px solid;
-    width: 0px;
-    height: 100vh;
-    position: fixed;
-    right:0px;
-    top: 0px;
-    background: #00000036;
-    padding: 10px;
-    z-index: 1;
-}
-.right-side-conatainer-show{
-     border: 1px solid;
     width: 500px;
     height: 100vh;
     position: fixed;
@@ -19,8 +8,9 @@
     background: #00000036;
     padding: 10px;
     z-index: 1;
-    transition: 10s;
+    transition: 2s;
 }
+
 .inner-content{
     border: 1px solid #ffffff;
     margin-top: 10px;

@@ -17,6 +17,7 @@ export const actions = {
   polygon: "polygon",
   StrokeColor: "Stroke",
   fillColor: "fill",
+  show: "show",
 };
 
 const StrokeColor = () => {
