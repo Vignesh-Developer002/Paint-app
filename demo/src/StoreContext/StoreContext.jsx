@@ -9,6 +9,7 @@ const StoreContext = ({ children }) => {
   const [btn, setBtn] = useState(false);
   const [currentlyDrawnShap, setCurrentlyDrawnShape] = useState({}); // rectangle
   const [drawing, setDrawing] = useState([]); // rectangle
+
   const [currentlyDrawnCircle, setCurrentlyDrawnCircle] = useState({}); //circle
   const [drawCircle, setDrawCircle] = useState([]); // circle
   const [scribble, setScribble] = useState({}); //scribble
@@ -53,19 +54,6 @@ const StoreContext = ({ children }) => {
   let stroke = sideBar.stroke;
   let names = idName.Name;
 
-  console.log(
-    "idName.id",
-    ids,
-    "idName.Name",
-    names,
-    strokeWidth,
-    height,
-    width,
-    radius,
-    fill,
-    stroke
-  );
-
   // function for handle the input field value changes
 
   function handleInputValue(e) {
@@ -87,7 +75,6 @@ const StoreContext = ({ children }) => {
         )
       );
     } else if (names === "circle") {
-      console.log("input changes", names);
       setDrawCircle((prev) =>
         prev.map((d) =>
           d.id === ids
@@ -102,7 +89,6 @@ const StoreContext = ({ children }) => {
         )
       );
     } else if (names === "scrible") {
-      console.log("input changes", names);
       setDrawScribble((prev) =>
         prev.map((d) =>
           d.id === ids
@@ -116,7 +102,6 @@ const StoreContext = ({ children }) => {
         )
       );
     } else if (names === "line") {
-      console.log("input changes", names);
       setDrawLine((prev) =>
         prev.map((d) =>
           d.id === ids
@@ -130,7 +115,6 @@ const StoreContext = ({ children }) => {
         )
       );
     } else if (names === "polygon") {
-      console.log("input changes", names);
       setDrawPolygon((prev) =>
         prev.map((d) =>
           d.id === ids
@@ -144,7 +128,6 @@ const StoreContext = ({ children }) => {
   // function for handle the perticular shape click
 
   function handleSelect(id, name) {
-    console.log(id, name);
     if (name === "rectangle") {
       let Id, nm, height, width, stroke, fill, radius, strokeWidth;
       const totalShape = drawing.find((d) => d.id === id);
@@ -170,7 +153,7 @@ const StoreContext = ({ children }) => {
       }));
     } else if (name === "circle") {
       const totalShape = drawCircle.find((d) => d.id === id);
-      console.log(totalShape);
+
       let name = totalShape["name"];
       let ids = totalShape["id"];
       let radius = totalShape["radius"];
@@ -179,9 +162,6 @@ const StoreContext = ({ children }) => {
       let strokeWidth = totalShape["strokeWidth"];
       let stroke = totalShape["stroke"];
       let fill = totalShape["fill"];
-      console.log(
-        `name ${name}, id ${ids} radius ${radius} height${height} width ${width} strokeWidth ${strokeWidth} stroke${stroke} fill ${fill}`
-      );
 
       setCurrentShape(name);
       setSideBar({
@@ -195,7 +175,7 @@ const StoreContext = ({ children }) => {
       });
     } else if (name === "scrible") {
       let totalShape = drawScribble.find((d) => d.id === id);
-      console.log(totalShape);
+
       let name = totalShape["name"];
       let fill = totalShape["fill"];
       let stroke = totalShape["stroke"];
@@ -212,7 +192,7 @@ const StoreContext = ({ children }) => {
       });
     } else if (name === "line") {
       let totalShape = drawLine.find((d) => d.id === id);
-      console.log(totalShape);
+
       let name = totalShape["name"];
       let fill = totalShape["fill"];
       let stroke = totalShape["stroke"];
@@ -229,7 +209,7 @@ const StoreContext = ({ children }) => {
       });
     } else if (name === "polygon") {
       let totalShape = drawPolygon.find((d) => d.id === id);
-      console.log(totalShape);
+
       let name = totalShape["name"];
       let fill = totalShape["fill"];
       let stroke = totalShape["stroke"];
@@ -247,12 +227,21 @@ const StoreContext = ({ children }) => {
     }
   }
 
+  // function for clearing all the shapes
+  function handleClear() {
+    setDrawing([]);
+    setDrawCircle([]);
+    setDrawScribble([]);
+    setDrawLine([]);
+    setDrawPolygon([]);
+  }
+
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name) {
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
       transformerRef.current.nodes([transformerNode]);
-      console.log("handleTransform", id, name);
+
       setIdName((prev) => ({ ...prev, id: id, Name: name }));
       handleSelect(id, name);
     } else {
@@ -444,6 +433,7 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    handleClear,
     idName,
     sideBar,
     setSideBar,

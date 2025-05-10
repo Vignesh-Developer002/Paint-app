@@ -7,6 +7,8 @@ import { FaDrawPolygon } from "react-icons/fa";
 import { FaArrowPointer } from "react-icons/fa6";
 import { useContext } from "react";
 import { globalStore } from "../StoreContext/StoreContext";
+import Clear from "../components/Clear/Clear";
+// import { RiDeleteBinLine } from "react-icons/ri";
 
 export const actions = {
   select: "select",
@@ -17,7 +19,7 @@ export const actions = {
   polygon: "polygon",
   StrokeColor: "Stroke",
   fillColor: "fill",
-  show: "show",
+  Clear: "clear",
 };
 
 const StrokeColor = () => {
@@ -33,7 +35,7 @@ const StrokeColor = () => {
         name="stroke"
         onChange={(e) => handleInputValue(e)}
         style={{
-          width: "100px",
+          width: "80px",
           height: "50px",
           border: "none",
           cursor: "pointer",
@@ -59,7 +61,7 @@ export const FillColor = () => {
         value={sideBar.fill}
         onChange={(e) => handleInputValue(e)}
         style={{
-          width: "100px",
+          width: "80px",
           height: "50px",
           border: "none",
           cursor: "pointer",
@@ -68,6 +70,8 @@ export const FillColor = () => {
     </>
   );
 };
+
+
 
 export const drawData = [
   {
@@ -160,9 +164,8 @@ export const drawData = [
       />
     ),
   },
-  // {
-  //   id: actions.StrokeColor,
-  //   icons: <StrokeColor />,
-  // },
-  // { id: actions.fillColor, icons: <FillColor /> },
+  {
+    id: actions.Clear,
+    icons:<Clear/>,
+  },
 ];

@@ -10,9 +10,9 @@ const MainStage = () => {
     onStageMouseDown,
     onStageMouseMove,
     onStageMouseOut,
-    stageRef
+    stageRef,
   } = useContext(globalStore);
-  
+
   return (
     <Stage
       ref={stageRef}
@@ -21,7 +21,9 @@ const MainStage = () => {
       onMouseDown={onStageMouseDown}
       onMouseMove={onStageMouseMove}
       onMouseUp={onStageMouseOut}
-      onClick={(e)=>e.target === stageRef.current? transformerRef.current.nodes([]):<></>}
+      onClick={(e) =>
+        e.target === stageRef.current ? transformerRef.current.nodes([]) : <></>
+      }
     >
       <Layer>
         {/* parent show component  array*/}
