@@ -1,6 +1,5 @@
 .right-side-container{
-    border: 1px solid;
-    width: 500px;
+    width: 450px;
     height: 100vh;
     position: fixed;
     right:0px;
@@ -9,32 +8,41 @@
     padding: 10px;
     z-index: 1;
     transition: 2s;
+    box-shadow: 10px 10px 10px 5px black;
 }
 
 .inner-content{
     border: 1px solid #ffffff;
+    height: 100%;
     margin-top: 10px;
 }
 .heading{
     text-align: center;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 700;
+    margin-top: 10px;
     margin-bottom: 20px;
+    color: rgb(100, 98, 98);
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }
 .main-content{
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     padding: 10px;
 }
 .stroke-color, .fill-color, .stroke-width, .circle-radius, .height, .width{
     display:flex ;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
 }
 .stroke-color p, .fill-color p, .stroke-width p, .circle-radius p, .height p, .width p{
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 500;
+    color: #5a5a5a;
+    font-weight: 600;
+
 }
 
 .stroke-color input, .fill-color input, .stroke-width input, .circle-radius input, .height input, .width input{

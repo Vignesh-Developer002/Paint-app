@@ -21,7 +21,7 @@ const RightSideShape = () => {
       {idName.id && idName.Name && (
         <div className="right-side-container" id="right-side-container">
           <div className="inner-content">
-            <h1 className="heading">{currentShap ? currentShap : ""}</h1>
+            <h1 className="heading">{currentShap ? currentShap.toUpperCase() : ""}</h1>
             {/* flex-column */}
             <div className="main-content">
               <div className="stroke-color">
@@ -33,6 +33,7 @@ const RightSideShape = () => {
                 </p>
                 <StrokeColor />
               </div>
+              <hr />
               <div className="fill-color">
                 <p>
                   Fill color :{" "}
@@ -42,8 +43,9 @@ const RightSideShape = () => {
                 </p>
                 <FillColor />
               </div>
+              <hr />
               <div className="stroke-width">
-                <p>Stroke Width</p>
+                <p>Stroke Width :</p>
                 <input
                   type="number"
                   name="strokeWidth"
@@ -51,9 +53,10 @@ const RightSideShape = () => {
                   onChange={(e) => handleInputValue(e)}
                 />
               </div>
+              <hr />
               {idName.Name === "circle" ? (
                 <div className="circle-radius">
-                  <p> Radius</p>
+                  <p> Radius :</p>
                   <input
                     type="number"
                     name="radius"
@@ -67,7 +70,7 @@ const RightSideShape = () => {
               {idName.Name === "rectangle" ? (
                 <>
                   <div className="height">
-                    <p>Height</p>
+                    <p>Height :</p>
                     <input
                       type="number"
                       name="height"
@@ -75,8 +78,9 @@ const RightSideShape = () => {
                       onChange={(e) => handleInputValue(e)}
                     />
                   </div>
+                  <hr />
                   <div className="width">
-                    <p>Width</p>
+                    <p>Width :</p>
                     <input
                       type="number"
                       name="width"
@@ -84,6 +88,7 @@ const RightSideShape = () => {
                       onChange={(e) => handleInputValue(e)}
                     />
                   </div>
+                  <hr />
                 </>
               ) : (
                 <></>

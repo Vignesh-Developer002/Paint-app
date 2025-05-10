@@ -76,7 +76,12 @@ export const drawData = [
       <FaArrowPointer
         data-tooltip-id="color"
         data-tooltip-content="Select"
-        style={{ width: "100%", height: "100%" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          outline: "none",
+        }}
       />
     ),
   },
@@ -86,7 +91,12 @@ export const drawData = [
       <FaRegCircle
         data-tooltip-id="color"
         data-tooltip-content="Circle"
-        style={{ width: "100%", height: "100%" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          outline: "none",
+        }}
       />
     ),
   },
@@ -96,7 +106,12 @@ export const drawData = [
       <RiRectangleLine
         data-tooltip-id="color"
         data-tooltip-content="Rectangle"
-        style={{ width: "100%", height: "100%" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          outline: "none",
+        }}
       />
     ),
   },
@@ -106,7 +121,12 @@ export const drawData = [
       <PiScribbleLight
         data-tooltip-id="color"
         data-tooltip-content="Scribble"
-        style={{ width: "100%", height: "100%" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          outline: "none",
+        }}
       />
     ),
   },
@@ -116,7 +136,12 @@ export const drawData = [
       <FaArrowTrendDown
         data-tooltip-id="color"
         data-tooltip-content="Line"
-        style={{ width: "100%", height: "100%" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          outline: "none",
+        }}
       />
     ),
   },
@@ -126,7 +151,12 @@ export const drawData = [
       <FaDrawPolygon
         data-tooltip-id="color"
         data-tooltip-content="Polygon"
-        style={{ width: "100%", height: "100%" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          outline: "none",
+        }}
       />
     ),
   },
