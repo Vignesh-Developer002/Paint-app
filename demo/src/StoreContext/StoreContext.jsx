@@ -445,6 +445,7 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    idName,
     sideBar,
     setSideBar,
     currentShap,
