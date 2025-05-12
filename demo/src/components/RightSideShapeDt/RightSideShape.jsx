@@ -4,12 +4,12 @@ import StrokeColor, { FillColor } from "../../Actions/Action";
 import { globalStore } from "../../StoreContext/StoreContext";
 
 const RightSideShape = () => {
-  const { sideBar, handleInputValue, currentShap, idName } =
+  const { sideBar, handleInputValue, currentShap, idName, sideBarView } =
     useContext(globalStore);
 
   return (
     <>
-      {idName.id && idName.Name && (
+      {idName.id && idName.Name && sideBarView && (
         <div className="right-side-container">
           <div className="inner-content">
             <h1 className="heading">

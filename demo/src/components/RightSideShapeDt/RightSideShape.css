@@ -7,8 +7,12 @@
     background: #00000036;
     padding: 10px;
     z-index: 1;
-    transition: 2s;
+    transition: 250s;
     box-shadow: 10px 10px 10px 5px black;
+}
+.right-side-container.active{
+    right:0px;
+    transition: 220s;
 }
 
 .inner-content{

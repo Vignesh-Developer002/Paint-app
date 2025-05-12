@@ -14,6 +14,7 @@ const MainStage = () => {
     draggable,
     mouseDown,
     btn,
+    transformUnSelect,
   } = useContext(globalStore);
 
   let stage = document.getElementById("stageClass");
@@ -35,9 +36,7 @@ const MainStage = () => {
       onMouseDown={onStageMouseDown}
       onMouseMove={onStageMouseMove}
       onMouseUp={onStageMouseOut}
-      onClick={(e) =>
-        e.target === stageRef.current ? transformerRef.current.nodes([]) : <></>
-      }
+      onClick={(e) => transformUnSelect(e)}
       draggable={draggable}
     >
       <Layer>

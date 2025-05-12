@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 export const globalStore = createContext();
 
 const StoreContext = ({ children }) => {
+  const [sideBarView, setSideBarView] = useState(false);
   const [btn, setBtn] = useState("");
   const [currentlyDrawnShap, setCurrentlyDrawnShape] = useState({}); // rectangle
   const [drawing, setDrawing] = useState([]); // rectangle
@@ -247,7 +248,7 @@ const StoreContext = ({ children }) => {
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
       transformerRef.current.nodes([transformerNode]);
-
+      setSideBarView(true); //---------------------------
       setIdName((prev) => ({ ...prev, id: id, Name: name }));
       handleSelect(id, name);
     } else {
@@ -358,7 +359,6 @@ const StoreContext = ({ children }) => {
       });
     } else if (btnName === actions.polygon) {
       setDraggable(false);
-
       if (!isComplete) {
         let pos = e.target.getStage().getPointerPosition();
         let x = pos.x || 0;
@@ -456,7 +456,23 @@ const StoreContext = ({ children }) => {
     }
   }
 
+  // Function for handle the whille clicking outside the tranform should be unselect
+  function transformUnSelect(e) {
+    // e.target === stageRef.current ? transformerRef.current.nodes([]) : "";
+    if (e.target === stageRef.current) {
+      transformerRef.current.nodes([]);
+      setSideBarView(false);
+    } else {
+      return;
+    }
+  }
+
+  console.log("sideBarView", sideBarView);
+
   const contextValue = {
+    sideBarView,
+    setSideBarView,
+    transformUnSelect,
     // handleDrage,
     btn,
     setBtn,
