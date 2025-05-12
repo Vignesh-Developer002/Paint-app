@@ -7,7 +7,7 @@ export const globalStore = createContext();
 
 const StoreContext = ({ children }) => {
   const [sideBarView, setSideBarView] = useState(false);
-  const [btn, setBtn] = useState("");
+  const [btn, setBtn] = useState("default");
   const [currentlyDrawnShap, setCurrentlyDrawnShape] = useState({}); // rectangle
   const [drawing, setDrawing] = useState([]); // rectangle
   const [draggable, setDraggable] = useState(false);
@@ -42,6 +42,7 @@ const StoreContext = ({ children }) => {
     stroke: "",
   });
 
+  console.log("draggable", draggable, "btn", btn, "btnName", btnName);
   const [currentShap, setCurrentShape] = useState(); // for assigning the current selected shape name
 
   // function for handle the input field logic
@@ -127,7 +128,6 @@ const StoreContext = ({ children }) => {
   }
 
   // function for handle the perticular shape click
-
   function handleSelect(id, name) {
     if (name === "rectangle") {
       let Id, nm, height, width, stroke, fill, radius, strokeWidth;
@@ -193,7 +193,6 @@ const StoreContext = ({ children }) => {
       });
     } else if (name === "line") {
       let totalShape = drawLine.find((d) => d.id === id);
-
       let name = totalShape["name"];
       let fill = totalShape["fill"];
       let stroke = totalShape["stroke"];
@@ -237,18 +236,12 @@ const StoreContext = ({ children }) => {
     setDrawPolygon([]);
   }
 
-  // function for handle drag functionality
-  // function handleDrage() {
-  //   setDraggable(true);
-  // }
-
-  console.log(btn, draggable);
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name) {
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
       transformerRef.current.nodes([transformerNode]);
-      setSideBarView(true); //---------------------------
+      setSideBarView(true);
       setIdName((prev) => ({ ...prev, id: id, Name: name }));
       handleSelect(id, name);
     } else {
@@ -280,14 +273,14 @@ const StoreContext = ({ children }) => {
 
   // onStageMouseDown
   function onStageMouseDown(e) {
-    // setDraggable(false);
-    //---------------------
     if (btnName === actions.select) {
       setDraggable(false);
+      setBtn("default");
       return;
     } else if (btnName === actions.rectangle) {
       isPaint.current = true;
       setDraggable(false);
+      setBtn("default");
       let pos = e.target.getStage().getPointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
@@ -306,6 +299,7 @@ const StoreContext = ({ children }) => {
       }));
     } else if (btnName === actions.circle) {
       setDraggable(false);
+      setBtn("default");
       isPaint.current = true;
       let pos = e.target.getStage().getPointerPosition();
       let x = pos.x || 0;
@@ -324,6 +318,7 @@ const StoreContext = ({ children }) => {
       });
     } else if (btnName === actions.scribble) {
       setDraggable(false);
+      setBtn("default");
       isPaint.current = true;
       let pos = e.target.getStage().getPointerPosition();
       let x = pos.x || 0;
@@ -341,6 +336,7 @@ const StoreContext = ({ children }) => {
       });
     } else if (btnName === actions.line) {
       setDraggable(false);
+      setBtn("default");
       isPaint.current = true;
       let pos = e.target.getStage().getPointerPosition();
       let x = pos.x || 0;
@@ -359,6 +355,7 @@ const StoreContext = ({ children }) => {
       });
     } else if (btnName === actions.polygon) {
       setDraggable(false);
+      setBtn("default");
       if (!isComplete) {
         let pos = e.target.getStage().getPointerPosition();
         let x = pos.x || 0;
@@ -384,7 +381,6 @@ const StoreContext = ({ children }) => {
 
   // onStageMouseMove
   function onStageMouseMove(e) {
-    //------------------
     if (btnName === actions.select) {
       return;
     } else if (btnName === actions.rectangle) {
@@ -458,7 +454,6 @@ const StoreContext = ({ children }) => {
 
   // Function for handle the whille clicking outside the tranform should be unselect
   function transformUnSelect(e) {
-    // e.target === stageRef.current ? transformerRef.current.nodes([]) : "";
     if (e.target === stageRef.current) {
       transformerRef.current.nodes([]);
       setSideBarView(false);
@@ -467,13 +462,10 @@ const StoreContext = ({ children }) => {
     }
   }
 
-  console.log("sideBarView", sideBarView);
-
   const contextValue = {
     sideBarView,
     setSideBarView,
     transformUnSelect,
-    // handleDrage,
     btn,
     setBtn,
     draggable,
@@ -527,7 +519,7 @@ const StoreContext = ({ children }) => {
     setDrawPolygon,
     mouseDown,
   };
-  // console.log(btnName);
+
   return (
     <globalStore.Provider value={contextValue}>{children}</globalStore.Provider>
   );

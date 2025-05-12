@@ -162,10 +162,10 @@ export const drawData = [
       />
     ),
   },
-  {
-    id: actions.drag,
-    icons: <Drag />,
-  },
+  // {
+  //   id: actions.drag,
+  //   // icons: <Drag />,
+  // },
   {
     id: actions.Clear,
     icons: <Clear />,

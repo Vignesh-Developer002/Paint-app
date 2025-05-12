@@ -10,7 +10,6 @@ const ShowPolygon = () => {
   function handlePolygonDrag(e, id) {
     let x = e.target.x();
     let y = e.target.y();
-
     setDrawPolygon((prev) =>
       prev.map((p) => (p.id === id ? { ...p, x: x, y: y } : p))
     );

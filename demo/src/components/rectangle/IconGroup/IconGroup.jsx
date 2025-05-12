@@ -5,7 +5,7 @@ import { globalStore } from "../../../StoreContext/StoreContext.jsx";
 import Drag from "../../Drag/Drag.jsx";
 
 const IconGroup = () => {
-  const { btnName, setBtnName, setDraggable,setBtn } = useContext(globalStore);
+  const { btnName, setBtnName, setDraggable, setBtn } = useContext(globalStore);
   //function for findinfd the name of the perticular clicked button
   function handleAction(id) {
     setBtnName(id);
@@ -19,7 +19,7 @@ const IconGroup = () => {
       id === "clear"
     ) {
       setDraggable(false);
-      setBtn("")
+      setBtn("default");
     }
     if (id === "drag") {
       setDraggable(true);

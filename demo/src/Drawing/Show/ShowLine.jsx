@@ -6,10 +6,7 @@ import { globalStore } from "../../StoreContext/StoreContext";
 const ShowLine = () => {
   const { handleTransformetMouseDown, drawLine, setDrawLine } =
     useContext(globalStore);
-  //getting the local storage line data
-  // let localLine = localStorage.getItem("line");
-  // let lineData;
-  // lineData = JSON.parse(localLine);
+ 
 
   function handleDrag(e, id) {
     let x = e.target.x();
@@ -17,15 +14,10 @@ const ShowLine = () => {
     setDrawLine((prev) =>
       prev.map((l) => (l.id === id ? { ...l, x: x, y: y } : l))
     );
-    //setting the updated line data to the local storage
-    // localStorage.setItem("line", JSON.stringify(result));
+    
   }
 
-  // if (!localStorage.getItem("line")) {
-  //   useEffect(() => {
-  //     localStorage.setItem("line", JSON.stringify(line));
-  //   }, []);
-  // }
+  
 
   function handleTranfomEnd(e, id, name) {
     let x = e.target.x();

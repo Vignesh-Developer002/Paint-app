@@ -21,9 +21,11 @@ const MainStage = () => {
   if (stage) {
     if (btn === "grab") {
       stage.style.cursor = "grab";
-    } else if (mouseDown) {
+    }
+    if (mouseDown) {
       stage.style.cursor = "grabbing";
-    } else {
+    }
+    if (btn === "default") {
       stage.style.cursor = "default";
     }
   }
