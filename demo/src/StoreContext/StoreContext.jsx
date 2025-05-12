@@ -6,10 +6,10 @@ import { v4 as uuidv4 } from "uuid";
 export const globalStore = createContext();
 
 const StoreContext = ({ children }) => {
-  const [btn, setBtn] = useState(false);
+  const [btn, setBtn] = useState("");
   const [currentlyDrawnShap, setCurrentlyDrawnShape] = useState({}); // rectangle
   const [drawing, setDrawing] = useState([]); // rectangle
-
+  const [draggable, setDraggable] = useState(false);
   const [currentlyDrawnCircle, setCurrentlyDrawnCircle] = useState({}); //circle
   const [drawCircle, setDrawCircle] = useState([]); // circle
   const [scribble, setScribble] = useState({}); //scribble
@@ -236,6 +236,12 @@ const StoreContext = ({ children }) => {
     setDrawPolygon([]);
   }
 
+  // function for handle drag functionality
+  // function handleDrage() {
+  //   setDraggable(true);
+  // }
+
+  console.log(btn, draggable);
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name) {
     if (btnName === actions.select) {
@@ -273,10 +279,14 @@ const StoreContext = ({ children }) => {
 
   // onStageMouseDown
   function onStageMouseDown(e) {
+    // setDraggable(false);
+    //---------------------
     if (btnName === actions.select) {
+      setDraggable(false);
       return;
     } else if (btnName === actions.rectangle) {
       isPaint.current = true;
+      setDraggable(false);
       let pos = e.target.getStage().getPointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
@@ -294,6 +304,7 @@ const StoreContext = ({ children }) => {
         rotation: 0,
       }));
     } else if (btnName === actions.circle) {
+      setDraggable(false);
       isPaint.current = true;
       let pos = e.target.getStage().getPointerPosition();
       let x = pos.x || 0;
@@ -311,6 +322,7 @@ const StoreContext = ({ children }) => {
         rotation: 0,
       });
     } else if (btnName === actions.scribble) {
+      setDraggable(false);
       isPaint.current = true;
       let pos = e.target.getStage().getPointerPosition();
       let x = pos.x || 0;
@@ -327,6 +339,7 @@ const StoreContext = ({ children }) => {
         rotation: 0,
       });
     } else if (btnName === actions.line) {
+      setDraggable(false);
       isPaint.current = true;
       let pos = e.target.getStage().getPointerPosition();
       let x = pos.x || 0;
@@ -344,7 +357,8 @@ const StoreContext = ({ children }) => {
         rotation: 0,
       });
     } else if (btnName === actions.polygon) {
-      // setIsComplete(false); //--------Now----------------------------------------
+      setDraggable(false);
+
       if (!isComplete) {
         let pos = e.target.getStage().getPointerPosition();
         let x = pos.x || 0;
@@ -361,11 +375,16 @@ const StoreContext = ({ children }) => {
           rotation: 0,
         }));
       }
+    } else if (btnName === actions.drag) {
+      setBtn("grabbing");
+      setMouseDown(true);
+      setDraggable(true);
     }
   }
 
   // onStageMouseMove
   function onStageMouseMove(e) {
+    //------------------
     if (btnName === actions.select) {
       return;
     } else if (btnName === actions.rectangle) {
@@ -410,11 +429,14 @@ const StoreContext = ({ children }) => {
         let y = pos.y || 0;
         setNextPoints({ x: x, y: y });
       }
+    } else if (btnName === actions.drag) {
+      setDraggable(true);
     }
   }
 
   // onStageMouseOut
   function onStageMouseOut() {
+    setMouseDown(false);
     if (btnName === actions.rectangle) {
       isPaint.current = false;
       setDrawing((prev) => [...prev, currentlyDrawnShap]);
@@ -429,10 +451,17 @@ const StoreContext = ({ children }) => {
     } else if (btnName === actions.line) {
       setDrawLine((prev) => [...prev, lines]);
       setLines({});
+    } else if (btnName === "drag") {
+      setBtn("grab");
     }
   }
 
   const contextValue = {
+    // handleDrage,
+    btn,
+    setBtn,
+    draggable,
+    setDraggable,
     handleClear,
     idName,
     sideBar,
@@ -480,6 +509,7 @@ const StoreContext = ({ children }) => {
     setPolygons,
     drawPolygon,
     setDrawPolygon,
+    mouseDown,
   };
   // console.log(btnName);
   return (

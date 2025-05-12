@@ -8,3 +8,10 @@
     margin: 0;
     padding: 0;
 }
+
+.grabCursor{
+cursor: grab;
+}
+.defaultCursor{
+    cursor: default;
+}

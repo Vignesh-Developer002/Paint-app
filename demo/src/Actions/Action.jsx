@@ -1,4 +1,3 @@
-import { FaMousePointer } from "react-icons/fa";
 import { FaRegCircle } from "react-icons/fa";
 import { RiRectangleLine } from "react-icons/ri";
 import { PiScribbleLight } from "react-icons/pi";
@@ -8,6 +7,7 @@ import { FaArrowPointer } from "react-icons/fa6";
 import { useContext } from "react";
 import { globalStore } from "../StoreContext/StoreContext";
 import Clear from "../components/Clear/Clear";
+import Drag from "../components/Drag/Drag";
 // import { RiDeleteBinLine } from "react-icons/ri";
 
 export const actions = {
@@ -20,6 +20,7 @@ export const actions = {
   StrokeColor: "Stroke",
   fillColor: "fill",
   Clear: "clear",
+  drag: "drag",
 };
 
 const StrokeColor = () => {
@@ -93,6 +94,7 @@ export const drawData = [
         data-tooltip-content="Circle"
         style={{
           width: "100%",
+          // border: "1px solid",
           height: "100%",
           border: "none",
           outline: "none",
@@ -159,6 +161,10 @@ export const drawData = [
         }}
       />
     ),
+  },
+  {
+    id: actions.drag,
+    icons: <Drag />,
   },
   {
     id: actions.Clear,
