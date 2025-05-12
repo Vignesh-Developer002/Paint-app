@@ -94,7 +94,6 @@ export const drawData = [
         data-tooltip-content="Circle"
         style={{
           width: "100%",
-          // border: "1px solid",
           height: "100%",
           border: "none",
           outline: "none",

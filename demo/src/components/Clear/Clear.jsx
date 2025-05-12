@@ -14,8 +14,9 @@ const Clear = () => {
           height: "100%",
           border: "none",
           outline: "none",
+
         }}
-        onClick={() => handleClear()}
+        // onClick={() => handleClear()}
       />
     </>
   );
