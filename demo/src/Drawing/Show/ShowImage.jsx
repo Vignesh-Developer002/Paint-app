@@ -17,7 +17,7 @@ const ShowImage = () => {
             width={i.width}
             height={i.height}
             draggable={true}
-            opacity={i.opacity}
+            opacity={i.opacity / 100}
             onMouseDown={(e) => handleTransformetMouseDown(e, i.id, i.name)}
           />
         ))}

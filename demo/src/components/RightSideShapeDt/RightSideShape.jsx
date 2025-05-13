@@ -33,14 +33,12 @@ const RightSideShape = () => {
   }, []);
 
   // logic for disable the input field
-  console.log(sideBar.opacity);
+  // console.log(sideBar.opacity);
   if (sideBar.opacity <= 100) {
     setDisable(false);
   }
   if (sideBar.opacity >= 100) {
     setDisable(true);
-  } else {
-    setDisable(false);
   }
 
   return (

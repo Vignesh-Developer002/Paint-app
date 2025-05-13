@@ -42,12 +42,12 @@ const StoreContext = ({ children }) => {
     width: "",
     fill: "",
     stroke: "",
-    opacity: "",
+    opacity: 20,
   });
 
   const [currentShap, setCurrentShape] = useState(); // for assigning the current selected shape name
 
-  console.log(images);
+  console.log("images array", images);
   // function for handle the input field logic
 
   let ids = idName.id;
@@ -58,14 +58,9 @@ const StoreContext = ({ children }) => {
   let fill = sideBar.fill;
   let stroke = sideBar.stroke;
   let names = idName.Name;
-  let opacity = sideBar.opacity / 100;
+  let opacity = Number(sideBar.opacity);
 
-  if (opacity <= 1) {
-    console.log(opacity, "accepted");
-  } else {
-    console.log(opacity, "not accepted");
-  }
-
+  console.log("sideBar", sideBar.opacity, "opacity", opacity);
   // function for handle the input field value changes
   function handleInputValue(e) {
     const { name, value } = e.target;
@@ -137,7 +132,12 @@ const StoreContext = ({ children }) => {
       setImages((prev) =>
         prev.map((d) =>
           d.id === ids
-            ? { ...d, height: height, width: width, opacity: opacity }
+            ? {
+                ...d,
+                height: height,
+                width: width,
+                opacity: Math.round(opacity),
+              }
             : d
         )
       );
@@ -242,10 +242,12 @@ const StoreContext = ({ children }) => {
       });
     } else if (name === "image") {
       let totalShape = images.find((d) => d.id === id);
+      console.log("finded shape object", totalShape);
       let name = totalShape["name"];
       let height = totalShape["height"];
       let width = totalShape["width"];
       let opacity = totalShape["opacity"];
+      console.log("handleSelect", opacity);
       setCurrentShape(name);
       setSideBar({
         name: name,
@@ -261,14 +263,23 @@ const StoreContext = ({ children }) => {
   }
 
   // useEffect for pushing the image in an array(-----------IMAGE---------)
+  let op = sideBar.opacity;
   useEffect(() => {
     if (image !== null && image !== undefined) {
       let height = image["height"];
       let width = image["width"];
       let img = image;
+      let opacity = op;
       setImages((prev) => [
         ...prev,
-        { id: uuidv4(), name: "image", opacity: 10, img, height, width },
+        {
+          id: uuidv4(),
+          name: "image",
+          opacity: opacity,
+          img,
+          height,
+          width,
+        },
       ]);
     }
   }, [image]);
