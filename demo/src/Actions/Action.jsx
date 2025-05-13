@@ -8,8 +8,8 @@ import { useContext } from "react";
 import { globalStore } from "../StoreContext/StoreContext";
 import Clear from "../components/Clear/Clear";
 import Drag from "../components/Drag/Drag";
-// import { RiDeleteBinLine } from "react-icons/ri";
 import { FaUpload } from "react-icons/fa";
+import { MdTextIncrease } from "react-icons/md";
 
 export const actions = {
   select: "select",
@@ -22,7 +22,8 @@ export const actions = {
   fillColor: "fill",
   Clear: "clear",
   drag: "drag",
-  upload:"image"
+  upload: "image",
+  text: "text",
 };
 
 const StrokeColor = () => {
@@ -30,8 +31,6 @@ const StrokeColor = () => {
   return (
     <>
       <input
-        // data-tooltip-id="color"
-        // data-tooltip-content="Stroke Color"
         type="color"
         value={sideBar.stroke}
         name="stroke"
@@ -66,6 +65,7 @@ export const FillColor = () => {
           height: "50px",
           border: "none",
           cursor: "pointer",
+          fontSize: "25px",
         }}
       />
     </>
@@ -84,6 +84,7 @@ export const drawData = [
           height: "100%",
           border: "none",
           outline: "none",
+          fontSize: "25px",
         }}
       />
     ),
@@ -99,6 +100,7 @@ export const drawData = [
           height: "100%",
           border: "none",
           outline: "none",
+          fontSize: "25px",
         }}
       />
     ),
@@ -114,6 +116,7 @@ export const drawData = [
           height: "100%",
           border: "none",
           outline: "none",
+          fontSize: "25px",
         }}
       />
     ),
@@ -129,6 +132,7 @@ export const drawData = [
           height: "100%",
           border: "none",
           outline: "none",
+          fontSize: "25px",
         }}
       />
     ),
@@ -144,6 +148,7 @@ export const drawData = [
           height: "100%",
           border: "none",
           outline: "none",
+          fontSize: "25px",
         }}
       />
     ),
@@ -159,20 +164,61 @@ export const drawData = [
           height: "100%",
           border: "none",
           outline: "none",
+          fontSize: "25px",
         }}
       />
     ),
   },
-  // {
-  //   id: actions.drag,
-  //   // icons: <Drag />,
-  // },
+  {
+    id: actions.drag,
+    icons: <Drag />,
+  },
   {
     id: actions.Clear,
-    icons: <Clear />,
+    icons: (
+      <Clear
+        data-tooltip-id="color"
+        data-tooltip-content="Clear"
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          outline: "none",
+          fontSize: "25px",
+        }}
+      />
+    ),
   },
   {
     id: actions.upload,
-    icons: <FaUpload />,
+    icons: (
+      <FaUpload
+        data-tooltip-id="color"
+        data-tooltip-content="Upload"
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          outline: "none",
+          fontSize: "25px",
+        }}
+      />
+    ),
+  },
+  {
+    id: actions.text,
+    icons: (
+      <MdTextIncrease
+        data-tooltip-id="color"
+        data-tooltip-content="Text"
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          fontSize: "25px",
+          outline: "none",
+        }}
+      />
+    ),
   },
 ];

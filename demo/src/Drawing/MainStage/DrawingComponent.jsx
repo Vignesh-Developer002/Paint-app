@@ -6,6 +6,7 @@ import DrawLine from "../../Drawing/Draw/DrawLine.jsx";
 import DrawPolygon from "../../Drawing/Draw/DrawPolygon.jsx";
 import DrawRectangle from "../../Drawing/Draw/DrawRectangle.jsx";
 import DrawScribble from "../../Drawing/Draw/DrawScribble.jsx";
+import DrawText from "../Draw/DrawText.jsx";
 
 const DrawingComponent = () => {
   const { btnName } = useContext(globalStore);
@@ -16,6 +17,7 @@ const DrawingComponent = () => {
       {btnName === actions.scribble ? <DrawScribble /> : <></>}
       {btnName === actions.line ? <DrawLine /> : <></>}
       {btnName === actions.polygon ? <DrawPolygon /> : <></>}
+      {btnName === actions.text ? <DrawText /> : <></>}
     </>
   );
 };

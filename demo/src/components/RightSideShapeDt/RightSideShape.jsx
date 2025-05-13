@@ -138,6 +138,20 @@ const RightSideShape = () => {
                 <></>
               )}
 
+              {btnName === "text" ? (
+                <div className="width">
+                  <p>Width :</p>
+                  <input
+                    type="number"
+                    name="width"
+                    value={sideBar.width}
+                    onChange={(e) => handleInputValue(e)}
+                  />
+                </div>
+              ) : (
+                <></>
+              )}
+
               {btnName === "image" || idName.Name === "image" ? (
                 <>
                   <label

@@ -22,6 +22,8 @@ const StoreContext = ({ children }) => {
   const [polygons, setPolygons] = useState({}); // on Mouse down initial point update polygons
   const [nextPoint, setNextPoints] = useState({}); // polygon points update
   const [drawPolygon, setDrawPolygon] = useState([]); //polygon
+  const [text, setText] = useState({}); // for set the initial text value
+  const [drawText, setDrawText] = useState([]); // for set the text object in text array
   const [closed, setClosed] = useState(false); // for tracking the polygon circle is completed or not
   const [isComplete, setIsComplete] = useState(false);
   const transformerRef = useRef(null);
@@ -43,11 +45,15 @@ const StoreContext = ({ children }) => {
     fill: "",
     stroke: "",
     opacity: 20,
+    text: "",
+    fontSize: "",
+    fontStyle: "",
   });
+
+  console.log();
 
   const [currentShap, setCurrentShape] = useState(); // for assigning the current selected shape name
 
-  console.log("images array", images);
   // function for handle the input field logic
 
   let ids = idName.id;
@@ -60,7 +66,6 @@ const StoreContext = ({ children }) => {
   let names = idName.Name;
   let opacity = Number(sideBar.opacity);
 
-  console.log("sideBar", sideBar.opacity, "opacity", opacity);
   // function for handle the input field value changes
   function handleInputValue(e) {
     const { name, value } = e.target;
@@ -242,12 +247,10 @@ const StoreContext = ({ children }) => {
       });
     } else if (name === "image") {
       let totalShape = images.find((d) => d.id === id);
-      console.log("finded shape object", totalShape);
       let name = totalShape["name"];
       let height = totalShape["height"];
       let width = totalShape["width"];
       let opacity = totalShape["opacity"];
-      console.log("handleSelect", opacity);
       setCurrentShape(name);
       setSideBar({
         name: name,
@@ -329,6 +332,7 @@ const StoreContext = ({ children }) => {
     setClosed(false); // for tracking the circle is clicked or not
   }, [closed]);
 
+  console.log(btnName);
   // onStageMouseDown
   function onStageMouseDown(e) {
     if (btnName === actions.select) {
@@ -434,6 +438,22 @@ const StoreContext = ({ children }) => {
       setBtn("grabbing");
       setMouseDown(true);
       setDraggable(true);
+    } else if (btnName === actions.text) {
+      console.log("mouse down text clicked", e);
+      let pos = e.target.getStage().getPointerPosition();
+      let x = pos.x || 0;
+      let y = pos.y || 0;
+      setText({
+        id: uuidv4(),
+        x: x,
+        y: y,
+        name: btnName,
+        text: sideBar.text || "Text",
+        fontSize: sideBar.fontSize || 30,
+        fontStyle: sideBar.fontStyle || "italic",
+        fill: sideBar.fill || "grey",
+        width: sideBar.width || 60,
+      });
     }
   }
 
@@ -507,20 +527,30 @@ const StoreContext = ({ children }) => {
       setLines({});
     } else if (btnName === "drag") {
       setBtn("grab");
+    } else if (btnName === "text") {
+      setDrawText((prev) => [...prev, text]);
+      setText({});
     }
   }
 
   // Function for handle the whille clicking outside the tranform should be unselect
   function transformUnSelect(e) {
     if (e.target === stageRef.current) {
-      transformerRef.current.nodes([]);
-      setSideBarView(false);
+      if (transformerRef.current) {
+        transformerRef.current.nodes([]);
+        setSideBarView(false);
+      }
     } else {
       return;
     }
   }
+  console.log("text array", drawText);
 
   const contextValue = {
+    drawText,
+    setDrawText,
+    text,
+    setText,
     disable,
     setDisable,
     images,
