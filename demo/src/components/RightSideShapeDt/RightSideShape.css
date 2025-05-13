@@ -36,12 +36,12 @@
     gap: 20px;
     padding: 10px;
 }
-.stroke-color, .fill-color, .stroke-width, .circle-radius, .height, .width{
+.stroke-color, .fill-color, .stroke-width, .circle-radius, .height, .width, .opacity{
     display:flex ;
     flex-direction: column;
     gap: 10px;
 }
-.stroke-color p, .fill-color p, .stroke-width p, .circle-radius p, .height p, .width p{
+.stroke-color p, .fill-color p, .stroke-width p, .circle-radius p, .height p, .width p, .opacity p{
     font-size: 17px;
     font-weight: 500;
     color: #5a5a5a;
@@ -49,11 +49,38 @@
 
 }
 
-.stroke-color input, .fill-color input, .stroke-width input, .circle-radius input, .height input, .width input{
+.stroke-color input, .fill-color input, .stroke-width input, .circle-radius input, .height input, .width input, .opacity input{
     padding: 8px 10px;
     font-size: 18px;
     border: none;
     outline: none;
     border-radius:4px;
    
+}
+.image-upload{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    margin-top: 30px;
+    border: 2px dashed rgb(82, 189, 231);
+    padding: 20px 10px;
+    cursor: pointer;
+}
+.image-upload p{
+    color: #5a5a5a;
+}
+.img-cont{
+    display: flex;
+    justify-content: center;
+}
+.UploadImg{
+    font-size: 60px;
+    color:rgb(82, 189, 231);
+}
+
+.prev-name{
+    display: flex;
+    justify-content: center;
+    font-weight: 700;
+    color: grey;
 }

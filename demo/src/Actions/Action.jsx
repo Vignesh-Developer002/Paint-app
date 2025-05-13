@@ -9,6 +9,7 @@ import { globalStore } from "../StoreContext/StoreContext";
 import Clear from "../components/Clear/Clear";
 import Drag from "../components/Drag/Drag";
 // import { RiDeleteBinLine } from "react-icons/ri";
+import { FaUpload } from "react-icons/fa";
 
 export const actions = {
   select: "select",
@@ -21,6 +22,7 @@ export const actions = {
   fillColor: "fill",
   Clear: "clear",
   drag: "drag",
+  upload:"image"
 };
 
 const StrokeColor = () => {
@@ -168,5 +170,9 @@ export const drawData = [
   {
     id: actions.Clear,
     icons: <Clear />,
+  },
+  {
+    id: actions.upload,
+    icons: <FaUpload />,
   },
 ];

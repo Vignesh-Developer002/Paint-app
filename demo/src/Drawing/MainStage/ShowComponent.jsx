@@ -4,6 +4,7 @@ import ShowLine from "../Show/ShowLine";
 import ShowPolygon from "../Show/ShowPolygon";
 import ShowRectangle from "../Show/ShowRectangle";
 import ShowScribble from "../Show/ShowScribble";
+import ShowImage from "../Show/ShowImage";
 
 const ShowComponent = () => {
   return (
@@ -12,7 +13,9 @@ const ShowComponent = () => {
       <ShowRectangle />
       <ShowScribble />
       <ShowLine/>
-      <ShowPolygon/> 
+      <ShowPolygon/>
+      <ShowImage/> 
+      
     </>
   );
 };

@@ -4,11 +4,13 @@ import { actions } from "../Actions/Action";
 import { v4 as uuidv4 } from "uuid";
 
 export const globalStore = createContext();
-
 const StoreContext = ({ children }) => {
+  const [disable, setDisable] = useState(false); // for disable and enable the opacity input field
+  const [image, setImage] = useState(); // for upload the image
+  const [images, setImages] = useState([]); // for pushimg the multiple images
   const [sideBarView, setSideBarView] = useState(false);
   const [btn, setBtn] = useState("default");
-  const [currentlyDrawnShap, setCurrentlyDrawnShape] = useState({}); // rectangle
+  const [currentlyDrawnShap, setCurrentlyDrawnShape] = useState({}); // rectangles
   const [drawing, setDrawing] = useState([]); // rectangle
   const [draggable, setDraggable] = useState(false);
   const [currentlyDrawnCircle, setCurrentlyDrawnCircle] = useState({}); //circle
@@ -17,7 +19,7 @@ const StoreContext = ({ children }) => {
   const [drawScribble, setDrawScribble] = useState([]); //scribble
   const [drawLine, setDrawLine] = useState([]); //line
   const [lines, setLines] = useState({}); //line
-  const [polygons, setPolygons] = useState({}); // on Mous down initial point update polygons
+  const [polygons, setPolygons] = useState({}); // on Mouse down initial point update polygons
   const [nextPoint, setNextPoints] = useState({}); // polygon points update
   const [drawPolygon, setDrawPolygon] = useState([]); //polygon
   const [closed, setClosed] = useState(false); // for tracking the polygon circle is completed or not
@@ -40,11 +42,12 @@ const StoreContext = ({ children }) => {
     width: "",
     fill: "",
     stroke: "",
+    opacity: "",
   });
 
-  console.log("draggable", draggable, "btn", btn, "btnName", btnName);
   const [currentShap, setCurrentShape] = useState(); // for assigning the current selected shape name
 
+  console.log(images);
   // function for handle the input field logic
 
   let ids = idName.id;
@@ -55,9 +58,15 @@ const StoreContext = ({ children }) => {
   let fill = sideBar.fill;
   let stroke = sideBar.stroke;
   let names = idName.Name;
+  let opacity = sideBar.opacity / 100;
+
+  if (opacity <= 1) {
+    console.log(opacity, "accepted");
+  } else {
+    console.log(opacity, "not accepted");
+  }
 
   // function for handle the input field value changes
-
   function handleInputValue(e) {
     const { name, value } = e.target;
     setSideBar((prev) => ({ ...prev, [name]: value }));
@@ -121,6 +130,14 @@ const StoreContext = ({ children }) => {
         prev.map((d) =>
           d.id === ids
             ? { ...d, strokeWidth: strokeWidth, stroke: stroke, fill: fill }
+            : d
+        )
+      );
+    } else if (names === "image") {
+      setImages((prev) =>
+        prev.map((d) =>
+          d.id === ids
+            ? { ...d, height: height, width: width, opacity: opacity }
             : d
         )
       );
@@ -209,7 +226,6 @@ const StoreContext = ({ children }) => {
       });
     } else if (name === "polygon") {
       let totalShape = drawPolygon.find((d) => d.id === id);
-
       let name = totalShape["name"];
       let fill = totalShape["fill"];
       let stroke = totalShape["stroke"];
@@ -224,8 +240,38 @@ const StoreContext = ({ children }) => {
         fill: fill,
         stroke: stroke,
       });
+    } else if (name === "image") {
+      let totalShape = images.find((d) => d.id === id);
+      let name = totalShape["name"];
+      let height = totalShape["height"];
+      let width = totalShape["width"];
+      let opacity = totalShape["opacity"];
+      setCurrentShape(name);
+      setSideBar({
+        name: name,
+        strokeWidth: "0",
+        radius: "0",
+        height: height,
+        opacity: opacity,
+        width: width,
+        fill: "0",
+        stroke: "0",
+      });
     }
   }
+
+  // useEffect for pushing the image in an array(-----------IMAGE---------)
+  useEffect(() => {
+    if (image !== null && image !== undefined) {
+      let height = image["height"];
+      let width = image["width"];
+      let img = image;
+      setImages((prev) => [
+        ...prev,
+        { id: uuidv4(), name: "image", opacity: 10, img, height, width },
+      ]);
+    }
+  }, [image]);
 
   // function for clearing all the shapes
   function handleClear() {
@@ -234,6 +280,7 @@ const StoreContext = ({ children }) => {
     setDrawScribble([]);
     setDrawLine([]);
     setDrawPolygon([]);
+    setImages([]);
   }
 
   // function for handle the transformer mouse down in shape components
@@ -463,6 +510,12 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    disable,
+    setDisable,
+    images,
+    image,
+    setImage,
+    setCurrentShape,
     sideBarView,
     setSideBarView,
     transformUnSelect,
