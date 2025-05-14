@@ -9,6 +9,7 @@ const Clear = () => {
       <RiDeleteBinLine
         data-tooltip-id="color"
         data-tooltip-content="clear"
+        data-tooltip-place="right"
         style={{
           width: "100%",
           height: "100%",

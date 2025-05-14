@@ -79,6 +79,7 @@ export const drawData = [
       <FaArrowPointer
         data-tooltip-id="color"
         data-tooltip-content="Select"
+        data-tooltip-place="right"
         style={{
           width: "100%",
           height: "100%",
@@ -95,6 +96,7 @@ export const drawData = [
       <FaRegCircle
         data-tooltip-id="color"
         data-tooltip-content="Circle"
+        data-tooltip-place="right"
         style={{
           width: "100%",
           height: "100%",
@@ -111,6 +113,7 @@ export const drawData = [
       <RiRectangleLine
         data-tooltip-id="color"
         data-tooltip-content="Rectangle"
+        data-tooltip-place="right"
         style={{
           width: "100%",
           height: "100%",
@@ -127,6 +130,7 @@ export const drawData = [
       <PiScribbleLight
         data-tooltip-id="color"
         data-tooltip-content="Scribble"
+        data-tooltip-place="right"
         style={{
           width: "100%",
           height: "100%",
@@ -143,6 +147,7 @@ export const drawData = [
       <FaArrowTrendDown
         data-tooltip-id="color"
         data-tooltip-content="Line"
+        data-tooltip-place="right"
         style={{
           width: "100%",
           height: "100%",
@@ -159,6 +164,7 @@ export const drawData = [
       <FaDrawPolygon
         data-tooltip-id="color"
         data-tooltip-content="Polygon"
+        data-tooltip-place="right"
         style={{
           width: "100%",
           height: "100%",
@@ -179,6 +185,7 @@ export const drawData = [
       <Clear
         data-tooltip-id="color"
         data-tooltip-content="Clear"
+        data-tooltip-place="right"
         style={{
           width: "100%",
           height: "100%",
@@ -195,6 +202,7 @@ export const drawData = [
       <FaUpload
         data-tooltip-id="color"
         data-tooltip-content="Upload"
+        data-tooltip-place="right"
         style={{
           width: "100%",
           height: "100%",
@@ -211,6 +219,7 @@ export const drawData = [
       <MdTextIncrease
         data-tooltip-id="color"
         data-tooltip-content="Text"
+        data-tooltip-place="right"
         style={{
           width: "100%",
           height: "100%",
