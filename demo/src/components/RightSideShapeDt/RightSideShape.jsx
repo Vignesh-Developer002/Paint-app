@@ -1,12 +1,16 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import "../RightSideShapeDt/RightSideShape.css";
 import StrokeColor, { FillColor } from "../../Actions/Action";
 import { globalStore } from "../../StoreContext/StoreContext";
 import { Label } from "react-konva";
 import { IoCloudUploadOutline } from "react-icons/io5";
+import { FaItalic } from "react-icons/fa";
+import { FaBold } from "react-icons/fa";
 
 const RightSideShape = () => {
   const {
+    fontStyle,
+    setFontStyle,
     sideBar,
     handleInputValue,
     currentShap,
@@ -17,7 +21,16 @@ const RightSideShape = () => {
     setImage,
     disable,
     setDisable,
+    setSideBar,
+    drawText,
+    setDrawText,
   } = useContext(globalStore);
+
+  let Text = sideBar.text;
+  let fontSize = Number(sideBar.fontSize);
+  let ids = idName.id;
+  let width = Number(sideBar.width);
+  let fill = sideBar.fill;
 
   // function for upload image functionality
   const handleUpload = useCallback((e) => {
@@ -41,6 +54,37 @@ const RightSideShape = () => {
     setDisable(true);
   }
 
+  function handleFontStyle(e) {
+    let { name } = e.target;
+    if (name === "bold") {
+      setFontStyle("bold");
+    }
+    if (name === "italic") {
+      setFontStyle("italic");
+    }
+  }
+  // useEffect for when ever the fontstyle state variable changes call the handleChange function
+  useEffect(() => {
+    handleChange();
+  }, [fontStyle]);
+
+  function handleChange() {
+    setDrawText((prev) =>
+      prev.map((d) =>
+        d.id === ids
+          ? {
+              ...d,
+              text: Text,
+              fontSize: fontSize,
+              width: width,
+              fontStyle: fontStyle,
+              fill: fill,
+            }
+          : d
+      )
+    );
+  }
+
   return (
     <>
       {((idName.id && idName.Name && sideBarView) || btnName === "image") && (
@@ -51,42 +95,44 @@ const RightSideShape = () => {
             </h1>
             {/* flex-column */}
             <div className="main-content">
-              {idName.Name !== "image" && btnName !== "image" && (
-                <>
-                  <div className="stroke-color">
-                    <p>
-                      Stroke color :{" "}
-                      {sideBar["stroke"]
-                        ? `(${sideBar["stroke"]})`
-                        : "(No Color Selected)"}
-                    </p>
-                    <StrokeColor />
-                  </div>
-                  <hr />
+              {idName.Name !== "image" &&
+                btnName !== "image" &&
+                idName.Name !== "text" && (
+                  <>
+                    <div className="stroke-color">
+                      <p>
+                        Stroke color :{" "}
+                        {sideBar["stroke"]
+                          ? `(${sideBar["stroke"]})`
+                          : "(No Color Selected)"}
+                      </p>
+                      <StrokeColor />
+                    </div>
+                    <hr />
 
-                  <div className="fill-color">
-                    <p>
-                      Fill color :{" "}
-                      {sideBar["fill"]
-                        ? `(${sideBar["fill"]})`
-                        : "(No Color Selected)"}
-                    </p>
-                    <FillColor />
-                  </div>
+                    <div className="fill-color">
+                      <p>
+                        Fill color :{" "}
+                        {sideBar["fill"]
+                          ? `(${sideBar["fill"]})`
+                          : "(No Color Selected)"}
+                      </p>
+                      <FillColor />
+                    </div>
 
-                  <hr />
-                  <div className="stroke-width">
-                    <p>Stroke Width :</p>
-                    <input
-                      type="number"
-                      name="strokeWidth"
-                      value={sideBar.strokeWidth}
-                      onChange={(e) => handleInputValue(e)}
-                    />
-                  </div>
-                  <hr />
-                </>
-              )}
+                    <hr />
+                    <div className="stroke-width">
+                      <p>Stroke Width :</p>
+                      <input
+                        type="number"
+                        name="strokeWidth"
+                        value={sideBar.strokeWidth}
+                        onChange={(e) => handleInputValue(e)}
+                      />
+                    </div>
+                    <hr />
+                  </>
+                )}
 
               {idName.Name === "circle" && btnName !== "image" ? (
                 <div className="circle-radius">
@@ -138,16 +184,65 @@ const RightSideShape = () => {
                 <></>
               )}
 
-              {btnName === "text" ? (
-                <div className="width">
-                  <p>Width :</p>
-                  <input
-                    type="number"
-                    name="width"
-                    value={sideBar.width}
-                    onChange={(e) => handleInputValue(e)}
-                  />
-                </div>
+              {/* for text component */}
+              {idName.Name === "text" ? (
+                <>
+                  <div className="fill-color">
+                    <p>
+                      Fill color :{" "}
+                      {sideBar["fill"]
+                        ? `(${sideBar["fill"]})`
+                        : "(No Color Selected)"}
+                    </p>
+                    <FillColor />
+                  </div>
+                  <div className="text">
+                    <p>text</p>
+                    <input
+                      type="text"
+                      value={sideBar.text}
+                      name="text"
+                      onChange={(e) => handleInputValue(e)}
+                    />
+                  </div>
+                  <div className="width">
+                    <p>Width :</p>
+                    <input
+                      type="number"
+                      name="width"
+                      value={sideBar.width}
+                      onChange={(e) => handleInputValue(e)}
+                    />
+                  </div>
+                  <div className="font-size">
+                    <p>Font size :</p>
+                    <input
+                      type="number"
+                      value={sideBar.fontSize}
+                      name="fontSize"
+                      onChange={(e) => handleInputValue(e)}
+                    />
+                  </div>
+                  <div className="fontStyle">
+                    <p>Font Style :</p>
+                    <div className="btns">
+                      <button
+                        name="bold"
+                        className={fontStyle === "bold" ? "bgGrey" : "white"}
+                        onClick={(e) => handleFontStyle(e)}
+                      >
+                        B{/* <FaBold /> */}
+                      </button>
+                      <button
+                        name="italic"
+                        className={fontStyle === "italic" ? "bgGrey" : "white"}
+                        onClick={(e) => handleFontStyle(e)}
+                      >
+                        I{/* <FaItalic /> */}
+                      </button>
+                    </div>
+                  </div>
+                </>
               ) : (
                 <></>
               )}

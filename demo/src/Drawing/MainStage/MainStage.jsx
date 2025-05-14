@@ -15,6 +15,7 @@ const MainStage = () => {
     mouseDown,
     btn,
     transformUnSelect,
+    handleCircleWheel,
   } = useContext(globalStore);
 
   let stage = document.getElementById("stageClass");
@@ -40,6 +41,7 @@ const MainStage = () => {
       onMouseUp={onStageMouseOut}
       onClick={(e) => transformUnSelect(e)}
       draggable={draggable}
+      onWheel={(e) => handleCircleWheel(e)}
     >
       <Layer>
         {/* parent show component  array*/}

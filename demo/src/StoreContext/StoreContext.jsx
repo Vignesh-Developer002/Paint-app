@@ -12,6 +12,7 @@ const StoreContext = ({ children }) => {
   const [btn, setBtn] = useState("default");
   const [currentlyDrawnShap, setCurrentlyDrawnShape] = useState({}); // rectangles
   const [drawing, setDrawing] = useState([]); // rectangle
+  // drawing drawCircle drawScribble drawLine drawPolygon drawText
   const [draggable, setDraggable] = useState(false);
   const [currentlyDrawnCircle, setCurrentlyDrawnCircle] = useState({}); //circle
   const [drawCircle, setDrawCircle] = useState([]); // circle
@@ -24,6 +25,7 @@ const StoreContext = ({ children }) => {
   const [drawPolygon, setDrawPolygon] = useState([]); //polygon
   const [text, setText] = useState({}); // for set the initial text value
   const [drawText, setDrawText] = useState([]); // for set the text object in text array
+  const [fontStyle, setFontStyle] = useState(""); // for  assign the fontStyleBtn for text
   const [closed, setClosed] = useState(false); // for tracking the polygon circle is completed or not
   const [isComplete, setIsComplete] = useState(false);
   const transformerRef = useRef(null);
@@ -35,8 +37,12 @@ const StoreContext = ({ children }) => {
   const stageRef = useRef(null); // stage ref
   const [mouseDown, setMouseDown] = useState(false); // for tracking the mouse for useEffect run
   const [idName, setIdName] = useState({ id: "", Name: "" }); // for setting the name and id in handle select
-  // state for handle the right side input values
+  const [currentValue, setCurrentValue] = useState(""); // for tracking the currently typed value
+  const [currentShap, setCurrentShape] = useState(); // for assigning the current selected shape name
+  const [selectBox, setSelectionBox] = useState({}); //slecting box box layer
+  const [selectedIds, setSelectedIds] = useState([]); // selected shap id
 
+  // state for handle the right side input values
   const [sideBar, setSideBar] = useState({
     strokeWidth: "",
     radius: "",
@@ -50,9 +56,34 @@ const StoreContext = ({ children }) => {
     fontStyle: "",
   });
 
-  console.log();
+  // function for handle the zoom in zoom  out functionality for stage
+  function handleCircleWheel(e) {
+    const stage = stageRef.current;
+    const oldScale = stage.scaleX();
+    const pointer = stage.getPointerPosition();
 
-  const [currentShap, setCurrentShape] = useState(); // for assigning the current selected shape name
+    const mousePointTo = {
+      x: (pointer.x - stage.x()) / oldScale,
+      y: (pointer.y - stage.y()) / oldScale,
+    };
+
+    let direction = e.evt.deltaY > 0 ? 1 : -1;
+
+    // if (e.evt.ctrlKey) {
+    //   direction = -direction;
+    // }
+
+    const scaleBy = 1.01;
+    const newScale = direction > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+
+    stage.scale({ x: newScale, y: newScale });
+
+    const newPos = {
+      x: pointer.x - mousePointTo.x * newScale,
+      y: pointer.y - mousePointTo.y * newScale,
+    };
+    stage.position(newPos);
+  }
 
   // function for handle the input field logic
 
@@ -65,11 +96,19 @@ const StoreContext = ({ children }) => {
   let stroke = sideBar.stroke;
   let names = idName.Name;
   let opacity = Number(sideBar.opacity);
+  let Text = sideBar.text;
+  let fontSize = Number(sideBar.fontSize);
+  let FontStyle = fontStyle;
 
   // function for handle the input field value changes
   function handleInputValue(e) {
     const { name, value } = e.target;
+    setCurrentValue(value);
     setSideBar((prev) => ({ ...prev, [name]: value }));
+  }
+
+  // useEffect for update the values
+  useEffect(() => {
     if (names === "rectangle") {
       setDrawing((prev) =>
         prev.map((d) =>
@@ -146,8 +185,23 @@ const StoreContext = ({ children }) => {
             : d
         )
       );
+    } else if (names === "text") {
+      setDrawText((prev) =>
+        prev.map((d) =>
+          d.id === ids
+            ? {
+                ...d,
+                text: Text,
+                fontSize: fontSize,
+                width: width,
+                fontStyle: FontStyle,
+                fill: fill,
+              }
+            : d
+        )
+      );
     }
-  }
+  }, [currentValue]);
 
   // function for handle the perticular shape click
   function handleSelect(id, name) {
@@ -176,7 +230,6 @@ const StoreContext = ({ children }) => {
       }));
     } else if (name === "circle") {
       const totalShape = drawCircle.find((d) => d.id === id);
-
       let name = totalShape["name"];
       let ids = totalShape["id"];
       let radius = totalShape["radius"];
@@ -262,6 +315,27 @@ const StoreContext = ({ children }) => {
         fill: "0",
         stroke: "0",
       });
+    } else if (name === "text") {
+      let totalShape = drawText.find((d) => d.id === id);
+      let text = totalShape["text"];
+      let fontSize = totalShape["fontSize"];
+      let fontStyles = fontStyle;
+      let fill = totalShape["fill"];
+      let width = totalShape["width"];
+      let name = totalShape["name"];
+      setCurrentShape(name);
+      setSideBar({
+        name: name,
+        strokeWidth: "0",
+        radius: "0",
+        height: "0",
+        opacity: "0",
+        width: width,
+        fill: fill,
+        stroke: "0",
+        text: text,
+        fontSize: fontSize,
+      });
     }
   }
 
@@ -331,14 +405,17 @@ const StoreContext = ({ children }) => {
 
     setClosed(false); // for tracking the circle is clicked or not
   }, [closed]);
-
-  console.log(btnName);
   // onStageMouseDown
   function onStageMouseDown(e) {
     if (btnName === actions.select) {
       setDraggable(false);
       setBtn("default");
-      return;
+      let position = e.target.getStage().getPointerPosition();
+      let x = position.x;
+      let y = position.y;
+      setSelectionBox({ x: x, y: y, width: 0, height: 0 });
+
+      // return;
     } else if (btnName === actions.rectangle) {
       isPaint.current = true;
       setDraggable(false);
@@ -439,7 +516,6 @@ const StoreContext = ({ children }) => {
       setMouseDown(true);
       setDraggable(true);
     } else if (btnName === actions.text) {
-      console.log("mouse down text clicked", e);
       let pos = e.target.getStage().getPointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
@@ -450,17 +526,30 @@ const StoreContext = ({ children }) => {
         name: btnName,
         text: sideBar.text || "Text",
         fontSize: sideBar.fontSize || 30,
-        fontStyle: sideBar.fontStyle || "italic",
+        fontStyle: fontStyle,
         fill: sideBar.fill || "grey",
         width: sideBar.width || 60,
       });
     }
   }
+  console.log("selection Box", selectBox);
 
   // onStageMouseMove
   function onStageMouseMove(e) {
     if (btnName === actions.select) {
-      return;
+      if (!selectBox) {
+        return;
+      } else {
+        let position = e.target.getStage().getPointerPosition();
+        let x = position.x;
+        let y = position.y;
+        let newSelectionBox = {
+          ...selectBox,
+          width: x - selectBox.x,
+          height: y - selectBox.y,
+        };
+        setSelectionBox(newSelectionBox);
+      }
     } else if (btnName === actions.rectangle) {
       isPaint.current = true;
       let pos = e.target.getStage().getPointerPosition();
@@ -511,7 +600,20 @@ const StoreContext = ({ children }) => {
   // onStageMouseOut
   function onStageMouseOut() {
     setMouseDown(false);
-    if (btnName === actions.rectangle) {
+    if (btnName === actions.select) {
+      if (!selectBox) {
+        return;
+      } else {
+        const box = {
+          x: Math.min(selectBox.x, selectBox.x + selectBox.width),
+          y: Math.min(selectBox.y, selectBox.y + selectBox.height),
+          width: Math.abs(selectBox.width),
+          height: Math.abs(selectBox.height),
+        };
+        // drawing drawCircle drawScribble drawLine drawPolygon drawText
+        // let entireShape = [..]
+      }
+    } else if (btnName === actions.rectangle) {
       isPaint.current = false;
       setDrawing((prev) => [...prev, currentlyDrawnShap]);
       setCurrentlyDrawnShape({}); // resetting the currently drawn shape
@@ -544,9 +646,126 @@ const StoreContext = ({ children }) => {
       return;
     }
   }
-  console.log("text array", drawText);
+
+  /*
+const ShapeSelector = () => {
+  const [shapes, setShapes] = useState([
+    { id: "rect1", x: 20, y: 20 },
+    { id: "rect2", x: 100, y: 100 },
+    { id: "rect3", x: 200, y: 150 },
+  ]);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [selectionBox, setSelectionBox] = useState(null);
+  const stageRef = useRef();
+
+  const handleShapeClick = (e, id) => {
+    const isSelected = selectedIds.includes(id);
+    const isMultiSelect = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
+
+    if (isMultiSelect) {
+      setSelectedIds(
+        isSelected ? selectedIds.filter((sid) => sid !== id) : [...selectedIds, id]
+      );
+    } else {
+      setSelectedIds([id]);
+    }
+  };
+
+  const handleMouseDown = (e) => {
+    const stage = stageRef.current.getStage();
+    const pointer = stage.getPointerPosition();
+    setSelectionBox({ x: pointer.x, y: pointer.y, width: 0, height: 0 });
+  };
+
+  const handleMouseMove = (e) => {
+    if (!selectionBox) return;
+
+    const stage = stageRef.current.getStage();
+    const pointer = stage.getPointerPosition();
+    const newBox = {
+      ...selectionBox,
+      width: pointer.x - selectionBox.x,
+      height: pointer.y - selectionBox.y,
+    };
+    setSelectionBox(newBox);
+  };
+
+  const handleMouseUp = () => {
+    if (!selectionBox) return;
+
+    const box = {
+      x: Math.min(selectionBox.x, selectionBox.x + selectionBox.width),
+      y: Math.min(selectionBox.y, selectionBox.y + selectionBox.height),
+      width: Math.abs(selectionBox.width),
+      height: Math.abs(selectionBox.height),
+    };
+
+    const selected = shapes
+      .filter((shape) => {
+        return (
+          shape.x > box.x &&
+          shape.x < box.x + box.width &&
+          shape.y > box.y &&
+          shape.y < box.y + box.height
+        );
+      })
+      .map((s) => s.id);
+
+    setSelectedIds(selected);
+    setSelectionBox(null);
+  };
+
+  return (
+    <Stage
+      width={window.innerWidth}
+      height={window.innerHeight}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      ref={stageRef}
+    >
+      <Layer>
+        {shapes.map((shape) => (
+          <Rect
+            key={shape.id}
+            x={shape.x}
+            y={shape.y}
+            width={50}
+            height={50}
+            fill={selectedIds.includes(shape.id) ? "blue" : "gray"}
+            stroke="black"
+            strokeWidth={2}
+            onClick={(e) => handleShapeClick(e, shape.id)}
+          />
+        ))}
+        {selectionBox && (
+          <Rect
+            x={selectionBox.x}
+            y={selectionBox.y}
+            width={selectionBox.width}
+            height={selectionBox.height}
+            fill="rgba(0, 161, 255, 0.3)"
+            stroke="blue"
+            strokeWidth={1}
+            dash={[4, 4]}
+          />
+        )}
+      </Layer>
+    </Stage>
+  );
+};
+
+export default ShapeSelector;
+
+  
+  */
 
   const contextValue = {
+    selectBox,
+    setSelectionBox,
+    handleCircleWheel,
+    fontStyle,
+    setFontStyle,
     drawText,
     setDrawText,
     text,

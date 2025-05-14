@@ -5,7 +5,7 @@ import { Text } from "react-konva";
 const ShowText = () => {
   const { drawText, setDrawText, handleTransformetMouseDown } =
     useContext(globalStore);
-  console.log(Array.isArray(drawText));
+  console.log(drawText);
   return (
     <>
       {Array.isArray(drawText) &&
