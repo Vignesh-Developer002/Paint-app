@@ -1,21 +1,28 @@
-import {useContext} from "react";
+import { useContext } from "react";
 import { globalStore } from "../../StoreContext/StoreContext";
-import {Rect} from "react-konva"
+import { Rect } from "react-konva";
 
 const DrawSelection = () => {
-  const { selectBox, setSelectionBox } = useContext(globalStore);
+  const { selectBox, setSelectionBox, selectionArrowRef } =
+    useContext(globalStore);
+  let visible = selectBox["visible"];
+  console.log("arrow ref", selectionArrowRef);
   return (
     <>
-      {selectBox && (
+      {selectBox && visible && (
         <Rect
+          id={selectBox.id}
+          ref={selectionArrowRef}
           x={selectBox.x}
           y={selectBox.y}
+          name={selectBox.name}
           width={selectBox.width}
           height={selectBox.height}
-          fill="rgba(0, 161, 255, 0.3)"
-          stroke="blue"
-          strokeWidth={1}
-          dash={[4, 4]}
+          fill={selectBox.fill}
+          stroke={selectBox.stroke}
+          strokeWidth={selectBox.strokeWidth}
+          dash={selectBox.dash}
+          draggable={true}
         />
       )}
     </>

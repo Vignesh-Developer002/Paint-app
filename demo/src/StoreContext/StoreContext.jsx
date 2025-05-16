@@ -5,14 +5,16 @@ import { v4 as uuidv4 } from "uuid";
 
 export const globalStore = createContext();
 const StoreContext = ({ children }) => {
+  let selectionArrowRef = useRef();
+  const [blueRect, setBlueRect] = useState(true); // multiple shape transform
   const [disable, setDisable] = useState(false); // for disable and enable the opacity input field
   const [image, setImage] = useState(); // for upload the image
   const [images, setImages] = useState([]); // for pushimg the multiple images
   const [sideBarView, setSideBarView] = useState(false);
   const [btn, setBtn] = useState("default");
+  // currentlyDrawnShap-rect, currentlyDrawnCircle, polygons
   const [currentlyDrawnShap, setCurrentlyDrawnShape] = useState({}); // rectangles
   const [drawing, setDrawing] = useState([]); // rectangle
-  // drawing drawCircle drawScribble drawLine drawPolygon drawText
   const [draggable, setDraggable] = useState(false);
   const [currentlyDrawnCircle, setCurrentlyDrawnCircle] = useState({}); //circle
   const [drawCircle, setDrawCircle] = useState([]); // circle
@@ -40,7 +42,7 @@ const StoreContext = ({ children }) => {
   const [currentValue, setCurrentValue] = useState(""); // for tracking the currently typed value
   const [currentShap, setCurrentShape] = useState(); // for assigning the current selected shape name
   const [selectBox, setSelectionBox] = useState({}); //slecting box box layer
-  const [selectedIds, setSelectedIds] = useState([]); // selected shap id
+  // const [selectedIds, setSelectedIds] = useState([]); // selected shap id
 
   // state for handle the right side input values
   const [sideBar, setSideBar] = useState({
@@ -68,10 +70,6 @@ const StoreContext = ({ children }) => {
     };
 
     let direction = e.evt.deltaY > 0 ? 1 : -1;
-
-    // if (e.evt.ctrlKey) {
-    //   direction = -direction;
-    // }
 
     const scaleBy = 1.01;
     const newScale = direction > 0 ? oldScale * scaleBy : oldScale / scaleBy;
@@ -251,7 +249,6 @@ const StoreContext = ({ children }) => {
       });
     } else if (name === "scrible") {
       let totalShape = drawScribble.find((d) => d.id === id);
-
       let name = totalShape["name"];
       let fill = totalShape["fill"];
       let stroke = totalShape["stroke"];
@@ -369,16 +366,47 @@ const StoreContext = ({ children }) => {
     setDrawLine([]);
     setDrawPolygon([]);
     setImages([]);
+    setDrawText([]);
   }
 
   // function for handle the transformer mouse down in shape components
-  function handleTransformetMouseDown(e, id, name) {
+  function handleTransformetMouseDown(e, id, name, multiSel) {
+    console.log(
+      "e-",
+      e,
+      "id-",
+      id,
+      "name -",
+      name,
+      "multisel-",
+      multiSel,
+      Array.isArray(multiSel)
+    );
+
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
-      transformerRef.current.nodes([transformerNode]);
-      setSideBarView(true);
-      setIdName((prev) => ({ ...prev, id: id, Name: name }));
-      handleSelect(id, name);
+      console.log(
+        "transform",
+        transformerNode &&
+          multiSel === undefined &&
+          Array.isArray(multiSel) === false
+      );
+      if (
+        transformerNode &&
+        multiSel === undefined &&
+        Array.isArray(multiSel) === false
+      ) {
+        console.log("single transform");
+        transformerRef.current.nodes([transformerNode]);
+        setSideBarView(true);
+        setIdName((prev) => ({ ...prev, id: id, Name: name }));
+        handleSelect(id, name);
+      }
+      if (multiSel !== undefined && Array.isArray(multiSel)) {
+        console.log("multi transform");
+        transformerRef.current.nodes(multiSel);
+        setSideBarView(true);
+      }
     } else {
       return;
     }
@@ -394,6 +422,22 @@ const StoreContext = ({ children }) => {
     }
   }
 
+  // function for handle the handleShapeClick
+  const handleShapeClick = (e, id) => {
+    const isSelected = selectedIds.includes(id);
+    const isMultiSelect = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
+
+    if (isMultiSelect) {
+      setSelectedIds(
+        isSelected
+          ? selectedIds.filter((sid) => sid !== id)
+          : [...selectedIds, id]
+      );
+    } else {
+      setSelectedIds([id]);
+    }
+  };
+
   // useEffect for pushing the polygon data to the array and clearing the polygon object
   useEffect(() => {
     if (Object.keys(polygons).length > 0) {
@@ -405,6 +449,7 @@ const StoreContext = ({ children }) => {
 
     setClosed(false); // for tracking the circle is clicked or not
   }, [closed]);
+
   // onStageMouseDown
   function onStageMouseDown(e) {
     if (btnName === actions.select) {
@@ -413,9 +458,19 @@ const StoreContext = ({ children }) => {
       let position = e.target.getStage().getPointerPosition();
       let x = position.x;
       let y = position.y;
-      setSelectionBox({ x: x, y: y, width: 0, height: 0 });
-
-      // return;
+      setSelectionBox({
+        x: x,
+        y: y,
+        id: uuidv4(),
+        width: 0,
+        height: 0,
+        name: "select",
+        fill: "rgba(0, 161, 255, 0.3)",
+        stroke: "blue",
+        strokeWidth: 4,
+        dash: [4, 4],
+        visible: true,
+      });
     } else if (btnName === actions.rectangle) {
       isPaint.current = true;
       setDraggable(false);
@@ -532,7 +587,6 @@ const StoreContext = ({ children }) => {
       });
     }
   }
-  console.log("selection Box", selectBox);
 
   // onStageMouseMove
   function onStageMouseMove(e) {
@@ -543,12 +597,11 @@ const StoreContext = ({ children }) => {
         let position = e.target.getStage().getPointerPosition();
         let x = position.x;
         let y = position.y;
-        let newSelectionBox = {
-          ...selectBox,
-          width: x - selectBox.x,
-          height: y - selectBox.y,
-        };
-        setSelectionBox(newSelectionBox);
+        setSelectionBox((prev) => ({
+          ...prev,
+          width: x - prev.x,
+          height: y - prev.y,
+        }));
       }
     } else if (btnName === actions.rectangle) {
       isPaint.current = true;
@@ -596,22 +649,51 @@ const StoreContext = ({ children }) => {
       setDraggable(true);
     }
   }
+  console.log(idName.Name);
 
   // onStageMouseOut
-  function onStageMouseOut() {
+  function onStageMouseOut(e) {
+    setBlueRect(false);
+    let stage = e.target.getStage();
+    console.log(stage);
+
+    console.log(stage, "stage");
     setMouseDown(false);
     if (btnName === actions.select) {
       if (!selectBox) {
         return;
       } else {
-        const box = {
-          x: Math.min(selectBox.x, selectBox.x + selectBox.width),
-          y: Math.min(selectBox.y, selectBox.y + selectBox.height),
-          width: Math.abs(selectBox.width),
-          height: Math.abs(selectBox.height),
-        };
-        // drawing drawCircle drawScribble drawLine drawPolygon drawText
-        // let entireShape = [..]
+        let rectangleShape = stage.find(".rectangle");
+        let circleShape = stage.find(".circle");
+        let polygon = stage.find(".polygon");
+        var box = selectionArrowRef.current.getClientRect(); // blue color slected layer
+        let shapes = [...rectangleShape, ...circleShape, ...polygon];
+        var selected = shapes.filter((shape) =>
+          Konva.Util.haveIntersection(box, shape.getClientRect())
+        );
+        console.log("selected", selected);
+        if (selected) {
+          handleTransformetMouseDown(
+            e,
+            selectBox["id"],
+            selectBox["name"],
+            selected
+          );
+        }
+        // tr.nodes(selected);
+        setSelectionBox({
+          x: "",
+          y: "",
+          width: 0,
+          height: 0,
+          name: "select",
+          fill: "rgba(0, 161, 255, 0.3)",
+          stroke: "blue",
+          strokeWidth: 4,
+          dash: [4, 4],
+          visible: false,
+        });
+        // setSelectionBox((prev) => ({ ...prev, visible: !blueRect }));
       }
     } else if (btnName === actions.rectangle) {
       isPaint.current = false;
@@ -647,120 +729,9 @@ const StoreContext = ({ children }) => {
     }
   }
 
-  /*
-const ShapeSelector = () => {
-  const [shapes, setShapes] = useState([
-    { id: "rect1", x: 20, y: 20 },
-    { id: "rect2", x: 100, y: 100 },
-    { id: "rect3", x: 200, y: 150 },
-  ]);
-  const [selectedIds, setSelectedIds] = useState([]);
-  const [selectionBox, setSelectionBox] = useState(null);
-  const stageRef = useRef();
-
-  const handleShapeClick = (e, id) => {
-    const isSelected = selectedIds.includes(id);
-    const isMultiSelect = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
-
-    if (isMultiSelect) {
-      setSelectedIds(
-        isSelected ? selectedIds.filter((sid) => sid !== id) : [...selectedIds, id]
-      );
-    } else {
-      setSelectedIds([id]);
-    }
-  };
-
-  const handleMouseDown = (e) => {
-    const stage = stageRef.current.getStage();
-    const pointer = stage.getPointerPosition();
-    setSelectionBox({ x: pointer.x, y: pointer.y, width: 0, height: 0 });
-  };
-
-  const handleMouseMove = (e) => {
-    if (!selectionBox) return;
-
-    const stage = stageRef.current.getStage();
-    const pointer = stage.getPointerPosition();
-    const newBox = {
-      ...selectionBox,
-      width: pointer.x - selectionBox.x,
-      height: pointer.y - selectionBox.y,
-    };
-    setSelectionBox(newBox);
-  };
-
-  const handleMouseUp = () => {
-    if (!selectionBox) return;
-
-    const box = {
-      x: Math.min(selectionBox.x, selectionBox.x + selectionBox.width),
-      y: Math.min(selectionBox.y, selectionBox.y + selectionBox.height),
-      width: Math.abs(selectionBox.width),
-      height: Math.abs(selectionBox.height),
-    };
-
-    const selected = shapes
-      .filter((shape) => {
-        return (
-          shape.x > box.x &&
-          shape.x < box.x + box.width &&
-          shape.y > box.y &&
-          shape.y < box.y + box.height
-        );
-      })
-      .map((s) => s.id);
-
-    setSelectedIds(selected);
-    setSelectionBox(null);
-  };
-
-  return (
-    <Stage
-      width={window.innerWidth}
-      height={window.innerHeight}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      ref={stageRef}
-    >
-      <Layer>
-        {shapes.map((shape) => (
-          <Rect
-            key={shape.id}
-            x={shape.x}
-            y={shape.y}
-            width={50}
-            height={50}
-            fill={selectedIds.includes(shape.id) ? "blue" : "gray"}
-            stroke="black"
-            strokeWidth={2}
-            onClick={(e) => handleShapeClick(e, shape.id)}
-          />
-        ))}
-        {selectionBox && (
-          <Rect
-            x={selectionBox.x}
-            y={selectionBox.y}
-            width={selectionBox.width}
-            height={selectionBox.height}
-            fill="rgba(0, 161, 255, 0.3)"
-            stroke="blue"
-            strokeWidth={1}
-            dash={[4, 4]}
-          />
-        )}
-      </Layer>
-    </Stage>
-  );
-};
-
-export default ShapeSelector;
-
-  
-  */
-
   const contextValue = {
+    selectionArrowRef,
+    handleShapeClick,
     selectBox,
     setSelectionBox,
     handleCircleWheel,
@@ -839,3 +810,102 @@ export default ShapeSelector;
 };
 
 export default StoreContext;
+
+/*let x1, y1, x2, y2;
+        stage.on("mousedown touchstart", (e) => {
+          // do nothing if we mousedown on any shape
+          if (e.target !== stage) {
+            return;
+          }
+          x1 = stage.getPointerPosition().x;
+          y1 = stage.getPointerPosition().y;
+          x2 = stage.getPointerPosition().x;
+          y2 = stage.getPointerPosition().y;
+
+          selectionRectangle.setAttrs({
+            x: x1,
+            y: y1,
+            width: 0,
+            height: 0,
+            visible: true,
+          });
+        });
+
+        stage.on("mousemove touchmove", () => {
+          // do nothing if we didn't start selection
+          if (!selectionRectangle.visible()) {
+            return;
+          }
+          x2 = stage.getPointerPosition().x;
+          y2 = stage.getPointerPosition().y;
+
+          selectionRectangle.setAttrs({
+            x: Math.min(x1, x2),
+            y: Math.min(y1, y2),
+            width: Math.abs(x2 - x1),
+            height: Math.abs(y2 - y1),
+          });
+        });
+
+        stage.on("mouseup touchend", () => {
+          // do nothing if we didn't start selection
+          if (!selectionRectangle.visible()) {
+            return;
+          }
+          // update visibility in timeout, so we can check it in click event
+          setTimeout(() => {
+            selectionRectangle.visible(false);
+          });
+
+          var shapes = stage.find(".rect");
+          var box = selectionRectangle.getClientRect();
+          co;
+          var selected = shapes.filter((shape) =>
+            Konva.Util.haveIntersection(box, shape.getClientRect())
+          );
+          tr.nodes(selected);
+        });
+
+        // clicks should select/deselect shapes
+        stage.on("click tap", function (e) {
+          // if we are selecting with rect, do nothing
+          if (
+            selectionRectangle.visible() &&
+            selectionRectangle.width() > 0 &&
+            selectionRectangle.height() > 0
+          ) {
+            return;
+          }
+
+          // if click on empty area - remove all selections
+          if (e.target === stage) {
+            tr.nodes([]);
+            return;
+          }
+
+          // do nothing if clicked NOT on our rectangles
+          if (!e.target.hasName("rect")) {
+            return;
+          }
+
+          // do we pressed shift or ctrl?
+          const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
+          const isSelected = tr.nodes().indexOf(e.target) >= 0;
+
+          if (!metaPressed && !isSelected) {
+            // if no key pressed and the node is not selected
+            // select just one
+            tr.nodes([e.target]);
+          } else if (metaPressed && isSelected) {
+            // if we pressed keys and node was selected
+            // we need to remove it from selection:
+            const nodes = tr.nodes().slice(); // use slice to have new copy of array
+            // remove node from array
+            nodes.splice(nodes.indexOf(e.target), 1);
+            tr.nodes(nodes);
+          } else if (metaPressed && !isSelected) {
+            // add the node into selection
+            const nodes = tr.nodes().concat([e.target]);
+            tr.nodes(nodes);
+          }
+        }); */

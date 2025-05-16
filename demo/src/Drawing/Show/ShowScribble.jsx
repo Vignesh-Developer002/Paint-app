@@ -3,9 +3,12 @@ import { globalStore } from "../../StoreContext/StoreContext";
 import { Line } from "react-konva";
 
 const ShowScribble = () => {
-  const { drawScribble, handleTransformetMouseDown, setDrawScribble } =
-    useContext(globalStore);
-    
+  const {
+    drawScribble,
+    handleTransformetMouseDown,
+    setDrawScribble,
+    handleShapeClick,
+  } = useContext(globalStore);
 
   function handleRectDrag(e, id) {
     const x = e.target.x();

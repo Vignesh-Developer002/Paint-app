@@ -109,18 +109,24 @@ const RightSideShape = () => {
                       <StrokeColor />
                     </div>
                     <hr />
+                    {idName.Name !== "scrible" && idName.Name !== "line" ? (
+                      <>
+                        {" "}
+                        <div className="fill-color">
+                          <p>
+                            Fill color :{" "}
+                            {sideBar["fill"]
+                              ? `(${sideBar["fill"]})`
+                              : "(No Color Selected)"}
+                          </p>
+                          <FillColor />
+                        </div>
+                        <hr />
+                      </>
+                    ) : (
+                      <></>
+                    )}
 
-                    <div className="fill-color">
-                      <p>
-                        Fill color :{" "}
-                        {sideBar["fill"]
-                          ? `(${sideBar["fill"]})`
-                          : "(No Color Selected)"}
-                      </p>
-                      <FillColor />
-                    </div>
-
-                    <hr />
                     <div className="stroke-width">
                       <p>Stroke Width :</p>
                       <input
@@ -169,16 +175,18 @@ const RightSideShape = () => {
                     />
                   </div>
                   <hr />
-                  <div className="opacity">
-                    <p>Opacity :</p>
-                    <input
-                      type="number"
-                      disabled={disable}
-                      name="opacity"
-                      value={sideBar.opacity}
-                      onChange={(e) => handleInputValue(e)}
-                    />
-                  </div>
+                  {idName.Name !== "rectangle" && (
+                    <div className="opacity">
+                      <p>Opacity :</p>
+                      <input
+                        type="number"
+                        disabled={disable}
+                        name="opacity"
+                        value={sideBar.opacity}
+                        onChange={(e) => handleInputValue(e)}
+                      />
+                    </div>
+                  )}
                 </>
               ) : (
                 <></>

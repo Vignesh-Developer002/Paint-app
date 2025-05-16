@@ -4,9 +4,12 @@ import { Line } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext";
 
 const ShowLine = () => {
-  const { handleTransformetMouseDown, drawLine, setDrawLine } =
-    useContext(globalStore);
- 
+  const {
+    handleTransformetMouseDown,
+    drawLine,
+    setDrawLine,
+    handleShapeClick,
+  } = useContext(globalStore);
 
   function handleDrag(e, id) {
     let x = e.target.x();
@@ -14,10 +17,7 @@ const ShowLine = () => {
     setDrawLine((prev) =>
       prev.map((l) => (l.id === id ? { ...l, x: x, y: y } : l))
     );
-    
   }
-
-  
 
   function handleTranfomEnd(e, id, name) {
     let x = e.target.x();

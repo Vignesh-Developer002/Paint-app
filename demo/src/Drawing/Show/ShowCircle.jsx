@@ -4,8 +4,11 @@ import { circle } from "../../components/Schemas/Schemas";
 import { globalStore } from "../../StoreContext/StoreContext.jsx";
 
 const ShowCircle = () => {
-  const { handleTransformetMouseDown, drawCircle, setDrawCircle } =
-    useContext(globalStore);
+  const {
+    handleTransformetMouseDown,
+    drawCircle,
+    setDrawCircle,
+  } = useContext(globalStore);
 
   function handleDragEnd(e, id) {
     let x = e.target.x();

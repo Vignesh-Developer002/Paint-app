@@ -3,7 +3,8 @@ import { Image as KonvaImage, Layer } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext";
 
 const ShowImage = () => {
-  const { image, handleTransformetMouseDown, images } = useContext(globalStore);
+  const { image, handleTransformetMouseDown, images } =
+    useContext(globalStore);
   return (
     <>
       {Array.isArray(images) &&

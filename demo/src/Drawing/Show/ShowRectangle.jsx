@@ -4,7 +4,7 @@ import { rectangle } from "../../components/Schemas/Schemas";
 import { globalStore } from "../../StoreContext/StoreContext";
 
 const ShowRectangle = () => {
-  const { handleTransformetMouseDown, drawing, setDrawing } =
+  const { handleTransformetMouseDown, drawing, setDrawing, handleShapeClick } =
     useContext(globalStore);
 
   function handleRectDrag(e, id) {
@@ -46,6 +46,7 @@ const ShowRectangle = () => {
               onDragEnd={(e) => handleRectDrag(e, r.id)}
               onMouseDown={(e) => handleTransformetMouseDown(e, r.id, r.name)}
               onTransformEnd={(e) => handleTransformEnd(e, r.id, r.name)}
+
             />
           );
         })}
