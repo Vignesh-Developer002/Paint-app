@@ -6,6 +6,7 @@ import ShowRectangle from "../Show/ShowRectangle";
 import ShowScribble from "../Show/ShowScribble";
 import ShowImage from "../Show/ShowImage";
 import ShowText from "../Show/ShowText";
+import ShowGroup from "../Show/ShowGroup";
 
 const ShowComponent = () => {
   return (
@@ -17,6 +18,7 @@ const ShowComponent = () => {
       <ShowPolygon />
       <ShowImage />
       <ShowText />
+      <ShowGroup />
     </>
   );
 };

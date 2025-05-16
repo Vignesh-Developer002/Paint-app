@@ -10,6 +10,7 @@ import Clear from "../components/Clear/Clear";
 import Drag from "../components/Drag/Drag";
 import { FaUpload } from "react-icons/fa";
 import { MdTextIncrease } from "react-icons/md";
+import { FaObjectGroup } from "react-icons/fa";
 
 export const actions = {
   select: "select",
@@ -24,6 +25,7 @@ export const actions = {
   drag: "drag",
   upload: "image",
   text: "text",
+  group: "group",
 };
 
 const StrokeColor = () => {
@@ -54,8 +56,6 @@ export const FillColor = () => {
   return (
     <>
       <input
-        // data-tooltip-id="color"
-        // data-tooltip-content="Fill Color"
         type="color"
         name="fill"
         value={sideBar.fill}
@@ -219,6 +219,23 @@ export const drawData = [
       <MdTextIncrease
         data-tooltip-id="color"
         data-tooltip-content="Text"
+        data-tooltip-place="right"
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          fontSize: "25px",
+          outline: "none",
+        }}
+      />
+    ),
+  },
+  {
+    id: actions.group,
+    icons: (
+      <FaObjectGroup
+        data-tooltip-id="color"
+        data-tooltip-content="Group"
         data-tooltip-place="right"
         style={{
           width: "100%",

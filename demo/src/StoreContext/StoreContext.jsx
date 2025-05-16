@@ -12,7 +12,6 @@ const StoreContext = ({ children }) => {
   const [images, setImages] = useState([]); // for pushimg the multiple images
   const [sideBarView, setSideBarView] = useState(false);
   const [btn, setBtn] = useState("default");
-  // currentlyDrawnShap-rect, currentlyDrawnCircle, polygons
   const [currentlyDrawnShap, setCurrentlyDrawnShape] = useState({}); // rectangles
   const [drawing, setDrawing] = useState([]); // rectangle
   const [draggable, setDraggable] = useState(false);
@@ -27,6 +26,8 @@ const StoreContext = ({ children }) => {
   const [drawPolygon, setDrawPolygon] = useState([]); //polygon
   const [text, setText] = useState({}); // for set the initial text value
   const [drawText, setDrawText] = useState([]); // for set the text object in text array
+  const [group, setGroup] = useState({}); // for initiate the group object
+  const [ShowGroup, setShowGroup] = useState([]); // for pushing the group into the array
   const [fontStyle, setFontStyle] = useState(""); // for  assign the fontStyleBtn for text
   const [closed, setClosed] = useState(false); // for tracking the polygon circle is completed or not
   const [isComplete, setIsComplete] = useState(false);
@@ -42,7 +43,6 @@ const StoreContext = ({ children }) => {
   const [currentValue, setCurrentValue] = useState(""); // for tracking the currently typed value
   const [currentShap, setCurrentShape] = useState(); // for assigning the current selected shape name
   const [selectBox, setSelectionBox] = useState({}); //slecting box box layer
-  // const [selectedIds, setSelectedIds] = useState([]); // selected shap id
 
   let wd = Math.abs(selectBox?.width);
   let ht = Math.abs(selectBox?.height);
@@ -335,6 +335,9 @@ const StoreContext = ({ children }) => {
         text: text,
         fontSize: fontSize,
       });
+    } else if (name === "group") {
+      let totalShape = ShowGroup.find((d) => d.id === id);
+      console.log(totalShape, name);
     }
   }
 
@@ -369,34 +372,22 @@ const StoreContext = ({ children }) => {
     setDrawPolygon([]);
     setImages([]);
     setDrawText([]);
+    setShowGroup([]);
   }
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name, multiSel) {
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
-      console.log(
-        "Single transform",
-        "e-",
-        e,
-        "id-",
-        id,
-        "name -",
-        name,
-        "multisel-",
-        multiSel,
-        Array.isArray(multiSel)
-      );
+
       let len = multiSel !== undefined ? multiSel.length : null;
-      console.log("condition", len > 1);
+
       if (multiSel === undefined && Array.isArray(multiSel) === false) {
-        console.log("single transform");
         transformerRef.current.nodes([transformerNode]);
         setSideBarView(true);
         setIdName((prev) => ({ ...prev, id: id, Name: name }));
         handleSelect(id, name);
       } else if (len) {
-        console.log("multi transform");
         transformerRef.current.shouldOverdrawWholeArea(true);
         transformerRef.current.nodes(multiSel);
         setSideBarView(true);
@@ -444,7 +435,6 @@ const StoreContext = ({ children }) => {
     setClosed(false); // for tracking the circle is clicked or not
   }, [closed]);
 
-  // console.log(selectBox);
   // onStageMouseDown
   function onStageMouseDown(e) {
     blueLayerRef.current = true;
@@ -582,6 +572,9 @@ const StoreContext = ({ children }) => {
         fill: sideBar.fill || "grey",
         width: sideBar.width || 60,
       });
+    } else if (btnName === actions.group) {
+      console.log("mouse Down", btnName);
+      setShowGroup((prev) => [...prev, group]);
     }
   }
 
@@ -646,6 +639,22 @@ const StoreContext = ({ children }) => {
       }
     } else if (btnName === actions.drag) {
       setDraggable(true);
+    } else if (btnName === actions.group) {
+      console.log("mouse Move", btnName);
+      let pos = e.target.getStage().getRelativePointerPosition();
+      let x = pos.x;
+      let y = pos.y;
+      setGroup({
+        x: x,
+        y: y,
+        id: uuidv4(),
+        name: btnName,
+        fill: "#F2F2F2",
+        stroke: "F2F2F2",
+        height: 100,
+        width: 100,
+        strokeWidth: 3,
+      });
     }
   }
 
@@ -654,7 +663,6 @@ const StoreContext = ({ children }) => {
     blueLayerRef.current = false;
     let stage = e.target.getStage();
     setMouseDown(false);
-    console.log("mouseOut", ht, wd);
     if (btnName === actions.select && ht > 10 && wd > 10) {
       setSelectionBox({
         x: "",
@@ -701,9 +709,13 @@ const StoreContext = ({ children }) => {
     } else if (btnName === "text") {
       setDrawText((prev) => [...prev, text]);
       setText({});
+    } else if (btnName === "group") {
+      console.log("MouseOut", btnName);
+      setGroup({});
     }
   }
 
+  console.log("Group Array", ShowGroup);
   // Function for handle the whille clicking outside the tranform should be unselect
   function transformUnSelect(e) {
     if (e.target === stageRef.current) {
@@ -717,6 +729,9 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    ShowGroup,
+    setShowGroup,
+    group,
     blueLayerRef,
     selectionArrowRef,
     handleShapeClick,
@@ -798,102 +813,3 @@ const StoreContext = ({ children }) => {
 };
 
 export default StoreContext;
-
-/*let x1, y1, x2, y2;
-        stage.on("mousedown touchstart", (e) => {
-          // do nothing if we mousedown on any shape
-          if (e.target !== stage) {
-            return;
-          }
-          x1 = stage.getPointerPosition().x;
-          y1 = stage.getPointerPosition().y;
-          x2 = stage.getPointerPosition().x;
-          y2 = stage.getPointerPosition().y;
-
-          selectionRectangle.setAttrs({
-            x: x1,
-            y: y1,
-            width: 0,
-            height: 0,
-            visible: true,
-          });
-        });
-
-        stage.on("mousemove touchmove", () => {
-          // do nothing if we didn't start selection
-          if (!selectionRectangle.visible()) {
-            return;
-          }
-          x2 = stage.getPointerPosition().x;
-          y2 = stage.getPointerPosition().y;
-
-          selectionRectangle.setAttrs({
-            x: Math.min(x1, x2),
-            y: Math.min(y1, y2),
-            width: Math.abs(x2 - x1),
-            height: Math.abs(y2 - y1),
-          });
-        });
-
-        stage.on("mouseup touchend", () => {
-          // do nothing if we didn't start selection
-          if (!selectionRectangle.visible()) {
-            return;
-          }
-          // update visibility in timeout, so we can check it in click event
-          setTimeout(() => {
-            selectionRectangle.visible(false);
-          });
-
-          var shapes = stage.find(".rect");
-          var box = selectionRectangle.getClientRect();
-          co;
-          var selected = shapes.filter((shape) =>
-            Konva.Util.haveIntersection(box, shape.getClientRect())
-          );
-          tr.nodes(selected);
-        });
-
-        // clicks should select/deselect shapes
-        stage.on("click tap", function (e) {
-          // if we are selecting with rect, do nothing
-          if (
-            selectionRectangle.visible() &&
-            selectionRectangle.width() > 0 &&
-            selectionRectangle.height() > 0
-          ) {
-            return;
-          }
-
-          // if click on empty area - remove all selections
-          if (e.target === stage) {
-            tr.nodes([]);
-            return;
-          }
-
-          // do nothing if clicked NOT on our rectangles
-          if (!e.target.hasName("rect")) {
-            return;
-          }
-
-          // do we pressed shift or ctrl?
-          const metaPressed = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
-          const isSelected = tr.nodes().indexOf(e.target) >= 0;
-
-          if (!metaPressed && !isSelected) {
-            // if no key pressed and the node is not selected
-            // select just one
-            tr.nodes([e.target]);
-          } else if (metaPressed && isSelected) {
-            // if we pressed keys and node was selected
-            // we need to remove it from selection:
-            const nodes = tr.nodes().slice(); // use slice to have new copy of array
-            // remove node from array
-            nodes.splice(nodes.indexOf(e.target), 1);
-            tr.nodes(nodes);
-          } else if (metaPressed && !isSelected) {
-            // add the node into selection
-            const nodes = tr.nodes().concat([e.target]);
-            tr.nodes(nodes);
-          }
-        }); */
