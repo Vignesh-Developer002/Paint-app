@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 export const globalStore = createContext();
 const StoreContext = ({ children }) => {
   let selectionArrowRef = useRef();
-  const [blueRect, setBlueRect] = useState(true); // multiple shape transform
+  let blueLayerRef = useRef(null); // multiple shape transform
   const [disable, setDisable] = useState(false); // for disable and enable the opacity input field
   const [image, setImage] = useState(); // for upload the image
   const [images, setImages] = useState([]); // for pushimg the multiple images
@@ -44,7 +44,10 @@ const StoreContext = ({ children }) => {
   const [selectBox, setSelectionBox] = useState({}); //slecting box box layer
   // const [selectedIds, setSelectedIds] = useState([]); // selected shap id
 
-  // state for handle the right side input values
+  let wd = Math.abs(selectBox?.width);
+  let ht = Math.abs(selectBox?.height);
+
+  // state for handle the right side input, h values
   const [sideBar, setSideBar] = useState({
     strokeWidth: "",
     radius: "",
@@ -84,7 +87,6 @@ const StoreContext = ({ children }) => {
   }
 
   // function for handle the input field logic
-
   let ids = idName.id;
   let strokeWidth = Number(sideBar.strokeWidth);
   let height = Number(sideBar.height);
@@ -371,39 +373,31 @@ const StoreContext = ({ children }) => {
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name, multiSel) {
-    console.log(
-      "e-",
-      e,
-      "id-",
-      id,
-      "name -",
-      name,
-      "multisel-",
-      multiSel,
-      Array.isArray(multiSel)
-    );
-
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
       console.log(
-        "transform",
-        transformerNode &&
-          multiSel === undefined &&
-          Array.isArray(multiSel) === false
+        "Single transform",
+        "e-",
+        e,
+        "id-",
+        id,
+        "name -",
+        name,
+        "multisel-",
+        multiSel,
+        Array.isArray(multiSel)
       );
-      if (
-        transformerNode &&
-        multiSel === undefined &&
-        Array.isArray(multiSel) === false
-      ) {
+      let len = multiSel !== undefined ? multiSel.length : null;
+      console.log("condition", len > 1);
+      if (multiSel === undefined && Array.isArray(multiSel) === false) {
         console.log("single transform");
         transformerRef.current.nodes([transformerNode]);
         setSideBarView(true);
         setIdName((prev) => ({ ...prev, id: id, Name: name }));
         handleSelect(id, name);
-      }
-      if (multiSel !== undefined && Array.isArray(multiSel)) {
+      } else if (len) {
         console.log("multi transform");
+        transformerRef.current.shouldOverdrawWholeArea(true);
         transformerRef.current.nodes(multiSel);
         setSideBarView(true);
       }
@@ -450,9 +444,11 @@ const StoreContext = ({ children }) => {
     setClosed(false); // for tracking the circle is clicked or not
   }, [closed]);
 
+  // console.log(selectBox);
   // onStageMouseDown
   function onStageMouseDown(e) {
-    if (btnName === actions.select) {
+    blueLayerRef.current = true;
+    if (btnName === actions.select && blueLayerRef.current) {
       setDraggable(false);
       setBtn("default");
       let position = e.target.getStage().getPointerPosition();
@@ -475,6 +471,7 @@ const StoreContext = ({ children }) => {
       isPaint.current = true;
       setDraggable(false);
       setBtn("default");
+      blueLayerRef.current = false;
       let pos = e.target.getStage().getPointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
@@ -590,10 +587,12 @@ const StoreContext = ({ children }) => {
 
   // onStageMouseMove
   function onStageMouseMove(e) {
+    // blueLayerRef.current = false;
     if (btnName === actions.select) {
       if (!selectBox) {
         return;
-      } else {
+      }
+      if (blueLayerRef.current) {
         let position = e.target.getStage().getPointerPosition();
         let x = position.x;
         let y = position.y;
@@ -649,53 +648,69 @@ const StoreContext = ({ children }) => {
       setDraggable(true);
     }
   }
-  console.log(idName.Name);
 
   // onStageMouseOut
   function onStageMouseOut(e) {
-    setBlueRect(false);
+    blueLayerRef.current = false;
     let stage = e.target.getStage();
-    console.log(stage);
-
-    console.log(stage, "stage");
     setMouseDown(false);
-    if (btnName === actions.select) {
-      if (!selectBox) {
-        return;
-      } else {
-        let rectangleShape = stage.find(".rectangle");
-        let circleShape = stage.find(".circle");
-        let polygon = stage.find(".polygon");
-        var box = selectionArrowRef.current.getClientRect(); // blue color slected layer
-        let shapes = [...rectangleShape, ...circleShape, ...polygon];
-        var selected = shapes.filter((shape) =>
-          Konva.Util.haveIntersection(box, shape.getClientRect())
-        );
-        console.log("selected", selected);
-        if (selected) {
-          handleTransformetMouseDown(
-            e,
-            selectBox["id"],
-            selectBox["name"],
-            selected
-          );
-        }
-        // tr.nodes(selected);
-        setSelectionBox({
-          x: "",
-          y: "",
-          width: 0,
-          height: 0,
-          name: "select",
-          fill: "rgba(0, 161, 255, 0.3)",
-          stroke: "blue",
-          strokeWidth: 4,
-          dash: [4, 4],
-          visible: false,
-        });
-        // setSelectionBox((prev) => ({ ...prev, visible: !blueRect }));
-      }
-    } else if (btnName === actions.rectangle) {
+    console.log("mouseOut", ht, wd);
+    if (btnName === actions.select && ht > 10 && wd > 10) {
+      setSelectionBox({
+        x: "",
+        y: "",
+        width: 0,
+        height: 0,
+        name: "select",
+        fill: "rgba(0, 161, 255, 0.3)",
+        stroke: "blue",
+        strokeWidth: 4,
+        dash: [4, 4],
+        visible: false,
+      });
+      let rectangleShape = stage.find(".rectangle");
+      let circleShape = stage.find(".circle");
+      let polygon = stage.find(".polygon");
+      var box = selectionArrowRef.current.getClientRect(); // blue color slected layer
+      let shapes = [...rectangleShape, ...circleShape, ...polygon];
+      var selected = shapes.filter((shape) =>
+        Konva.Util.haveIntersection(box, shape.getClientRect())
+      );
+      handleTransformetMouseDown(
+        e,
+        selectBox["id"],
+        selectBox["name"],
+        selected
+      );
+      // if (blueLayerRef.current === true) {
+      //   console.log("hello");
+
+      // }
+    }
+
+    // let rectangleShape = stage.find(".rectangle");
+    // let circleShape = stage.find(".circle");
+    // let polygon = stage.find(".polygon");
+    // var box = selectionArrowRef.current.getClientRect(); // blue color slected layer
+    // let shapes = [...rectangleShape, ...circleShape, ...polygon];
+    // var selected = shapes.filter((shape) =>
+    //   Konva.Util.haveIntersection(box, shape.getClientRect())
+    // );
+    //
+    // tr.nodes(selected);
+    // setSelectionBox({
+    //   x: "",
+    //   y: "",
+    //   width: 0,
+    //   height: 0,
+    //   name: "select",
+    //   fill: "rgba(0, 161, 255, 0.3)",
+    //   stroke: "blue",
+    //   strokeWidth: 4,
+    //   dash: [4, 4],
+    //   visible: false,
+    // });
+    else if (btnName === actions.rectangle) {
       isPaint.current = false;
       setDrawing((prev) => [...prev, currentlyDrawnShap]);
       setCurrentlyDrawnShape({}); // resetting the currently drawn shape
@@ -730,6 +745,7 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    blueLayerRef,
     selectionArrowRef,
     handleShapeClick,
     selectBox,

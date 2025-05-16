@@ -3,13 +3,16 @@ import { globalStore } from "../../StoreContext/StoreContext";
 import { Rect } from "react-konva";
 
 const DrawSelection = () => {
-  const { selectBox, setSelectionBox, selectionArrowRef } =
+  const { selectBox, setSelectionBox, selectionArrowRef, blueLayerRef } =
     useContext(globalStore);
   let visible = selectBox["visible"];
-  console.log("arrow ref", selectionArrowRef);
+  let width = selectBox["width"];
+  let height = selectBox["height"];
+  console.log(height, width);
   return (
+    // selectBox && visible &&
     <>
-      {selectBox && visible && (
+      {selectBox && visible && width > 10 && height > 10 && (
         <Rect
           id={selectBox.id}
           ref={selectionArrowRef}
