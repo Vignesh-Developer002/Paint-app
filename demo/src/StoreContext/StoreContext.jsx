@@ -451,7 +451,7 @@ const StoreContext = ({ children }) => {
     if (btnName === actions.select && blueLayerRef.current) {
       setDraggable(false);
       setBtn("default");
-      let position = e.target.getStage().getPointerPosition();
+      let position = e.target.getStage().getRelativePointerPosition();
       let x = position.x;
       let y = position.y;
       setSelectionBox({
@@ -472,7 +472,7 @@ const StoreContext = ({ children }) => {
       setDraggable(false);
       setBtn("default");
       blueLayerRef.current = false;
-      let pos = e.target.getStage().getPointerPosition();
+      let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
       setCurrentlyDrawnShape((pre) => ({
@@ -492,7 +492,7 @@ const StoreContext = ({ children }) => {
       setDraggable(false);
       setBtn("default");
       isPaint.current = true;
-      let pos = e.target.getStage().getPointerPosition();
+      let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
 
@@ -511,7 +511,7 @@ const StoreContext = ({ children }) => {
       setDraggable(false);
       setBtn("default");
       isPaint.current = true;
-      let pos = e.target.getStage().getPointerPosition();
+      let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
       setScribble({
@@ -529,7 +529,7 @@ const StoreContext = ({ children }) => {
       setDraggable(false);
       setBtn("default");
       isPaint.current = true;
-      let pos = e.target.getStage().getPointerPosition();
+      let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
       setLines({
@@ -548,7 +548,7 @@ const StoreContext = ({ children }) => {
       setDraggable(false);
       setBtn("default");
       if (!isComplete) {
-        let pos = e.target.getStage().getPointerPosition();
+        let pos = e.target.getStage().getRelativePointerPosition();
         let x = pos.x || 0;
         let y = pos.y || 0;
         setPolygons((prev) => ({
@@ -568,7 +568,7 @@ const StoreContext = ({ children }) => {
       setMouseDown(true);
       setDraggable(true);
     } else if (btnName === actions.text) {
-      let pos = e.target.getStage().getPointerPosition();
+      let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
       setText({
@@ -593,7 +593,7 @@ const StoreContext = ({ children }) => {
         return;
       }
       if (blueLayerRef.current) {
-        let position = e.target.getStage().getPointerPosition();
+        let position = e.target.getStage().getRelativePointerPosition();
         let x = position.x;
         let y = position.y;
         setSelectionBox((prev) => ({
@@ -604,14 +604,14 @@ const StoreContext = ({ children }) => {
       }
     } else if (btnName === actions.rectangle) {
       isPaint.current = true;
-      let pos = e.target.getStage().getPointerPosition();
+      let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
       setCurrentlyDrawnShape((prev) => {
         return { ...prev, width: x - prev.x || 0, height: y - prev.y || 0 };
       });
     } else if (btnName === actions.circle) {
-      let pos = e.target.getStage().getPointerPosition();
+      let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
       setCurrentlyDrawnCircle((pre) => ({
@@ -622,7 +622,7 @@ const StoreContext = ({ children }) => {
         ),
       }));
     } else if (btnName === actions.scribble) {
-      let pos = e.target.getStage().getPointerPosition();
+      let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
       setScribble((prev) => ({
@@ -630,7 +630,7 @@ const StoreContext = ({ children }) => {
         points: [...(prev.points || []), x, y],
       }));
     } else if (btnName === actions.line) {
-      let pos = e.target.getStage().getPointerPosition();
+      let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
       setLines({
@@ -639,7 +639,7 @@ const StoreContext = ({ children }) => {
       });
     } else if (btnName === actions.polygon) {
       if (!isComplete) {
-        let pos = e.target.getStage().getPointerPosition();
+        let pos = e.target.getStage().getRelativePointerPosition();
         let x = pos.x || 0;
         let y = pos.y || 0;
         setNextPoints({ x: x, y: y });
@@ -682,35 +682,7 @@ const StoreContext = ({ children }) => {
         selectBox["name"],
         selected
       );
-      // if (blueLayerRef.current === true) {
-      //   console.log("hello");
-
-      // }
-    }
-
-    // let rectangleShape = stage.find(".rectangle");
-    // let circleShape = stage.find(".circle");
-    // let polygon = stage.find(".polygon");
-    // var box = selectionArrowRef.current.getClientRect(); // blue color slected layer
-    // let shapes = [...rectangleShape, ...circleShape, ...polygon];
-    // var selected = shapes.filter((shape) =>
-    //   Konva.Util.haveIntersection(box, shape.getClientRect())
-    // );
-    //
-    // tr.nodes(selected);
-    // setSelectionBox({
-    //   x: "",
-    //   y: "",
-    //   width: 0,
-    //   height: 0,
-    //   name: "select",
-    //   fill: "rgba(0, 161, 255, 0.3)",
-    //   stroke: "blue",
-    //   strokeWidth: 4,
-    //   dash: [4, 4],
-    //   visible: false,
-    // });
-    else if (btnName === actions.rectangle) {
+    } else if (btnName === actions.rectangle) {
       isPaint.current = false;
       setDrawing((prev) => [...prev, currentlyDrawnShap]);
       setCurrentlyDrawnShape({}); // resetting the currently drawn shape
