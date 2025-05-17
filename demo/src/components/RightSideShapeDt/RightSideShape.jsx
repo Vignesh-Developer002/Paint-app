@@ -2,10 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import "../RightSideShapeDt/RightSideShape.css";
 import StrokeColor, { FillColor } from "../../Actions/Action";
 import { globalStore } from "../../StoreContext/StoreContext";
-import { Label } from "react-konva";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { FaItalic } from "react-icons/fa";
-import { FaBold } from "react-icons/fa";
 
 const RightSideShape = () => {
   const {
@@ -21,8 +18,6 @@ const RightSideShape = () => {
     setImage,
     disable,
     setDisable,
-    setSideBar,
-    drawText,
     setDrawText,
   } = useContext(globalStore);
 
@@ -46,7 +41,6 @@ const RightSideShape = () => {
   }, []);
 
   // logic for disable the input field
-  // console.log(sideBar.opacity);
   if (sideBar.opacity <= 100) {
     setDisable(false);
   }
@@ -153,7 +147,9 @@ const RightSideShape = () => {
               ) : (
                 <></>
               )}
-              {idName.Name === "rectangle" || idName.Name == "image" ? (
+              {idName.Name === "rectangle" ||
+              idName.Name == "image" ||
+              idName.Name === "group" ? (
                 <>
                   <div className="height">
                     <p>Height :</p>
@@ -175,7 +171,7 @@ const RightSideShape = () => {
                     />
                   </div>
                   <hr />
-                  {idName.Name !== "rectangle" && (
+                  {idName.Name !== "rectangle" && idName.Name !== "group" && (
                     <div className="opacity">
                       <p>Opacity :</p>
                       <input

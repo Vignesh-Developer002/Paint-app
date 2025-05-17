@@ -200,6 +200,21 @@ const StoreContext = ({ children }) => {
             : d
         )
       );
+    } else if (names === "group") {
+      setShowGroup((prev) =>
+        prev.map((d) =>
+          d.id === ids
+            ? {
+                ...d,
+                fill: fill,
+                height: height,
+                width: width,
+                strokeWidth: strokeWidth,
+                stroke: stroke,
+              }
+            : d
+        )
+      );
     }
   }, [currentValue]);
 
@@ -337,11 +352,29 @@ const StoreContext = ({ children }) => {
       });
     } else if (name === "group") {
       let totalShape = ShowGroup.find((d) => d.id === id);
-      console.log(totalShape, name);
+      let name = totalShape["name"];
+      let height = totalShape["height"];
+      let width = totalShape["width"];
+      let stroke = totalShape["stroke"];
+      let strokeWidth = totalShape["strokeWidth"];
+      let fill = totalShape["fill"];
+      setCurrentShape(name);
+      setSideBar({
+        name: name,
+        strokeWidth: "0",
+        radius: "0",
+        height: height,
+        opacity: "0",
+        width: width,
+        fill: fill,
+        stroke: stroke,
+        text: "",
+        strokeWidth: strokeWidth,
+      });
     }
   }
 
-  // useEffect for pushing the image in an array(-----------IMAGE---------)
+  // useEffect for pushing the image in to an array(-----------IMAGE---------)
   let op = sideBar.opacity;
   useEffect(() => {
     if (image !== null && image !== undefined) {
@@ -580,7 +613,6 @@ const StoreContext = ({ children }) => {
 
   // onStageMouseMove
   function onStageMouseMove(e) {
-    // blueLayerRef.current = false;
     if (btnName === actions.select) {
       if (!selectBox) {
         return;
@@ -649,8 +681,8 @@ const StoreContext = ({ children }) => {
         y: y,
         id: uuidv4(),
         name: btnName,
-        fill: "#F2F2F2",
-        stroke: "F2F2F2",
+        fill: sideBar.fill || "#F2F2F2",
+        stroke: sideBar.stroke || "F2F2F2",
         height: 100,
         width: 100,
         strokeWidth: 3,

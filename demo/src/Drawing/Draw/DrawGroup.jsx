@@ -3,7 +3,7 @@ import { globalStore } from "../../StoreContext/StoreContext";
 import { Circle, Group, Line, Rect } from "react-konva";
 
 const DrawGroup = () => {
-  const { group } = useContext(globalStore);
+  const { group, sideBar } = useContext(globalStore);
   console.log("object group", group);
   return (
     <>
@@ -28,8 +28,8 @@ const DrawGroup = () => {
               group["x"] + group["width"],
               group["y"] + group["height"],
             ]}
-            stroke="black"
-            strokeWidth={2}
+            stroke={group["stroke"] || "black"}
+            strokeWidth={group["strokeWidth"] || 2}
           />
 
           <Line
@@ -39,16 +39,16 @@ const DrawGroup = () => {
               group["x"],
               group["y"] + group["height"],
             ]}
-            stroke="F2F2F2"
-            strokeWidth={2}
+            stroke={group["stroke"] || "black"}
+            strokeWidth={group["strokeWidth"] || 2}
           />
 
           <Circle
             x={group["x"] + group["width"] / 2}
             y={group["y"] + group["height"] / 2}
             radius={15}
-            fill="white"
-            stroke="F2F2F2"
+            fill={group["fill"] || "white"}
+            stroke={group["stroke"] || "F2F2F2"}
           />
         </Group>
       )}
