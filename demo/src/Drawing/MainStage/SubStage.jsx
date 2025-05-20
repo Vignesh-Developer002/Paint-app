@@ -23,7 +23,11 @@ const SubStage = () => {
     drawText,
     setDrawCircle,
     handleTransformetMouseDown,
+    handleRectDrag,
+    setDrawing,
   } = useContext(globalStore);
+
+  let rectArr = [...drawing];
   let stageHeight = window.innerHeight;
   let stageWidth = window.innerWidth;
   let width, height;
@@ -57,25 +61,26 @@ const SubStage = () => {
   //--------circle-end---------------------------------------------------------
 
   //----------------Rectangle-start------------------------------------------
-  function handleRectDrag(e, id) {
-    let x = e.target.x();
-    let y = e.target.y();
-    setDrawing((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, x: x, y: y } : r))
-    );
-  }
+
+//   function handleRectDrag(e, id) {
+//     let x = e.target.x();
+//     let y = e.target.y();
+//     setDrawing((prev) =>
+//       prev.map((r) => (r.id === id ? { ...r, x: x, y: y } : r))
+//     );
+//   }
 
   //function for tranformend
-  function handleTransformEnd(e, id, name) {
-    let x = e.target.x();
-    let y = e.target.y();
-    let rotate = e.target.rotation();
-    setDrawing((prev) =>
-      prev.map((d) =>
-        d.id === id ? { ...d, x: x, y: y, rotation: rotate } : d
-      )
-    );
-  }
+//   function handleTransformEnd(e, id, name) {
+//     let x = e.target.x();
+//     let y = e.target.y();
+//     let rotate = e.target.rotation();
+//     setDrawing((prev) =>
+//       prev.map((d) =>
+//         d.id === id ? { ...d, x: x, y: y, rotation: rotate } : d
+//       )
+//     );
+//   }
 
   //----------------Rectangle-end------------------------------------------
 
@@ -124,7 +129,7 @@ const SubStage = () => {
                 />
               ))}
 
-              {/* {drawing.map((d, idx) => (
+              {/* {rectArr.map((d, idx) => (
                 <Rect
                   key={idx}
                   x={d.x}
@@ -135,13 +140,13 @@ const SubStage = () => {
                   name={d.name}
                   stroke={d.stroke}
                   strokeWidth={d.strokeWidth}
-                  draggable={true}
+                //   draggable={true}
                   rotation={d.rotation || 0}
                   onDragEnd={(e) => handleRectDrag(e, d.id)}
                   onMouseDown={(e) =>
                     handleTransformetMouseDown(e, d.id, d.name)
                   }
-                  onTransformEnd={(e) => handleTransformEnd(e, r.id, r.name)}
+                  onTransformEnd={(e) => handleTransformEnd(e, d.id, d.name)}
                 />
               ))} */}
             </Group>

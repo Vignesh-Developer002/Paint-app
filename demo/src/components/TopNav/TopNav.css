@@ -30,8 +30,7 @@ span{
     width:22px;
     height: 22px;
     border-radius: 50px;
-    background-color:rgb(255, 4, 0);
-     box-shadow: 3px 3px 10px 15px rgba(255, 4, 0, 0.911);;
+    background-color:rgb(251, 193, 0);
     animation-name:glow;
     animation-duration: 2s;
     animation-delay: 1s;
@@ -40,12 +39,12 @@ span{
 }
 @keyframes glow {
     0%{
-        box-shadow: 1px 2px 15px 3px rgb(244, 39, 35);
+        box-shadow: 1px 2px 15px 3px rgb(255, 196, 0);
     }25%{
-        box-shadow: 1px 2px 20px 6px rgb(255, 0, 0);
+        box-shadow: 1px 2px 20px 6px rgb(255, 196, 0);
     }
     50%{
-        box-shadow: 1px 2px 25px 10px rgb(236, 42, 31);
+        box-shadow: 1px 2px 25px 10px rgb(255, 196, 0);
     }
     75%{
         box-shadow: 1px 2px 20px 6px rgba(255, 25, 0, 0.727);

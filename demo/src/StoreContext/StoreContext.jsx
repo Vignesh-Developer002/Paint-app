@@ -648,7 +648,7 @@ const StoreContext = ({ children }) => {
       let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
-      // setPoint((p) => ({ ...p, x: x, y: y }));
+
       setCurrentlyDrawnShape((prev) => {
         return { ...prev, width: x - prev.x || 0, height: y - prev.y || 0 };
       });
