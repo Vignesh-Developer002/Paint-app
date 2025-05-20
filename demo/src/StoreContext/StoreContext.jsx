@@ -5,9 +5,20 @@ import { v4 as uuidv4 } from "uuid";
 
 export const globalStore = createContext();
 const StoreContext = ({ children }) => {
+  let mouseRef = useRef();
   let selectionArrowRef = useRef();
+  let [point, setPoint] = useState({
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  });
+  // let [wdHeight, setWdHeight] = useState({
+  //   width: 0,
+  //   height: 0,
+  // });
   let blueLayerRef = useRef(null); // multiple shape transform
-  const [disable, setDisable] = useState(false); // for disable and enable the opacity input field
+  const [disable, setDisble] = useState(false); // for disable and enable the opacity input field
   const [image, setImage] = useState(); // for upload the image
   const [images, setImages] = useState([]); // for pushimg the multiple images
   const [sideBarView, setSideBarView] = useState(false);
@@ -47,6 +58,18 @@ const StoreContext = ({ children }) => {
   let wd = Math.abs(selectBox?.width);
   let ht = Math.abs(selectBox?.height);
 
+  console.log("points", point, "current rectangle", currentlyDrawnShap);
+  // useEffect for assigning the width and height for xy line
+  useEffect(() => {
+    console.log("uesEffect runs");
+    setPoint({
+      x: currentlyDrawnShap?.x,
+      y: currentlyDrawnShap?.y,
+      height: currentlyDrawnShap?.height,
+      width: currentlyDrawnShap?.width,
+    });
+  }, [currentlyDrawnShap?.width, currentlyDrawnShap?.height]);
+
   // state for handle the right side input, h values
   const [sideBar, setSideBar] = useState({
     strokeWidth: "",
@@ -66,19 +89,14 @@ const StoreContext = ({ children }) => {
     const stage = stageRef.current;
     const oldScale = stage.scaleX();
     const pointer = stage.getPointerPosition();
-
     const mousePointTo = {
       x: (pointer.x - stage.x()) / oldScale,
       y: (pointer.y - stage.y()) / oldScale,
     };
-
     let direction = e.evt.deltaY > 0 ? 1 : -1;
-
     const scaleBy = 1.01;
     const newScale = direction > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-
     stage.scale({ x: newScale, y: newScale });
-
     const newPos = {
       x: pointer.x - mousePointTo.x * newScale,
       y: pointer.y - mousePointTo.y * newScale,
@@ -491,7 +509,7 @@ const StoreContext = ({ children }) => {
         visible: true,
       });
     } else if (btnName === actions.rectangle) {
-      isPaint.current = true;
+      isPaint.current = false;
       setDraggable(false);
       setBtn("default");
       blueLayerRef.current = false;
@@ -518,7 +536,6 @@ const StoreContext = ({ children }) => {
       let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
-
       setCurrentlyDrawnCircle({
         id: uuidv4(),
         x: x,
@@ -606,7 +623,6 @@ const StoreContext = ({ children }) => {
         width: sideBar.width || 60,
       });
     } else if (btnName === actions.group) {
-      console.log("mouse Down", btnName);
       setShowGroup((prev) => [...prev, group]);
     }
   }
@@ -632,6 +648,7 @@ const StoreContext = ({ children }) => {
       let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
+      // setPoint((p) => ({ ...p, x: x, y: y }));
       setCurrentlyDrawnShape((prev) => {
         return { ...prev, width: x - prev.x || 0, height: y - prev.y || 0 };
       });
@@ -672,7 +689,6 @@ const StoreContext = ({ children }) => {
     } else if (btnName === actions.drag) {
       setDraggable(true);
     } else if (btnName === actions.group) {
-      console.log("mouse Move", btnName);
       let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x;
       let y = pos.y;
@@ -742,12 +758,10 @@ const StoreContext = ({ children }) => {
       setDrawText((prev) => [...prev, text]);
       setText({});
     } else if (btnName === "group") {
-      console.log("MouseOut", btnName);
       setGroup({});
     }
   }
 
-  console.log("Group Array", ShowGroup);
   // Function for handle the whille clicking outside the tranform should be unselect
   function transformUnSelect(e) {
     if (e.target === stageRef.current) {
@@ -761,6 +775,7 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    point,
     ShowGroup,
     setShowGroup,
     group,
@@ -777,7 +792,7 @@ const StoreContext = ({ children }) => {
     text,
     setText,
     disable,
-    setDisable,
+    setDisble,
     images,
     image,
     setImage,

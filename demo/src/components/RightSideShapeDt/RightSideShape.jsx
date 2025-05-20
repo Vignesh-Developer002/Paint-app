@@ -17,7 +17,7 @@ const RightSideShape = () => {
     image,
     setImage,
     disable,
-    setDisable,
+    setDisble,
     setDrawText,
   } = useContext(globalStore);
 
@@ -42,10 +42,10 @@ const RightSideShape = () => {
 
   // logic for disable the input field
   if (sideBar.opacity <= 100) {
-    setDisable(false);
+    setDisble(false);
   }
   if (sideBar.opacity >= 100) {
-    setDisable(true);
+    setDisble(true);
   }
 
   function handleFontStyle(e) {
