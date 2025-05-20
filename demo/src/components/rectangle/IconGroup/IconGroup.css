@@ -10,6 +10,7 @@
     box-shadow: 2px 2px 10px #0000005b;
     position: fixed;
     left:10px;
+    top: 100px;
     z-index: 1;
 }
 

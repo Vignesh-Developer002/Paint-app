@@ -3,6 +3,7 @@ import React, { useContext, useRef } from "react";
 import ShowComponent from "./ShowComponent";
 import { globalStore } from "../../StoreContext/StoreContext";
 import DrawingComponent from "./DrawingComponent";
+import SubStage from "./SubStage";
 
 const MainStage = () => {
   const {
@@ -16,6 +17,8 @@ const MainStage = () => {
     btn,
     transformUnSelect,
     handleCircleWheel,
+    stageVisible,
+    setStageVisible,
   } = useContext(globalStore);
 
   let stage = document.getElementById("stageClass");
@@ -31,26 +34,30 @@ const MainStage = () => {
     }
   }
   return (
-    <Stage
-      id="stageClass"
-      ref={stageRef}
-      width={window.innerWidth}
-      height={window.innerHeight}
-      onMouseDown={onStageMouseDown}
-      onMouseMove={onStageMouseMove}
-      onMouseUp={onStageMouseOut}
-      onClick={(e) => transformUnSelect(e)}
-      draggable={draggable}
-      onWheel={(e) => handleCircleWheel(e)}
-    >
-      <Layer>
-        {/* parent show component  array*/}
-        <ShowComponent />
-        {/*parent drawing component object */}
-        <DrawingComponent />
-        <Transformer ref={transformerRef} resizeEnabled={false} />
-      </Layer>
-    </Stage>
+    <>
+      {stageVisible === false ? (
+        <Stage
+          id="stageClass"
+          ref={stageRef}
+          width={window.innerWidth}
+          height={window.innerHeight}
+          onMouseDown={onStageMouseDown}
+          onMouseMove={onStageMouseMove}
+          onMouseUp={onStageMouseOut}
+          onClick={(e) => transformUnSelect(e)}
+          draggable={draggable}
+          onWheel={(e) => handleCircleWheel(e)}
+        >
+          <Layer>
+            <ShowComponent />
+            <DrawingComponent />
+            <Transformer ref={transformerRef} resizeEnabled={false} />
+          </Layer>
+        </Stage>
+      ) : (
+        <SubStage />
+      )}
+    </>
   );
 };
 

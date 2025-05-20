@@ -19,6 +19,7 @@ const RightSideShape = () => {
     disable,
     setDisble,
     setDrawText,
+    stageVisible
   } = useContext(globalStore);
 
   let Text = sideBar.text;
@@ -81,207 +82,217 @@ const RightSideShape = () => {
 
   return (
     <>
-      {((idName.id && idName.Name && sideBarView) || btnName === "image") && (
-        <div className="right-side-container">
-          <div className="inner-content">
-            <h1 className="heading">
-              {currentShap ? currentShap.toUpperCase() : ""}
-            </h1>
-            {/* flex-column */}
-            <div className="main-content">
-              {idName.Name !== "image" &&
-                btnName !== "image" &&
-                idName.Name !== "text" && (
-                  <>
-                    <div className="stroke-color">
-                      <p>
-                        Stroke color :{" "}
-                        {sideBar["stroke"]
-                          ? `(${sideBar["stroke"]})`
-                          : "(No Color Selected)"}
-                      </p>
-                      <StrokeColor />
-                    </div>
-                    <hr />
-                    {idName.Name !== "scrible" && idName.Name !== "line" ? (
+      {!stageVisible && (
+        <>
+          {((idName.id && idName.Name && sideBarView) ||
+            btnName === "image") && (
+            <div className="right-side-container">
+              <div className="inner-content">
+                <h1 className="heading">
+                  {currentShap ? currentShap.toUpperCase() : ""}
+                </h1>
+                {/* flex-column */}
+                <div className="main-content">
+                  {idName.Name !== "image" &&
+                    btnName !== "image" &&
+                    idName.Name !== "text" && (
                       <>
-                        {" "}
-                        <div className="fill-color">
+                        <div className="stroke-color">
                           <p>
-                            Fill color :{" "}
-                            {sideBar["fill"]
-                              ? `(${sideBar["fill"]})`
+                            Stroke color :{" "}
+                            {sideBar["stroke"]
+                              ? `(${sideBar["stroke"]})`
                               : "(No Color Selected)"}
                           </p>
-                          <FillColor />
+                          <StrokeColor />
+                        </div>
+                        <hr />
+                        {idName.Name !== "scrible" && idName.Name !== "line" ? (
+                          <>
+                            {" "}
+                            <div className="fill-color">
+                              <p>
+                                Fill color :{" "}
+                                {sideBar["fill"]
+                                  ? `(${sideBar["fill"]})`
+                                  : "(No Color Selected)"}
+                              </p>
+                              <FillColor />
+                            </div>
+                            <hr />
+                          </>
+                        ) : (
+                          <></>
+                        )}
+
+                        <div className="stroke-width">
+                          <p>Stroke Width :</p>
+                          <input
+                            type="number"
+                            name="strokeWidth"
+                            value={sideBar.strokeWidth}
+                            onChange={(e) => handleInputValue(e)}
+                          />
                         </div>
                         <hr />
                       </>
-                    ) : (
-                      <></>
                     )}
 
-                    <div className="stroke-width">
-                      <p>Stroke Width :</p>
+                  {idName.Name === "circle" && btnName !== "image" ? (
+                    <div className="circle-radius">
+                      <p> Radius :</p>
                       <input
                         type="number"
-                        name="strokeWidth"
-                        value={sideBar.strokeWidth}
+                        name="radius"
+                        value={sideBar.radius}
                         onChange={(e) => handleInputValue(e)}
                       />
                     </div>
-                    <hr />
-                  </>
-                )}
-
-              {idName.Name === "circle" && btnName !== "image" ? (
-                <div className="circle-radius">
-                  <p> Radius :</p>
-                  <input
-                    type="number"
-                    name="radius"
-                    value={sideBar.radius}
-                    onChange={(e) => handleInputValue(e)}
-                  />
-                </div>
-              ) : (
-                <></>
-              )}
-              {idName.Name === "rectangle" ||
-              idName.Name == "image" ||
-              idName.Name === "group" ? (
-                <>
-                  <div className="height">
-                    <p>Height :</p>
-                    <input
-                      type="number"
-                      name="height"
-                      value={sideBar.height}
-                      onChange={(e) => handleInputValue(e)}
-                    />
-                  </div>
-                  <hr />
-                  <div className="width">
-                    <p>Width :</p>
-                    <input
-                      type="number"
-                      name="width"
-                      value={sideBar.width}
-                      onChange={(e) => handleInputValue(e)}
-                    />
-                  </div>
-                  <hr />
-                  {idName.Name !== "rectangle" && idName.Name !== "group" && (
-                    <div className="opacity">
-                      <p>Opacity :</p>
-                      <input
-                        type="number"
-                        disabled={disable}
-                        name="opacity"
-                        value={sideBar.opacity}
-                        onChange={(e) => handleInputValue(e)}
-                      />
-                    </div>
+                  ) : (
+                    <></>
                   )}
-                </>
-              ) : (
-                <></>
-              )}
-
-              {/* for text component */}
-              {idName.Name === "text" ? (
-                <>
-                  <div className="fill-color">
-                    <p>
-                      Fill color :{" "}
-                      {sideBar["fill"]
-                        ? `(${sideBar["fill"]})`
-                        : "(No Color Selected)"}
-                    </p>
-                    <FillColor />
-                  </div>
-                  <div className="text">
-                    <p>text</p>
-                    <input
-                      type="text"
-                      value={sideBar.text}
-                      name="text"
-                      onChange={(e) => handleInputValue(e)}
-                    />
-                  </div>
-                  <div className="width">
-                    <p>Width :</p>
-                    <input
-                      type="number"
-                      name="width"
-                      value={sideBar.width}
-                      onChange={(e) => handleInputValue(e)}
-                    />
-                  </div>
-                  <div className="font-size">
-                    <p>Font size :</p>
-                    <input
-                      type="number"
-                      value={sideBar.fontSize}
-                      name="fontSize"
-                      onChange={(e) => handleInputValue(e)}
-                    />
-                  </div>
-                  <div className="fontStyle">
-                    <p>Font Style :</p>
-                    <div className="btns">
-                      <button
-                        name="bold"
-                        className={fontStyle === "bold" ? "bgGrey" : "white"}
-                        onClick={(e) => handleFontStyle(e)}
-                      >
-                        B{/* <FaBold /> */}
-                      </button>
-                      <button
-                        name="italic"
-                        className={fontStyle === "italic" ? "bgGrey" : "white"}
-                        onClick={(e) => handleFontStyle(e)}
-                      >
-                        I{/* <FaItalic /> */}
-                      </button>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
-
-              {btnName === "image" || idName.Name === "image" ? (
-                <>
-                  <label
-                    htmlFor="upload"
-                    style={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <div className="image-upload">
-                      <div className="img-cont">
-                        <IoCloudUploadOutline className="UploadImg" />
+                  {idName.Name === "rectangle" ||
+                  idName.Name == "image" ||
+                  idName.Name === "group" ? (
+                    <>
+                      <div className="height">
+                        <p>Height :</p>
+                        <input
+                          type="number"
+                          name="height"
+                          value={sideBar.height}
+                          onChange={(e) => handleInputValue(e)}
+                        />
                       </div>
-                      <p>Click to upload image</p>
-                    </div>
-                  </label>
-                  <div className="prev-name">
-                    <p>{image ? image["name"] : ""}</p>
-                  </div>
-                  <input
-                    // accept="image/*"
-                    id="upload"
-                    type="file"
-                    onChange={(e) => handleUpload(e)}
-                    required
-                    hidden
-                  />
-                </>
-              ) : (
-                <></>
-              )}
+                      <hr />
+                      <div className="width">
+                        <p>Width :</p>
+                        <input
+                          type="number"
+                          name="width"
+                          value={sideBar.width}
+                          onChange={(e) => handleInputValue(e)}
+                        />
+                      </div>
+                      <hr />
+                      {idName.Name !== "rectangle" &&
+                        idName.Name !== "group" && (
+                          <div className="opacity">
+                            <p>Opacity :</p>
+                            <input
+                              type="number"
+                              disabled={disable}
+                              name="opacity"
+                              value={sideBar.opacity}
+                              onChange={(e) => handleInputValue(e)}
+                            />
+                          </div>
+                        )}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
+                  {/* for text component */}
+                  {idName.Name === "text" ? (
+                    <>
+                      <div className="fill-color">
+                        <p>
+                          Fill color :{" "}
+                          {sideBar["fill"]
+                            ? `(${sideBar["fill"]})`
+                            : "(No Color Selected)"}
+                        </p>
+                        <FillColor />
+                      </div>
+                      <div className="text">
+                        <p>text</p>
+                        <input
+                          type="text"
+                          value={sideBar.text}
+                          name="text"
+                          onChange={(e) => handleInputValue(e)}
+                        />
+                      </div>
+                      <div className="width">
+                        <p>Width :</p>
+                        <input
+                          type="number"
+                          name="width"
+                          value={sideBar.width}
+                          onChange={(e) => handleInputValue(e)}
+                        />
+                      </div>
+                      <div className="font-size">
+                        <p>Font size :</p>
+                        <input
+                          type="number"
+                          value={sideBar.fontSize}
+                          name="fontSize"
+                          onChange={(e) => handleInputValue(e)}
+                        />
+                      </div>
+                      <div className="fontStyle">
+                        <p>Font Style :</p>
+                        <div className="btns">
+                          <button
+                            name="bold"
+                            className={
+                              fontStyle === "bold" ? "bgGrey" : "white"
+                            }
+                            onClick={(e) => handleFontStyle(e)}
+                          >
+                            B{/* <FaBold /> */}
+                          </button>
+                          <button
+                            name="italic"
+                            className={
+                              fontStyle === "italic" ? "bgGrey" : "white"
+                            }
+                            onClick={(e) => handleFontStyle(e)}
+                          >
+                            I{/* <FaItalic /> */}
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
+                  {btnName === "image" || idName.Name === "image" ? (
+                    <>
+                      <label
+                        htmlFor="upload"
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <div className="image-upload">
+                          <div className="img-cont">
+                            <IoCloudUploadOutline className="UploadImg" />
+                          </div>
+                          <p>Click to upload image</p>
+                        </div>
+                      </label>
+                      <div className="prev-name">
+                        <p>{image ? image["name"] : ""}</p>
+                      </div>
+                      <input
+                        // accept="image/*"
+                        id="upload"
+                        type="file"
+                        onChange={(e) => handleUpload(e)}
+                        required
+                        hidden
+                      />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          )}
+        </>
       )}
     </>
   );

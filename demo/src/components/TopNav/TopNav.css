@@ -1,0 +1,88 @@
+
+.top-content{
+    margin: 2px auto;
+    width: 100%;
+    height: 90px;
+    border: 1px solid rgba(0, 0, 0, 0.48);
+    z-index:2;
+    background-color:rgb(34, 34, 34);
+    padding: 0px 50px;
+    position: fixed;
+    top: 0px;
+}
+
+.top-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.left-head{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border:2px solid rgb(0, 0, 0);
+    width:22px;
+    height: 22px;
+    border-radius: 50px;
+    background-color:rgb(255, 4, 0);
+     box-shadow: 3px 3px 10px 15px rgba(255, 4, 0, 0.911);;
+    animation-name:glow;
+    animation-duration: 2s;
+    animation-delay: 1s;
+    animation-iteration-count: infinite;
+    transition: box-shadow 2s;
+}
+@keyframes glow {
+    0%{
+        box-shadow: 1px 2px 15px 3px rgb(244, 39, 35);
+    }25%{
+        box-shadow: 1px 2px 20px 6px rgb(255, 0, 0);
+    }
+    50%{
+        box-shadow: 1px 2px 25px 10px rgb(236, 42, 31);
+    }
+    75%{
+        box-shadow: 1px 2px 20px 6px rgba(255, 25, 0, 0.727);
+    }
+    100%{
+        box-shadow: 1px 2px 15px 3px rgba(255, 0, 0, 0.727);
+    }
+}
+
+.exit-content{
+    width: auto;
+}
+.top-content h1{
+    font-size: 25px;
+    color:white;
+    text-transform: uppercase;
+}
+.exit{
+    display: flex;
+    gap:15px;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.526);
+}
+.exit:hover{
+    background-color: #abaaaa;
+}
+
+
+.exit p{
+    color: white;
+    font-size: 22px;
+}
+
+.ext-btn{
+    font-size: 24px;
+    color: #ffffff;
+}

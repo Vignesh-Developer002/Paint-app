@@ -3,11 +3,10 @@
     height: 100vh;
     position: fixed;
     right:0px;
-    top: 0px;
+    top: 100px;
     background: #00000036;
     padding: 10px;
-    z-index: 1;
-    transition: 250s;
+    z-index: 2;
     box-shadow: 10px 10px 10px 5px black;
 }
 .right-side-container.active{

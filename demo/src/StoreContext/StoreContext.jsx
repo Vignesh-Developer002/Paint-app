@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 
 export const globalStore = createContext();
 const StoreContext = ({ children }) => {
-  let mouseRef = useRef();
   let selectionArrowRef = useRef();
   let [point, setPoint] = useState({
     x: 0,
@@ -15,6 +14,7 @@ const StoreContext = ({ children }) => {
     radius: 0,
   });
 
+  let [stageVisible, setStageVisible] = useState(false);
   let blueLayerRef = useRef(null); // multiple shape transform
   const [disable, setDisble] = useState(false); // for disable and enable the opacity input field
   const [image, setImage] = useState(); // for upload the image
@@ -52,9 +52,10 @@ const StoreContext = ({ children }) => {
   const [currentValue, setCurrentValue] = useState(""); // for tracking the currently typed value
   const [currentShap, setCurrentShape] = useState(); // for assigning the current selected shape name
   const [selectBox, setSelectionBox] = useState({}); //slecting box box layer
-
   let wd = Math.abs(selectBox?.width);
   let ht = Math.abs(selectBox?.height);
+
+  console.log("Current rectangle store context", drawing);
 
   // useEffect for assigning the width and height for xy line
   useEffect(() => {
@@ -773,8 +774,17 @@ const StoreContext = ({ children }) => {
     }
   }
 
-  console.log(currentShap);
+  // function for handleStageVisble
+  function handleStageVisble() {
+    console.log("inside stage");
+    setStageVisible((pre) => !pre);
+  }
+
+  console.log("stageVisible", stageVisible);
   const contextValue = {
+    handleStageVisble,
+    stageVisible,
+    setStageVisible,
     point,
     ShowGroup,
     setShowGroup,

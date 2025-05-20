@@ -3,8 +3,13 @@ import { Rect } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext";
 
 const ShowRectangle = () => {
-  const { handleTransformetMouseDown, drawing, setDrawing, handleShapeClick } =
-    useContext(globalStore);
+  const {
+    handleTransformetMouseDown,
+    drawing,
+    setDrawing,
+    handleShapeClick,
+    handleStageVisble,
+  } = useContext(globalStore);
 
   function handleRectDrag(e, id) {
     let x = e.target.x();
@@ -45,6 +50,7 @@ const ShowRectangle = () => {
               onDragEnd={(e) => handleRectDrag(e, r.id)}
               onMouseDown={(e) => handleTransformetMouseDown(e, r.id, r.name)}
               onTransformEnd={(e) => handleTransformEnd(e, r.id, r.name)}
+              onDblClick={() => handleStageVisble()}
             />
           );
         })}
