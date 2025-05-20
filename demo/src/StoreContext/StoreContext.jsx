@@ -12,11 +12,9 @@ const StoreContext = ({ children }) => {
     y: 0,
     width: 0,
     height: 0,
+    radius: 0,
   });
-  // let [wdHeight, setWdHeight] = useState({
-  //   width: 0,
-  //   height: 0,
-  // });
+
   let blueLayerRef = useRef(null); // multiple shape transform
   const [disable, setDisble] = useState(false); // for disable and enable the opacity input field
   const [image, setImage] = useState(); // for upload the image
@@ -58,17 +56,20 @@ const StoreContext = ({ children }) => {
   let wd = Math.abs(selectBox?.width);
   let ht = Math.abs(selectBox?.height);
 
-  console.log("points", point, "current rectangle", currentlyDrawnShap);
   // useEffect for assigning the width and height for xy line
   useEffect(() => {
     console.log("uesEffect runs");
     setPoint({
-      x: currentlyDrawnShap?.x,
-      y: currentlyDrawnShap?.y,
-      height: currentlyDrawnShap?.height,
-      width: currentlyDrawnShap?.width,
+      x: currentlyDrawnShap?.x || currentlyDrawnCircle?.x,
+      y: currentlyDrawnShap?.y || currentlyDrawnCircle?.y,
+      height: currentlyDrawnShap?.height || 600,
+      width: currentlyDrawnShap?.width || 600,
+      radius: currentlyDrawnCircle?.radius,
     });
-  }, [currentlyDrawnShap?.width, currentlyDrawnShap?.height]);
+  }, [
+    (currentlyDrawnShap?.width, currentlyDrawnShap?.height) ||
+      currentlyDrawnCircle?.radius,
+  ]);
 
   // state for handle the right side input, h values
   const [sideBar, setSideBar] = useState({
@@ -430,9 +431,7 @@ const StoreContext = ({ children }) => {
   function handleTransformetMouseDown(e, id, name, multiSel) {
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
-
       let len = multiSel !== undefined ? multiSel.length : null;
-
       if (multiSel === undefined && Array.isArray(multiSel) === false) {
         transformerRef.current.nodes([transformerNode]);
         setSideBarView(true);
@@ -774,6 +773,7 @@ const StoreContext = ({ children }) => {
     }
   }
 
+  console.log(currentShap);
   const contextValue = {
     point,
     ShowGroup,

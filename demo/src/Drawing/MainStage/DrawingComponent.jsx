@@ -9,7 +9,7 @@ import DrawScribble from "../../Drawing/Draw/DrawScribble.jsx";
 import DrawText from "../Draw/DrawText.jsx";
 import DrawSelection from "../Draw/DrawSelection.jsx";
 import DrawGroup from "../Draw/DrawGroup.jsx";
-import DrawXyLine from "../Draw/DrawXyLine.jsx";
+import DrawXyLine from "../Draw/DrawXYLine.jsx";
 
 const DrawingComponent = () => {
   const { btnName } = useContext(globalStore);
