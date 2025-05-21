@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { actions } from "../Actions/Action";
 import { v4 as uuidv4 } from "uuid";
-import DrawSingleRect from "../Drawing/Draw/DrawSingleRect";
 
 export const globalStore = createContext();
 const StoreContext = ({ children }) => {
@@ -15,7 +14,7 @@ const StoreContext = ({ children }) => {
     radius: 0,
   });
 
-  let [stageVisible, setStageVisible] = useState(false);
+  let [stageVisible, setStageVisible] = useState(false); // for enable and disable the button
   let blueLayerRef = useRef(null); // multiple shape transform
   const [disable, setDisble] = useState(false); // for disable and enable the opacity input field
   const [image, setImage] = useState(); // for upload the image
@@ -107,7 +106,7 @@ const StoreContext = ({ children }) => {
     stage.position(newPos);
   }
 
-  // function for handle the input field logic
+  // function for handle the input filed logic
   let ids = idName.id;
   let strokeWidth = Number(sideBar.strokeWidth);
   let height = Number(sideBar.height);
@@ -826,7 +825,7 @@ const StoreContext = ({ children }) => {
     setSideBar((p) => ({ ...p, fill: "lightBlue", stroke: "lightGrey" }));
   }
 
-  console.log("btn", btnEnablen)
+  console.log("btn", btnEnablen);
   const contextValue = {
     handleExit,
     btnEnablen,
