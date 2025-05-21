@@ -57,11 +57,8 @@ const StoreContext = ({ children }) => {
   let wd = Math.abs(selectBox?.width);
   let ht = Math.abs(selectBox?.height);
 
-  console.log("Current rectangle store context", drawing);
-
   // useEffect for assigning the width and height for xy line
   useEffect(() => {
-    console.log("uesEffect runs");
     setPoint({
       x: currentlyDrawnShap?.x || currentlyDrawnCircle?.x,
       y: currentlyDrawnShap?.y || currentlyDrawnCircle?.y,
@@ -807,12 +804,9 @@ const StoreContext = ({ children }) => {
 
   // function for handleStageVisble
   function handleStageVisble() {
-    console.log("inside stage");
     setStageVisible((pre) => !pre);
     setSideBar((p) => ({ ...p, fill: "lightBlue", stroke: "lightGrey" }));
   }
-
-  console.log("stageVisible", stageVisible);
   const contextValue = {
     drawsingleRect,
     setDrawSingleRect,

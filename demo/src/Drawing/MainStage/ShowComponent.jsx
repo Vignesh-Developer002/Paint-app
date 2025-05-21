@@ -11,7 +11,7 @@ import ShowSingleRect from "../Show/ShowSingleRect";
 const ShowComponent = () => {
   return (
     <>
-     <ShowSingleRect />
+      <ShowSingleRect />
       <ShowCircle />
       <ShowRectangle />
       <ShowScribble />
@@ -20,7 +20,6 @@ const ShowComponent = () => {
       <ShowImage />
       <ShowText />
       <ShowGroup />
-     
     </>
   );
 };
