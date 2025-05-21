@@ -10,6 +10,7 @@ import DrawText from "../Draw/DrawText.jsx";
 import DrawSelection from "../Draw/DrawSelection.jsx";
 import DrawGroup from "../Draw/DrawGroup.jsx";
 import DrawXyLine from "../Draw/DrawXYLine.jsx";
+import DrawSingleRect from "../Draw/DrawSingleRect.jsx";
 
 const DrawingComponent = () => {
   const { btnName } = useContext(globalStore);
@@ -24,6 +25,7 @@ const DrawingComponent = () => {
       {btnName === actions.select ? <DrawSelection /> : <></>}
       {btnName === actions.group ? <DrawGroup /> : <></>}
       {btnName === actions.rectangle ? <DrawXyLine /> : <></>}
+      {btnName === actions.rectLayer ? <DrawSingleRect /> : <></>}
     </>
   );
 };

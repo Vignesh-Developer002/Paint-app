@@ -21,6 +21,8 @@ const StoreContext = ({ children }) => {
   const [images, setImages] = useState([]); // for pushimg the multiple images
   const [sideBarView, setSideBarView] = useState(false);
   const [btn, setBtn] = useState("default");
+  const [drawsingleRect, setDrawSingleRect] = useState({}); // object for store the initial value
+  const [showSingleRect, setShowSingleRect] = useState([]); // array for push the object
   const [currentlyDrawnShap, setCurrentlyDrawnShape] = useState({}); // rectangles
   const [drawing, setDrawing] = useState([]); // rectangle
   const [draggable, setDraggable] = useState(false);
@@ -624,6 +626,22 @@ const StoreContext = ({ children }) => {
       });
     } else if (btnName === actions.group) {
       setShowGroup((prev) => [...prev, group]);
+    } else if (btnName === actions.rectLayer) {
+      let pos = e.target.getStage().getRelativePointerPosition();
+      let x = pos.x || 0;
+      let y = pos.y || 0;
+      setDrawSingleRect({
+        id: uuidv4(),
+        x,
+        y,
+        name: btnName,
+        width: 1,
+        height: 1,
+        fill: sideBar.fill ? sideBar.fill : "gray",
+        stroke: sideBar.stroke ? sideBar.stroke : "#000000",
+        strokeWidth: 4,
+        rotation: 0,
+      });
     }
   }
 
@@ -703,6 +721,15 @@ const StoreContext = ({ children }) => {
         width: 100,
         strokeWidth: 3,
       });
+    } else if (btnName === actions.rectLayer) {
+      let pos = e.target.getStage().getRelativePointerPosition();
+      let x = pos.x || 0;
+      let y = pos.y || 0;
+      setDrawSingleRect((pre) => ({
+        ...pre,
+        width: x - pre.x || 0,
+        height: y - pre.y || 0,
+      }));
     }
   }
 
@@ -759,6 +786,9 @@ const StoreContext = ({ children }) => {
       setText({});
     } else if (btnName === "group") {
       setGroup({});
+    } else if (btnName === "rectLayer") {
+      setShowSingleRect((pre) => [...pre, drawsingleRect]);
+      setDrawSingleRect({});
     }
   }
 
@@ -782,6 +812,10 @@ const StoreContext = ({ children }) => {
 
   console.log("stageVisible", stageVisible);
   const contextValue = {
+    drawsingleRect,
+    setDrawSingleRect,
+    showSingleRect,
+    setShowSingleRect,
     handleStageVisble,
     stageVisible,
     setStageVisible,

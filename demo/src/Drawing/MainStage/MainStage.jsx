@@ -18,7 +18,6 @@ const MainStage = () => {
     transformUnSelect,
     handleCircleWheel,
     stageVisible,
-    setStageVisible,
   } = useContext(globalStore);
 
   let stage = document.getElementById("stageClass");

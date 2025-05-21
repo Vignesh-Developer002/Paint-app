@@ -11,11 +11,13 @@ import Drag from "../components/Drag/Drag";
 import { FaUpload } from "react-icons/fa";
 import { MdTextIncrease } from "react-icons/md";
 import { FaObjectGroup } from "react-icons/fa";
+import { RiRectangleFill } from "react-icons/ri";
 
 export const actions = {
   select: "select",
   circle: "circle",
   rectangle: "rectangle",
+  rectLayer: "rectLayer",
   scribble: "scrible",
   line: "line",
   polygon: "polygon",
@@ -130,6 +132,23 @@ export const drawData = [
       <PiScribbleLight
         data-tooltip-id="color"
         data-tooltip-content="Scribble"
+        data-tooltip-place="right"
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          outline: "none",
+          fontSize: "25px",
+        }}
+      />
+    ),
+  },
+  {
+    id: actions.rectLayer,
+    icons: (
+      <RiRectangleFill
+        data-tooltip-id="color"
+        data-tooltip-content="Rectangle layer"
         data-tooltip-place="right"
         style={{
           width: "100%",

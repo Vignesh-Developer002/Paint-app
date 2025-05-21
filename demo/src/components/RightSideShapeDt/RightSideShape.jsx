@@ -19,7 +19,7 @@ const RightSideShape = () => {
     disable,
     setDisble,
     setDrawText,
-    stageVisible
+    stageVisible,
   } = useContext(globalStore);
 
   let Text = sideBar.text;
