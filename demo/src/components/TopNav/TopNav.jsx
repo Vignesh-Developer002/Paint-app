@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import "./TopNav.css";
 import { IoExitOutline } from "react-icons/io5";
-import { LuPaintbrush } from "react-icons/lu";
 import { globalStore } from "../../StoreContext/StoreContext";
 
 const TopNav = () => {

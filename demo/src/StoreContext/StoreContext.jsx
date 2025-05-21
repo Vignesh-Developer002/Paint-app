@@ -428,6 +428,7 @@ const StoreContext = ({ children }) => {
     setImages([]);
     setDrawText([]);
     setShowGroup([]);
+    setShowSingleRect([]);
   }
 
   // function for handle the transformer mouse down in shape components
@@ -526,8 +527,8 @@ const StoreContext = ({ children }) => {
         name: btnName,
         width: 1,
         height: 1,
-        fill: sideBar.fill ? sideBar.fill : "gray",
-        stroke: sideBar.stroke ? sideBar.stroke : "#000000",
+        fill: sideBar.fill ? sideBar.fill : "grey",
+        stroke: sideBar.stroke ? sideBar.stroke : "Black",
         strokeWidth: 4,
         rotation: 0,
       }));
@@ -544,7 +545,7 @@ const StoreContext = ({ children }) => {
         y: y,
         name: btnName,
         radius: 1,
-        fill: sideBar.fill || "gray",
+        fill: sideBar.fill || "grey",
         stroke: sideBar.stroke || "#000000",
         strokeWidth: 4,
         rotation: 0,
@@ -637,8 +638,8 @@ const StoreContext = ({ children }) => {
         name: btnName,
         width: 1,
         height: 1,
-        fill: sideBar.fill ? sideBar.fill : "gray",
-        stroke: sideBar.stroke ? sideBar.stroke : "#000000",
+        fill: sideBar.fill ? sideBar.fill : "grey",
+        stroke: sideBar.stroke ? sideBar.stroke : "Black",
         strokeWidth: 4,
         rotation: 0,
       });
@@ -808,6 +809,7 @@ const StoreContext = ({ children }) => {
   function handleStageVisble() {
     console.log("inside stage");
     setStageVisible((pre) => !pre);
+    setSideBar((p) => ({ ...p, fill: "lightBlue", stroke: "lightGrey" }));
   }
 
   console.log("stageVisible", stageVisible);

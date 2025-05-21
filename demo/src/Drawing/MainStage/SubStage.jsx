@@ -32,10 +32,10 @@ const SubStage = () => {
     drawText,
     setDrawCircle,
     handleTransformetMouseDown,
-    handleRectDrag,
     setDrawing,
     showSingleRect,
     setDrawLine,
+    idName,
   } = useContext(globalStore);
 
   let rectArr = [...showSingleRect];
@@ -48,6 +48,12 @@ const SubStage = () => {
       width = d.width;
     }
   });
+
+  if (idName.Name === "rectangle") {
+    console.log("rect");
+  } else if (idName.Name === "circle") {
+    console.log("circle");
+  }
 
   //--------circle-start----------------------------------------------------
   function handleDragEnd(e, id) {
@@ -73,14 +79,6 @@ const SubStage = () => {
 
   //----------------Rectangle-start------------------------------------------
 
-  // function handleRectDrag(e, id) {
-  //   let x = e.target.x();
-  //   let y = e.target.y();
-  //   setDrawing((prev) =>
-  //     prev.map((r) => (r.id === id ? { ...r, x: x, y: y } : r))
-  //   );
-  // }
-
   //function for tranformend
   function handleTransformEnd(e, id, name) {
     let x = e.target.x();
@@ -90,6 +88,14 @@ const SubStage = () => {
       prev.map((d) =>
         d.id === id ? { ...d, x: x, y: y, rotation: rotate } : d
       )
+    );
+  }
+
+  function handleRectDrag(e, id) {
+    let x = e.target.x();
+    let y = e.target.y();
+    setDrawing((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, x: x, y: y } : r))
     );
   }
 
@@ -136,6 +142,7 @@ const SubStage = () => {
     <>
       {stageVisible && (
         <Stage
+          style={{ backgroundColor: "grey" }}
           ref={stageRef}
           width={stageWidth}
           height={stageHeight}
@@ -152,8 +159,7 @@ const SubStage = () => {
                 width={width}
                 x={stageWidth / 2 - width / 2}
                 y={stageHeight / 2 - height / 2}
-                fill="grey"
-                listening={false}
+                fill="white"
               />
 
               {drawCircle.map((d, idx) => (
@@ -164,8 +170,8 @@ const SubStage = () => {
                   y={d.y}
                   name={d.name}
                   radius={d.radius}
-                  fill={d.fill}
-                  stroke={d.stroke}
+                  fill="grey"
+                  stroke="black"
                   strokeWidth={d.strokeWidth}
                   onDragEnd={(e) => handleDragEnd(e, d.id)}
                   onTransformEnd={(e) => handleTransformEnd(e, d.id, d.name)}
@@ -184,9 +190,9 @@ const SubStage = () => {
                   y={d.y}
                   width={d.width}
                   height={d.height}
-                  fill={d.fill}
+                  fill="grey"
                   name={d.name}
-                  stroke={d.stroke}
+                  stroke="black"
                   strokeWidth={d.strokeWidth}
                   draggable={true}
                   rotation={d.rotation || 0}
