@@ -5,7 +5,8 @@ import { globalStore } from "../../StoreContext/StoreContext";
 import { PiPaintBrushFill } from "react-icons/pi";
 
 const TopNav = () => {
-  const { handleStageVisble, stageVisible } = useContext(globalStore);
+  const { handleStageVisble, stageVisible, handleExit } =
+    useContext(globalStore);
 
   return (
     <>
@@ -19,7 +20,8 @@ const TopNav = () => {
           </div>
           {stageVisible && (
             <div className="exit-content">
-              <div className="exit" onClick={() => handleStageVisble()}>
+              {/* handleStageVisble() */}
+              <div className="exit" onClick={() => handleExit()}>
                 <p>Exit</p>
                 <IoExitOutline className="ext-btn" />
               </div>

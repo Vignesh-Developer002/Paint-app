@@ -9,6 +9,7 @@ const ShowLine = () => {
     drawLine,
     setDrawLine,
     handleShapeClick,
+    btnEnablen
   } = useContext(globalStore);
 
   function handleDrag(e, id) {
@@ -42,7 +43,7 @@ const ShowLine = () => {
             stroke={l.stroke}
             strokeWidth={l.strokeWidth}
             lineJoin={l.lineJoin}
-            draggable={true}
+            draggable={btnEnablen}
             onDragEnd={(e) => handleDrag(e, l.id)}
             onTransformEnd={(e) => handleTranfomEnd(e, l.id, l.name)}
             onMouseDown={(e) => handleTransformetMouseDown(e, l.id, l.name)}

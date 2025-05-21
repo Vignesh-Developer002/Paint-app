@@ -8,7 +8,7 @@ const ShowPolygon = () => {
     handleTransformetMouseDown,
     drawPolygon,
     setDrawPolygon,
-    handleShapeClick,
+    btnEnablen,
   } = useContext(globalStore);
 
   function handlePolygonDrag(e, id) {
@@ -44,7 +44,7 @@ const ShowPolygon = () => {
             stroke={p.stroke}
             strokeWidth={p.strokeWidth}
             closed={p.closed}
-            draggable={true}
+            draggable={btnEnablen}
             rotation={p.rotation || 0}
             onDragEnd={(e) => handlePolygonDrag(e, p.id)}
             onTransformEnd={(e) => handletransformEnd(e, p.id, p.name)}

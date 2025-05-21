@@ -32,6 +32,8 @@ const SubStage = () => {
     showSingleRect,
     setDrawLine,
     idName,
+    btnEnablen,
+    setBtnEnable,
   } = useContext(globalStore);
 
   let rectArr = [...showSingleRect];
@@ -46,19 +48,6 @@ const SubStage = () => {
       y = d.y;
     }
   });
-
-  // fill: "grey";
-  // height: 380;
-  // id: "565aaf25-54dd-4c51-ad44-1d6919635595";
-  // name: "rectLayer";
-  // rotation: 0;
-  // stroke: "Black";
-  // strokeWidth: 4;
-  // width: 771;
-  // x: 362;
-  // y: 299;
-
-  console.log("inside layer", "width", width, "height", height, "x", x, "y", y);
 
   //--------circle-start--------------------------------------
   function handleDragEnd(e, id) {
@@ -119,6 +108,14 @@ const SubStage = () => {
     );
   }
 
+  function handlePolygonDrag(e, id) {
+    let x = e.target.x();
+    let y = e.target.y();
+    setDrawPolygon((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, x: x, y: y } : p))
+    );
+  }
+
   // ---------------------polygon-end---------------------
 
   //-------------------line-start-------------------------
@@ -141,7 +138,7 @@ const SubStage = () => {
     );
   }
   //-------------------line-end---------------------------
-
+ console.log(btnEnablen, "btnEnable");
   return (
     <>
       {stageVisible && (
@@ -172,7 +169,7 @@ const SubStage = () => {
                   strokeWidth={d.strokeWidth}
                   onDragEnd={(e) => handleDragEnd(e, d.id)}
                   onTransformEnd={(e) => handleTransformEnd(e, d.id, d.name)}
-                  draggable={true}
+                  draggable={btnEnablen}
                   rotation={d.rotation || 0}
                   onMouseDown={(e) =>
                     handleTransformetMouseDown(e, d.id, d.name)
@@ -191,7 +188,7 @@ const SubStage = () => {
                   name={d.name}
                   stroke="black"
                   strokeWidth={d.strokeWidth}
-                  draggable={true}
+                  draggable={btnEnablen}
                   rotation={d.rotation || 0}
                   onDragEnd={(e) => handleRectDrag(e, d.id)}
                   onMouseDown={(e) =>
@@ -211,7 +208,7 @@ const SubStage = () => {
                   stroke="black"
                   strokeWidth={d.strokeWidth}
                   closed={d.closed}
-                  draggable={true}
+                  draggable={btnEnablen}
                   rotation={d.rotation || 0}
                   onDragEnd={(e) => handlePolygonDrag(e, d.id)}
                   onTransformEnd={(e) => handletransformEnd(e, d.id, d.name)}
@@ -230,7 +227,7 @@ const SubStage = () => {
                   stroke="black"
                   strokeWidth={d.strokeWidth}
                   lineJoin={d.lineJoin}
-                  draggable={true}
+                  draggable={btnEnablen}
                   onDragEnd={(e) => handleDrag(e, d.id)}
                   onTransformEnd={(e) => handleTranfomEnd(e, d.id, d.name)}
                   onMouseDown={(e) =>

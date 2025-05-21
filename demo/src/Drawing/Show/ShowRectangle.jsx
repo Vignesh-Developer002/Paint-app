@@ -9,6 +9,7 @@ const ShowRectangle = () => {
     setDrawing,
     handleShapeClick,
     handleStageVisble,
+    btnEnablen
   } = useContext(globalStore);
 
   function handleRectDrag(e, id) {
@@ -45,7 +46,7 @@ const ShowRectangle = () => {
               name={r.name}
               stroke={r.stroke}
               strokeWidth={r.strokeWidth}
-              draggable={true}
+              draggable={btnEnablen}
               rotation={r.rotation || 0}
               onDragEnd={(e) => handleRectDrag(e, r.id)}
               onMouseDown={(e) => handleTransformetMouseDown(e, r.id, r.name)}

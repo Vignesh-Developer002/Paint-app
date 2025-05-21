@@ -4,7 +4,7 @@ import { circle } from "../../components/Schemas/Schemas";
 import { globalStore } from "../../StoreContext/StoreContext.jsx";
 
 const ShowCircle = () => {
-  const { handleTransformetMouseDown, drawCircle, setDrawCircle } =
+  const { handleTransformetMouseDown, drawCircle, setDrawCircle,btnEnablen } =
     useContext(globalStore);
 
   function handleDragEnd(e, id) {
@@ -43,7 +43,7 @@ const ShowCircle = () => {
             strokeWidth={c.strokeWidth}
             onDragEnd={(e) => handleDragEnd(e, c.id)}
             onTransformEnd={(e) => handleTransformEnd(e, c.id, c.name)}
-            draggable={true}
+            draggable={btnEnablen}
             rotation={c.rotation || 0}
             onMouseDown={(e) => handleTransformetMouseDown(e, c.id, c.name)}
           />

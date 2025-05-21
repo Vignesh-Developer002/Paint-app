@@ -14,6 +14,7 @@ const StoreContext = ({ children }) => {
     height: 0,
     radius: 0,
   });
+
   let [stageVisible, setStageVisible] = useState(false);
   let blueLayerRef = useRef(null); // multiple shape transform
   const [disable, setDisble] = useState(false); // for disable and enable the opacity input field
@@ -54,6 +55,7 @@ const StoreContext = ({ children }) => {
   const [currentValue, setCurrentValue] = useState(""); // for tracking the currently typed value
   const [currentShap, setCurrentShape] = useState(); // for assigning the current selected shape name
   const [selectBox, setSelectionBox] = useState({}); //slecting box box layer
+  const [btnEnablen, setBtnEnable] = useState(false); // for enable and disable the button
   let wd = Math.abs(selectBox?.width);
   let ht = Math.abs(selectBox?.height);
 
@@ -643,8 +645,6 @@ const StoreContext = ({ children }) => {
     }
   }
 
-  console.log("drawSingle Rectangle", drawsingleRect);
-
   // onStageMouseMove
   function onStageMouseMove(e) {
     if (btnName === actions.select) {
@@ -789,6 +789,7 @@ const StoreContext = ({ children }) => {
     } else if (btnName === "rectLayer") {
       setShowSingleRect((pre) => [...pre, drawsingleRect]);
       setDrawSingleRect({});
+      // setBtnEnable(true);
     }
   }
 
@@ -806,10 +807,30 @@ const StoreContext = ({ children }) => {
 
   // function for handleStageVisble
   function handleStageVisble() {
-    setStageVisible((pre) => !pre);
+    // setStageVisible((pre) => !pre);
+    // setSideBar((p) => ({ ...p, fill: "lightBlue", stroke: "lightGrey" }));
+    setStageVisible(true);
+    setBtnEnable(true);
+    localStorage.setItem("btnenable", JSON.stringify(true));
+  }
+
+  // function for handle the exit logic
+  function handleExit() {
+    let res;
+    if (localStorage.getItem("btnenable")) {
+      res = JSON.parse(localStorage.getItem("btnenable"));
+    }
+    console.log(res);
+    setStageVisible(false);
+    setBtnEnable(!res);
     setSideBar((p) => ({ ...p, fill: "lightBlue", stroke: "lightGrey" }));
   }
+
+  console.log("btn", btnEnablen)
   const contextValue = {
+    handleExit,
+    btnEnablen,
+    setBtnEnable,
     drawsingleRect,
     setDrawSingleRect,
     showSingleRect,

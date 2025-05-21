@@ -4,11 +4,21 @@ import { drawData } from "../../../Actions/Action.jsx";
 import { globalStore } from "../../../StoreContext/StoreContext.jsx";
 
 const IconGroup = () => {
-  const { btnName, setBtnName, setDraggable, setBtn, handleClear, setCurrentShape } =
-    useContext(globalStore);
-  //function for findinfd the name of the perticular clicked button
+  const {
+    btnName,
+    setBtnName,
+    setDraggable,
+    setBtn,
+    handleClear,
+    setCurrentShape,
+    stageVisible,
+    btnEnablen,
+    setBtnEnable,
+  } = useContext(globalStore);
 
-  function handleAction(id) {
+  //function for findinfd the name of the perticular clicked button
+  function handleAction(id, e) {
+    console.log("id", id);
     setBtnName(id);
     if (
       id === "select" ||
@@ -21,7 +31,7 @@ const IconGroup = () => {
     ) {
       setDraggable(false);
       setBtn("default");
-      setCurrentShape(id)
+      setCurrentShape(id);
     }
     if (id === "drag") {
       setDraggable(true);
@@ -34,13 +44,19 @@ const IconGroup = () => {
       setCurrentShape(id);
     }
   }
+
+  function handleBtn(icon) {
+    copnsole.log(icon);
+  }
+
   return (
     <div className="icon-group">
       {drawData.map((icon, idx) => (
         <button
+          id="btn"
           key={idx}
           className={btnName === icon.id ? "bg-blue" : "icon"}
-          onClick={() => handleAction(icon.id)}
+          onClick={(e) => handleAction(icon.id, e)}
         >
           {icon.icons}
         </button>
