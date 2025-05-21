@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { actions } from "../Actions/Action";
 import { v4 as uuidv4 } from "uuid";
+import DrawSingleRect from "../Drawing/Draw/DrawSingleRect";
 
 export const globalStore = createContext();
 const StoreContext = ({ children }) => {
@@ -13,7 +14,6 @@ const StoreContext = ({ children }) => {
     height: 0,
     radius: 0,
   });
-
   let [stageVisible, setStageVisible] = useState(false);
   let blueLayerRef = useRef(null); // multiple shape transform
   const [disable, setDisble] = useState(false); // for disable and enable the opacity input field
@@ -642,6 +642,8 @@ const StoreContext = ({ children }) => {
       });
     }
   }
+
+  console.log("drawSingle Rectangle", drawsingleRect);
 
   // onStageMouseMove
   function onStageMouseMove(e) {

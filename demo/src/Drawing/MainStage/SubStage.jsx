@@ -9,7 +9,6 @@ import {
   Line,
 } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext";
-import ShowComponent from "./ShowComponent";
 import DrawingComponent from "./DrawingComponent";
 
 const SubStage = () => {
@@ -17,7 +16,6 @@ const SubStage = () => {
     setDrawPolygon,
     stageRef,
     stageVisible,
-    setStageVisible,
     onStageMouseDown,
     onStageMouseMove,
     onStageMouseOut,
@@ -26,10 +24,8 @@ const SubStage = () => {
     transformerRef,
     drawing,
     drawCircle,
-    drawScribble,
     drawLine,
     drawPolygon,
-    drawText,
     setDrawCircle,
     handleTransformetMouseDown,
     setDrawing,
@@ -41,21 +37,30 @@ const SubStage = () => {
   let rectArr = [...showSingleRect];
   let stageHeight = window.innerHeight;
   let stageWidth = window.innerWidth;
-  let width, height;
+  let width, height, x, y;
   let res = showSingleRect.map((d) => {
     if (d.width > 0 && d.height > 0) {
       height = d.height;
       width = d.width;
+      x = d.x;
+      y = d.y;
     }
   });
 
-  if (idName.Name === "rectangle") {
-    console.log("rect");
-  } else if (idName.Name === "circle") {
-    console.log("circle");
-  }
+  // fill: "grey";
+  // height: 380;
+  // id: "565aaf25-54dd-4c51-ad44-1d6919635595";
+  // name: "rectLayer";
+  // rotation: 0;
+  // stroke: "Black";
+  // strokeWidth: 4;
+  // width: 771;
+  // x: 362;
+  // y: 299;
 
-  //--------circle-start----------------------------------------------------
+  console.log("inside layer", "width", width, "height", height, "x", x, "y", y);
+
+  //--------circle-start--------------------------------------
   function handleDragEnd(e, id) {
     let x = e.target.x();
     let y = e.target.y();
@@ -75,9 +80,9 @@ const SubStage = () => {
       )
     );
   }
-  //--------circle-end---------------------------------------------------------
+  //--------circle-end-----------------------------------------
 
-  //----------------Rectangle-start------------------------------------------
+  //----------------Rectangle-start----------------------------
 
   //function for tranformend
   function handleTransformEnd(e, id, name) {
@@ -99,9 +104,9 @@ const SubStage = () => {
     );
   }
 
-  //----------------Rectangle-end------------------------------------------
+  //----------------Rectangle-end--------------------------
 
-  //---------------polygon --------------------------------------
+  //---------------polygon --------------------------------
   //function for handletransformEnd i.e) rotation
   function handletransformEnd(e, id) {
     let x = e.target.x();
@@ -114,9 +119,9 @@ const SubStage = () => {
     );
   }
 
-  // ---------------------polygon-end-------------------------------
+  // ---------------------polygon-end---------------------
 
-  //-------------------line-start--------------------------
+  //-------------------line-start-------------------------
   function handleDrag(e, id) {
     let x = e.target.x();
     let y = e.target.y();
@@ -135,7 +140,7 @@ const SubStage = () => {
       )
     );
   }
-  //-------------------line-end------------------
+  //-------------------line-end---------------------------
 
   return (
     <>
@@ -153,14 +158,7 @@ const SubStage = () => {
         >
           <Layer>
             <Group>
-              <Rect
-                height={height}
-                width={width}
-                x={stageWidth / 2 - width / 2}
-                y={stageHeight / 2 - height / 2}
-                fill="white"
-              />
-
+              <Rect height={height} width={width} x={x} y={y} fill="white" />
               {drawCircle.map((d, idx) => (
                 <Circle
                   key={idx}
@@ -208,9 +206,9 @@ const SubStage = () => {
                   key={idx}
                   id={d.id}
                   points={d.points}
-                  fill={d.fill}
+                  fill="grey"
                   name={d.name}
-                  stroke={d.stroke}
+                  stroke="black"
                   strokeWidth={d.strokeWidth}
                   closed={d.closed}
                   draggable={true}
@@ -229,7 +227,7 @@ const SubStage = () => {
                   name={d.name}
                   rotation={d.rotation}
                   points={d.points}
-                  stroke={d.stroke}
+                  stroke="black"
                   strokeWidth={d.strokeWidth}
                   lineJoin={d.lineJoin}
                   draggable={true}
@@ -240,8 +238,8 @@ const SubStage = () => {
                   }
                 />
               ))}
+              <DrawingComponent />
             </Group>
-            <DrawingComponent />
             <Transformer ref={transformerRef} resizeEnabled={false} />
           </Layer>
         </Stage>

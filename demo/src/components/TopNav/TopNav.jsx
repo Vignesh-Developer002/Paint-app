@@ -2,20 +2,26 @@ import React, { useContext } from "react";
 import "./TopNav.css";
 import { IoExitOutline } from "react-icons/io5";
 import { globalStore } from "../../StoreContext/StoreContext";
+import { PiPaintBrushFill } from "react-icons/pi";
 
 const TopNav = () => {
   const { handleStageVisble, stageVisible } = useContext(globalStore);
+
   return (
     <>
       <div className="top-container">
         <div className="top-content">
           <div className="left-head">
-            <h1>Paint App</h1> <span></span>
+            <h1>Paint App</h1>{" "}
+            <span style={{ width: "40px", height: "40px" }}>
+              <PiPaintBrushFill fill="white" fontSize={30} />
+            </span>
           </div>
           {stageVisible && (
             <div className="exit-content">
               <div className="exit" onClick={() => handleStageVisble()}>
-                <p>Exit</p> <IoExitOutline className="ext-btn" />
+                <p>Exit</p>
+                <IoExitOutline className="ext-btn" />
               </div>
             </div>
           )}

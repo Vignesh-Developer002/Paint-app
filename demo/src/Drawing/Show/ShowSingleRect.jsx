@@ -9,20 +9,21 @@ const ShowSingleRect = () => {
   return (
     <>
       {Array.isArray(showSingleRect) &&
-        showSingleRect.map((d) => (
-          <Group>
-            <Rect
-              x={d.x}
-              y={d.y}
-              width={d?.width || 0}
-              height={d?.height || 0}
-              fill="Grey"
-              stroke="black"
-              strokeWidth={5}
-              rotation={d?.rotation || 0}
-              onDblClick={() => handleStageVisble()}
-            />
-          </Group>
+        showSingleRect.map((d, idx) => (
+          //   <Group>
+          <Rect
+            key={idx}
+            x={d.x}
+            y={d.y}
+            width={d?.width || 0}
+            height={d?.height || 0}
+            fill="Grey"
+            stroke="black"
+            strokeWidth={5}
+            rotation={d?.rotation || 0}
+            onDblClick={() => handleStageVisble()}
+          />
+          //   </Group>
         ))}
     </>
   );
