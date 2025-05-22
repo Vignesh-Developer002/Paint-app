@@ -18,7 +18,6 @@ const IconGroup = () => {
 
   //function for findinfd the name of the perticular clicked button
   function handleAction(id, e) {
-    console.log("id", id);
     setBtnName(id);
     if (
       id === "select" ||

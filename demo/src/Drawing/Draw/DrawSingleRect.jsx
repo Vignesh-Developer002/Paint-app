@@ -9,7 +9,6 @@ const DrawSingleRect = () => {
     showSingleRect,
     setShowSingleRect,
   } = useContext(globalStore);
-  console.log(showSingleRect);
   return (
     <>
       {Object.values(drawsingleRect) && (

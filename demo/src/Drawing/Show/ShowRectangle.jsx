@@ -9,7 +9,7 @@ const ShowRectangle = () => {
     setDrawing,
     handleShapeClick,
     handleStageVisble,
-    btnEnablen
+    btnEnablen,
   } = useContext(globalStore);
 
   function handleRectDrag(e, id) {
@@ -42,9 +42,9 @@ const ShowRectangle = () => {
               y={r.y}
               width={r.width}
               height={r.height}
-              fill={r.fill}
+              fill={r.fill === "grey" ? "lightBlue" : r.fill}
+              stroke={r.stroke === "Black" ? "lightGrey" : r.stroke}
               name={r.name}
-              stroke={r.stroke}
               strokeWidth={r.strokeWidth}
               draggable={btnEnablen}
               rotation={r.rotation || 0}

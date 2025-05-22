@@ -11,7 +11,7 @@ import {
 import { globalStore } from "../../StoreContext/StoreContext";
 import DrawingComponent from "./DrawingComponent";
 
-const SubStage = () => {
+const SubStage = ({ btnEnablen }) => {
   const {
     setDrawPolygon,
     stageRef,
@@ -32,8 +32,10 @@ const SubStage = () => {
     showSingleRect,
     setDrawLine,
     idName,
-    btnEnablen,
+    // btnEnablen,
     setBtnEnable,
+    shapeColor,
+    setShapeColor,
   } = useContext(globalStore);
 
   let rectArr = [...showSingleRect];
@@ -138,7 +140,9 @@ const SubStage = () => {
     );
   }
   //-------------------line-end---------------------------
- console.log(btnEnablen, "btnEnable");
+
+  console.log("subStage", btnEnablen);
+
   return (
     <>
       {stageVisible && (
@@ -155,7 +159,15 @@ const SubStage = () => {
         >
           <Layer>
             <Group>
-              <Rect height={height} width={width} x={x} y={y} fill="white" />
+              <Rect
+                height={height}
+                width={width}
+                x={x}
+                y={y}
+                fill="white"
+                stroke={"skyblue"}
+                strokeWidth={4}
+              />
               {drawCircle.map((d, idx) => (
                 <Circle
                   key={idx}
@@ -164,8 +176,8 @@ const SubStage = () => {
                   y={d.y}
                   name={d.name}
                   radius={d.radius}
-                  fill="grey"
-                  stroke="black"
+                  fill={btnEnablen && "grey"}
+                  stroke={btnEnablen && "black"}
                   strokeWidth={d.strokeWidth}
                   onDragEnd={(e) => handleDragEnd(e, d.id)}
                   onTransformEnd={(e) => handleTransformEnd(e, d.id, d.name)}
@@ -184,9 +196,9 @@ const SubStage = () => {
                   y={d.y}
                   width={d.width}
                   height={d.height}
-                  fill="grey"
+                  fill={btnEnablen && "grey"}
+                  stroke={btnEnablen && "black"}
                   name={d.name}
-                  stroke="black"
                   strokeWidth={d.strokeWidth}
                   draggable={btnEnablen}
                   rotation={d.rotation || 0}
@@ -203,9 +215,9 @@ const SubStage = () => {
                   key={idx}
                   id={d.id}
                   points={d.points}
-                  fill="grey"
                   name={d.name}
-                  stroke="black"
+                  fill={btnEnablen && "gray"}
+                  stroke={btnEnablen && "black"}
                   strokeWidth={d.strokeWidth}
                   closed={d.closed}
                   draggable={btnEnablen}
@@ -224,7 +236,7 @@ const SubStage = () => {
                   name={d.name}
                   rotation={d.rotation}
                   points={d.points}
-                  stroke="black"
+                  stroke={btnEnablen && "black"}
                   strokeWidth={d.strokeWidth}
                   lineJoin={d.lineJoin}
                   draggable={btnEnablen}

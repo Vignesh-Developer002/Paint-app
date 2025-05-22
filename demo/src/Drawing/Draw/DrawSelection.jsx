@@ -8,7 +8,7 @@ const DrawSelection = () => {
   let visible = selectBox["visible"];
   let width = selectBox["width"];
   let height = selectBox["height"];
-  console.log(height, width);
+
   return (
     // selectBox && visible &&
     <>

@@ -21,12 +21,11 @@ const ShowSingleRect = () => {
             y={d.y}
             width={d?.width || 0}
             height={d?.height || 0}
-            fill="Grey"
+            fill="lightGrey"
             stroke="black"
-            strokeWidth={5}
+            strokeWidth={2}
             rotation={d?.rotation || 0}
-            onDblClick={() => handleStageVisble()}
-            
+            onDblClick={(e) => handleStageVisble(e)}
           />
         ))}
     </>

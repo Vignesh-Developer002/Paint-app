@@ -1,11 +1,16 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { Circle } from "react-konva";
-import { circle } from "../../components/Schemas/Schemas";
 import { globalStore } from "../../StoreContext/StoreContext.jsx";
 
 const ShowCircle = () => {
-  const { handleTransformetMouseDown, drawCircle, setDrawCircle,btnEnablen } =
-    useContext(globalStore);
+  const {
+    handleTransformetMouseDown,
+    drawCircle,
+    setDrawCircle,
+    btnEnablen,
+    btnName,
+    stageVisible,
+  } = useContext(globalStore);
 
   function handleDragEnd(e, id) {
     let x = e.target.x();
@@ -26,6 +31,7 @@ const ShowCircle = () => {
       )
     );
   }
+  console.log(btnName);
 
   return (
     <>
@@ -38,8 +44,8 @@ const ShowCircle = () => {
             y={c.y}
             name={c.name}
             radius={c.radius}
-            fill={c.fill}
-            stroke={c.stroke}
+            fill={c.fill === "grey" ? "lightBlue" : c.fill}
+            stroke={c.stroke === "#000000" ? "lightGrey" : c.stroke}
             strokeWidth={c.strokeWidth}
             onDragEnd={(e) => handleDragEnd(e, c.id)}
             onTransformEnd={(e) => handleTransformEnd(e, c.id, c.name)}

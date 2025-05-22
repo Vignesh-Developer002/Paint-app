@@ -18,6 +18,7 @@ const MainStage = () => {
     transformUnSelect,
     handleCircleWheel,
     stageVisible,
+    btnEnablen,
   } = useContext(globalStore);
 
   let stage = document.getElementById("stageClass");
@@ -54,7 +55,7 @@ const MainStage = () => {
           </Layer>
         </Stage>
       ) : (
-        <SubStage />
+        <SubStage btnEnablen={btnEnablen} />
       )}
     </>
   );

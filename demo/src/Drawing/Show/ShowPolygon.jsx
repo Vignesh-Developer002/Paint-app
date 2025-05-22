@@ -39,9 +39,9 @@ const ShowPolygon = () => {
             key={idx}
             id={p.id}
             points={p.points}
-            fill={p.fill}
+            fill={p.fill === "gray" ? "lightBlue" : p.fill}
             name={p.name}
-            stroke={p.stroke}
+            stroke={p.stroke === "#000000" ? "lightGrey" : p.stroke}
             strokeWidth={p.strokeWidth}
             closed={p.closed}
             draggable={btnEnablen}

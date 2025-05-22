@@ -9,7 +9,8 @@ const ShowLine = () => {
     drawLine,
     setDrawLine,
     handleShapeClick,
-    btnEnablen
+    btnEnablen,
+    btnName,
   } = useContext(globalStore);
 
   function handleDrag(e, id) {
@@ -40,10 +41,12 @@ const ShowLine = () => {
             name={l.name}
             rotation={l.rotation}
             points={l.points}
-            stroke={l.stroke}
+            stroke={l.stroke === "#000000" ? "lightBlue" : l.stroke}
             strokeWidth={l.strokeWidth}
             lineJoin={l.lineJoin}
-            draggable={btnEnablen}
+            draggable={
+              btnEnablen ? true : btnName == "rectLayer" ? true : false
+            }
             onDragEnd={(e) => handleDrag(e, l.id)}
             onTransformEnd={(e) => handleTranfomEnd(e, l.id, l.name)}
             onMouseDown={(e) => handleTransformetMouseDown(e, l.id, l.name)}

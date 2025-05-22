@@ -13,7 +13,7 @@ const StoreContext = ({ children }) => {
     height: 0,
     radius: 0,
   });
-
+  const [shapeColor, setShapeColor] = useState(null); // for setting the shape color when ever we enter the subStage and leave the subStage
   let [stageVisible, setStageVisible] = useState(false); // for enable and disable the button
   let blueLayerRef = useRef(null); // multiple shape transform
   const [disable, setDisble] = useState(false); // for disable and enable the opacity input field
@@ -543,6 +543,7 @@ const StoreContext = ({ children }) => {
         y: y,
         name: btnName,
         radius: 1,
+        // sideBar.fill || "grey"
         fill: sideBar.fill || "grey",
         stroke: sideBar.stroke || "#000000",
         strokeWidth: 4,
@@ -636,9 +637,9 @@ const StoreContext = ({ children }) => {
         name: btnName,
         width: 1,
         height: 1,
-        fill: sideBar.fill ? sideBar.fill : "grey",
+        fill: sideBar.fill ? sideBar.fill : "Lightgrey",
         stroke: sideBar.stroke ? sideBar.stroke : "Black",
-        strokeWidth: 4,
+        strokeWidth: 2,
         rotation: 0,
       });
     }
@@ -788,7 +789,6 @@ const StoreContext = ({ children }) => {
     } else if (btnName === "rectLayer") {
       setShowSingleRect((pre) => [...pre, drawsingleRect]);
       setDrawSingleRect({});
-      // setBtnEnable(true);
     }
   }
 
@@ -804,29 +804,25 @@ const StoreContext = ({ children }) => {
     }
   }
 
+  console.log("btnEnable", btnEnablen);
   // function for handleStageVisble
-  function handleStageVisble() {
-    // setStageVisible((pre) => !pre);
-    // setSideBar((p) => ({ ...p, fill: "lightBlue", stroke: "lightGrey" }));
+  function handleStageVisble(e) {
     setStageVisible(true);
+    localStorage.setItem("shape", JSON.stringify(true));
     setBtnEnable(true);
-    localStorage.setItem("btnenable", JSON.stringify(true));
   }
 
   // function for handle the exit logic
   function handleExit() {
     let res;
-    if (localStorage.getItem("btnenable")) {
-      res = JSON.parse(localStorage.getItem("btnenable"));
-    }
-    console.log(res);
+    res = localStorage.setItem("btnenable", JSON.stringify(false));
     setStageVisible(false);
-    setBtnEnable(!res);
-    setSideBar((p) => ({ ...p, fill: "lightBlue", stroke: "lightGrey" }));
+    setBtnEnable(false);
   }
 
-  console.log("btn", btnEnablen);
   const contextValue = {
+    shapeColor,
+    setShapeColor,
     handleExit,
     btnEnablen,
     setBtnEnable,

@@ -5,7 +5,6 @@ import { Group, Rect, Line, Circle } from "react-konva";
 const ShowGroup = () => {
   const { ShowGroup, setShowGroup, handleTransformetMouseDown, sideBar } =
     useContext(globalStore);
-  console.log("ShowGroup Array", Array.isArray(ShowGroup), ShowGroup);
   return (
     <>
       {Array.isArray(ShowGroup) &&
