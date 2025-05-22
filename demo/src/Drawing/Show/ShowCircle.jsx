@@ -9,6 +9,7 @@ const ShowCircle = () => {
     setDrawCircle,
     btnEnablen,
     btnName,
+    singleRectRef,
     stageVisible,
   } = useContext(globalStore);
 
@@ -31,7 +32,8 @@ const ShowCircle = () => {
       )
     );
   }
-  console.log(btnName);
+
+  console.log("singleRef", singleRectRef.current);
 
   return (
     <>
@@ -44,14 +46,17 @@ const ShowCircle = () => {
             y={c.y}
             name={c.name}
             radius={c.radius}
+            // c.fill === "grey" ? "lightBlue" : c.fill
+            // c.stroke === "#000000" ? "lightGrey" : c.stroke
             fill={c.fill === "grey" ? "lightBlue" : c.fill}
             stroke={c.stroke === "#000000" ? "lightGrey" : c.stroke}
             strokeWidth={c.strokeWidth}
             onDragEnd={(e) => handleDragEnd(e, c.id)}
             onTransformEnd={(e) => handleTransformEnd(e, c.id, c.name)}
-            draggable={btnEnablen}
+            draggable={true}
             rotation={c.rotation || 0}
             onMouseDown={(e) => handleTransformetMouseDown(e, c.id, c.name)}
+            onClick={() => handleClick()}
           />
         ))}
     </>

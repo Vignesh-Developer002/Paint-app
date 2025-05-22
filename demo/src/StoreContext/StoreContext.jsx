@@ -13,6 +13,16 @@ const StoreContext = ({ children }) => {
     height: 0,
     radius: 0,
   });
+  let singleRectRef = useRef();
+  let [obRect, setObRect] = useState({}); //object for rect inside
+  let [obCir, setObCir] = useState({}); //object for circle inside
+  let [obLine, setObLine] = useState({}); //object for line inside
+  let [obPoly, setObPoly] = useState({}); //object for poly inside
+  let [showObRect, setShowObRect] = useState([]); // array for pushing the rect object
+  let [showObCircle, setShowObCirlce] = useState([]); //array for pushing the circle Object
+  let [showObLine, setShowObLine] = useState([]); //array for pushing the line object
+  let [showObPoly, setShowObpoly] = useState([]); //array for pushing the poly object
+  const [rectMouseDown, setRectMouseDown] = useState(null); // for tracking the mouse down for the singleRectLayer
   const [shapeColor, setShapeColor] = useState(null); // for setting the shape color when ever we enter the subStage and leave the subStage
   let [stageVisible, setStageVisible] = useState(false); // for enable and disable the button
   let blueLayerRef = useRef(null); // multiple shape transform
@@ -431,6 +441,9 @@ const StoreContext = ({ children }) => {
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name, multiSel) {
+    // if(){
+
+    // }
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
       let len = multiSel !== undefined ? multiSel.length : null;
@@ -794,6 +807,8 @@ const StoreContext = ({ children }) => {
 
   // Function for handle the whille clicking outside the tranform should be unselect
   function transformUnSelect(e) {
+    singleRectRef.current = true;
+    // setBtnEnable(false);// -----------------------------------------------------------------------------
     if (e.target === stageRef.current) {
       if (transformerRef.current) {
         transformerRef.current.nodes([]);
@@ -821,6 +836,9 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    showObRect, setShowObRect,
+    obRect,
+    setObRect,
     shapeColor,
     setShapeColor,
     handleExit,
@@ -910,6 +928,9 @@ const StoreContext = ({ children }) => {
     drawPolygon,
     setDrawPolygon,
     mouseDown,
+    rectMouseDown,
+    setRectMouseDown,
+    singleRectRef,
   };
 
   return (
