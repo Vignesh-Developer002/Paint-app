@@ -146,34 +146,67 @@ const StoreContext = ({ children }) => {
   // useEffect for update the values
   useEffect(() => {
     if (names === "rectangle") {
-      setDrawing((prev) =>
-        prev.map((d) =>
-          d.id === ids
-            ? {
-                ...d,
-                height: height,
-                width: width,
-                strokeWidth: strokeWidth,
-                fill: fill,
-                stroke: stroke,
-              }
-            : d
-        )
-      );
+      if (showObRect.length === 0) {
+        setDrawing((prev) =>
+          prev.map((d) =>
+            d.id === ids
+              ? {
+                  ...d,
+                  height: height,
+                  width: width,
+                  strokeWidth: strokeWidth,
+                  fill: fill,
+                  stroke: stroke,
+                }
+              : d
+          )
+        );
+      } else {
+        setShowObRect((prev) =>
+          prev.map((d) =>
+            d.id === ids
+              ? {
+                  ...d,
+                  height: height,
+                  width: width,
+                  strokeWidth: strokeWidth,
+                  fill: fill,
+                  stroke: stroke,
+                }
+              : d
+          )
+        );
+      }
     } else if (names === "circle") {
-      setDrawCircle((prev) =>
-        prev.map((d) =>
-          d.id === ids
-            ? {
-                ...d,
-                strokeWidth: strokeWidth,
-                fill: fill,
-                stroke: stroke,
-                radius: radius,
-              }
-            : d
-        )
-      );
+      if (showObCircle.length === 0) {
+        setDrawCircle((prev) =>
+          prev.map((d) =>
+            d.id === ids
+              ? {
+                  ...d,
+                  strokeWidth: strokeWidth,
+                  fill: fill,
+                  stroke: stroke,
+                  radius: radius,
+                }
+              : d
+          )
+        );
+      } else {
+        setShowObCirlce((prev) =>
+          prev.map((d) =>
+            d.id === ids
+              ? {
+                  ...d,
+                  strokeWidth: strokeWidth,
+                  fill: fill,
+                  stroke: stroke,
+                  radius: radius,
+                }
+              : d
+          )
+        );
+      }
     } else if (names === "scrible") {
       setDrawScribble((prev) =>
         prev.map((d) =>
@@ -188,26 +221,46 @@ const StoreContext = ({ children }) => {
         )
       );
     } else if (names === "line") {
-      setDrawLine((prev) =>
-        prev.map((d) =>
-          d.id === ids
-            ? {
-                ...d,
-                strokeWidth: strokeWidth,
-                fill: fill,
-                stroke: stroke,
-              }
-            : d
-        )
-      );
+      if (showObLine.length === 0) {
+        setDrawLine((prev) =>
+          prev.map((d) =>
+            d.id === ids
+              ? {
+                  ...d,
+                  strokeWidth: strokeWidth,
+                  fill: fill,
+                  stroke: stroke,
+                }
+              : d
+          )
+        );
+      } else {
+        setShowObLine((prev) =>
+          prev.map((d) =>
+            d.id === ids
+              ? { ...d, strokeWidth: strokeWidth, fill: fill, stroke: stroke }
+              : d
+          )
+        );
+      }
     } else if (names === "polygon") {
-      setDrawPolygon((prev) =>
-        prev.map((d) =>
-          d.id === ids
-            ? { ...d, strokeWidth: strokeWidth, stroke: stroke, fill: fill }
-            : d
-        )
-      );
+      if (showObPoly.length === 0) {
+        setDrawPolygon((prev) =>
+          prev.map((d) =>
+            d.id === ids
+              ? { ...d, strokeWidth: strokeWidth, stroke: stroke, fill: fill }
+              : d
+          )
+        );
+      } else {
+        setShowObpoly((prev) =>
+          prev.map((d) =>
+            d.id === ids
+              ? { ...d, strokeWidth: strokeWidth, stroke: stroke, fill: fill }
+              : d
+          )
+        );
+      }
     } else if (names === "image") {
       setImages((prev) =>
         prev.map((d) =>

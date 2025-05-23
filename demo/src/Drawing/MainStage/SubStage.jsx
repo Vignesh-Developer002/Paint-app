@@ -92,8 +92,6 @@ const SubStage = () => {
         let y = pos.y;
         setObPoly((prev) => ({
           ...prev,
-          x: x,
-          y: y,
           name: btnName,
           id: uuidv4(),
           points: Array.isArray(prev?.points) ? [...prev.points, x, y] : [x, y],

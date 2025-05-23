@@ -14,6 +14,16 @@ const ShowSingleRect = () => {
     Stage2ShapeColor,
   } = useContext(globalStore);
 
+  console.log(
+    " outside RECT",
+    showObRect,
+    " outside CIRCLE",
+    showObCircle,
+    " outside line",
+    showObLine,
+    " outsidePolyg",
+    showObPoly
+  );
 
   return (
     <>
@@ -34,6 +44,22 @@ const ShowSingleRect = () => {
               onDblClick={(e) => handleStageVisble(e)}
             />
 
+            {Array.isArray(showObPoly) &&
+              showObPoly.map((d) => (
+                <Line
+                  key={d?.id}
+                  id={d?.id}
+                  x={d?.x}
+                  y={d?.y}
+                  points={d?.points}
+                  fill={Stage2ShapeColor === true ? "lightBlue" : ""}
+                  stroke={Stage2ShapeColor === true ? "lightGrey" : ""}
+                  strokeWidth={d?.strokeWidth}
+                  closed={d?.closed}
+                  name={d?.name}
+                  rotation={d?.rotation}
+                />
+              ))}
             {Array.isArray(showObRect) &&
               showObRect.map((d, idx) => (
                 <Rect
@@ -61,23 +87,6 @@ const ShowSingleRect = () => {
                   fill={Stage2ShapeColor === true ? "lightBlue" : ""}
                   stroke={Stage2ShapeColor === true ? "lightGrey" : ""}
                   strokeWidth={d?.strokeWidth}
-                  rotation={d?.rotation}
-                />
-              ))}
-
-            {Array.isArray(showObPoly) &&
-              showObPoly.map((d) => (
-                <Line
-                  key={d?.id}
-                  id={d?.id}
-                  x={d?.x}
-                  y={d?.y}
-                  points={d?.points}
-                  fill={Stage2ShapeColor === true ? "lightBlue" : ""}
-                  stroke={Stage2ShapeColor === true ? "lightGrey" : ""}
-                  strokeWidth={d?.strokeWidth}
-                  closed={d?.closed}
-                  name={d?.name}
                   rotation={d?.rotation}
                 />
               ))}
