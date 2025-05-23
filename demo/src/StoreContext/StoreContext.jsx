@@ -836,7 +836,12 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
-    showObRect, setShowObRect,
+    showObCircle,
+    setShowObCirlce,
+    obCir,
+    setObCir,
+    showObRect,
+    setShowObRect,
     obRect,
     setObRect,
     shapeColor,

@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from "uuid";
 import DrawSingleComponent from "./DrawSingleComponent";
 import ShowSingleComonent from "./ShowSingleComonent";
 
-const SubStage = ({ btnEnablen }) => {
+const SubStage = () => {
   const {
     stageVisible,
     btnName,
@@ -27,8 +27,14 @@ const SubStage = ({ btnEnablen }) => {
     setObRect,
     showObRect,
     setShowObRect,
+    stageRef,
+    obCir,
+    setObCir,
+    showObCircle,
+    setShowObCirlce,
   } = useContext(globalStore);
 
+  console.log("circle array", showObCircle);
   let rectArr = [...showSingleRect];
   let stageHeight = window.innerHeight;
   let stageWidth = window.innerWidth;
@@ -59,6 +65,21 @@ const SubStage = ({ btnEnablen }) => {
         name: btnName,
         strokeWidth: 1,
       });
+    } else if (btnName === "circle") {
+      let pos = e.target.getStage().getRelativePointerPosition();
+      let x = pos.x;
+      let y = pos.y;
+      setObCir({
+        id: uuidv4(),
+        x: x,
+        y: y,
+        name: btnName,
+        radius: 1,
+        fill: "lightGrey",
+        stroke: "black",
+        strokeWidth: 1,
+        rotation: 0,
+      });
     }
   }
 
@@ -73,6 +94,17 @@ const SubStage = ({ btnEnablen }) => {
         width: x - p.x || 0,
         height: y - p.y || 0,
       }));
+    } else if (btnName === "circle") {
+      let pos = e.target.getStage().getRelativePointerPosition();
+      let x = pos.x || 0;
+      let y = pos.y || 0;
+      setObCir((pre) => ({
+        ...pre,
+        radius: Math.pow(
+          Math.pow(x - (pre.x || 0), 2) + Math.pow(y - (pre.y || 0), 2),
+          0.5
+        ),
+      }));
     }
   }
 
@@ -80,6 +112,9 @@ const SubStage = ({ btnEnablen }) => {
     if (btnName === "rectangle") {
       setShowObRect((p) => [...p, obRect]);
       setObRect({});
+    } else if (btnName === "circle") {
+      setShowObCirlce((d) => [...d, obCir]);
+      setObCir({});
     }
   }
   return (
@@ -87,7 +122,7 @@ const SubStage = ({ btnEnablen }) => {
       {stageVisible && (
         <Stage
           style={{ backgroundColor: "grey" }}
-          ref={singleRectRef}
+          ref={stageRef}
           width={stageWidth}
           height={stageHeight}
           onMouseDown={(e) => onStageMouseDown(e)}
