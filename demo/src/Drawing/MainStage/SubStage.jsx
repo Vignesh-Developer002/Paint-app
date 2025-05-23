@@ -44,6 +44,8 @@ const SubStage = () => {
     setShowObLine,
     Stage2ShapeColor,
     setStage2ShapeColor,
+    transFormUnselectStage2,
+    transformerRef2,
   } = useContext(globalStore);
 
   let rectArr = [...showSingleRect];
@@ -98,6 +100,8 @@ const SubStage = () => {
         let y = pos.y;
         setObPoly((prev) => ({
           ...prev,
+          x: x,
+          y: y,
           name: btnName,
           id: uuidv4(),
           points: Array.isArray(prev?.points) ? [...prev.points, x, y] : [x, y],
@@ -182,13 +186,12 @@ const SubStage = () => {
     }
   }
 
-  console.log("from subStage", Stage2ShapeColor);
   return (
     <>
       {stageVisible && (
         <Stage
           style={{ backgroundColor: "grey" }}
-          ref={singleRectRef}
+          ref={stageRef}
           width={stageWidth}
           height={stageHeight}
           onMouseDown={(e) => onStageMouseDown(e)}

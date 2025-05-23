@@ -70,12 +70,15 @@ const ShowSingleRect = () => {
                 <Line
                   key={d?.id}
                   id={d?.id}
+                  x={d?.x}
+                  y={d?.y}
                   points={d?.points}
                   fill={Stage2ShapeColor === true ? "lightBlue" : ""}
                   stroke={Stage2ShapeColor === true ? "lightGrey" : ""}
                   strokeWidth={d?.strokeWidth}
                   closed={d?.closed}
                   name={d?.name}
+                  rotation={d?.rotation}
                 />
               ))}
 

@@ -13,7 +13,7 @@ const StoreContext = ({ children }) => {
     height: 0,
     radius: 0,
   });
-  let singleRectRef = useRef();
+  let singleRectRef = useRef(null);
   let [Stage2ShapeColor, setStage2ShapeColor] = useState(null);
   let [stage2PolyClosed, setStage2PolygonClosed] = useState(false); // for tracking the  stage 2 polygon is closed
   let [nextStage2Points, setStage2Points] = useState({}); // for updating the points for stage 2 polygon
@@ -57,6 +57,7 @@ const StoreContext = ({ children }) => {
   const [closed, setClosed] = useState(false); // for tracking the polygon circle is completed or not
   const [isComplete, setIsComplete] = useState(false);
   const transformerRef = useRef(null);
+  const transformerRef2 = useRef(null);
   const [btnName, setBtnName] = useState("");
   const [fillColor, setFillColor] = useState(""); // fillColor
   const [strokeColor, setStrokeColor] = useState(""); // strokeColor
@@ -257,7 +258,7 @@ const StoreContext = ({ children }) => {
     if (name === "rectangle") {
       let Id, nm, height, width, stroke, fill, radius, strokeWidth;
       const totalShape = drawing.find((d) => d.id === id);
-      nm = totalShape["name"];
+      nm = totalShape?.name || "";
       Id = totalShape["id"];
       radius = totalShape["radius"];
       height = totalShape["height"];
@@ -279,7 +280,7 @@ const StoreContext = ({ children }) => {
       }));
     } else if (name === "circle") {
       const totalShape = drawCircle.find((d) => d.id === id);
-      let name = totalShape["name"];
+      let name = totalShape?.name || "";
       let ids = totalShape["id"];
       let radius = totalShape["radius"];
       let height = totalShape["height"];
@@ -316,7 +317,7 @@ const StoreContext = ({ children }) => {
       });
     } else if (name === "line") {
       let totalShape = drawLine.find((d) => d.id === id);
-      let name = totalShape["name"];
+      let name = totalShape?.name || "";
       let fill = totalShape["fill"];
       let stroke = totalShape["stroke"];
       let strokeWidth = totalShape["strokeWidth"];
@@ -332,7 +333,7 @@ const StoreContext = ({ children }) => {
       });
     } else if (name === "polygon") {
       let totalShape = drawPolygon.find((d) => d.id === id);
-      let name = totalShape["name"];
+      let name = totalShape?.name || "";
       let fill = totalShape["fill"];
       let stroke = totalShape["stroke"];
       let strokeWidth = totalShape["strokeWidth"];
@@ -830,7 +831,6 @@ const StoreContext = ({ children }) => {
 
   // Function for handle the whille clicking outside the tranform should be unselect
   function transformUnSelect(e) {
-    singleRectRef.current = true;
     // setBtnEnable(false);// -----------------------------------------------------------------------------
     if (e.target === stageRef.current) {
       if (transformerRef.current) {
@@ -862,6 +862,7 @@ const StoreContext = ({ children }) => {
   // console.log("shapeColor",Stage2ShapeColor);
 
   const contextValue = {
+    transformerRef2,
     Stage2ShapeColor,
     setStage2ShapeColor,
     showObLine,

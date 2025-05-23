@@ -46,7 +46,7 @@ const ShowRectangle = () => {
               stroke={r.stroke}
               name={r.name}
               strokeWidth={r.strokeWidth}
-              draggable={btnEnablen}
+              draggable={true}
               rotation={r.rotation || 0}
               onDragEnd={(e) => handleRectDrag(e, r.id)}
               onMouseDown={(e) => handleTransformetMouseDown(e, r.id, r.name)}

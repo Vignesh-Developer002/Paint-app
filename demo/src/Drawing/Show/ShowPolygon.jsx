@@ -44,8 +44,8 @@ const ShowPolygon = () => {
             stroke={p.stroke}
             strokeWidth={p.strokeWidth}
             closed={p.closed}
-            draggable={btnEnablen}
-            rotation={p.rotation || 0}
+            draggable={true}
+            rotation={p.rotation}
             onDragEnd={(e) => handlePolygonDrag(e, p.id)}
             onTransformEnd={(e) => handletransformEnd(e, p.id, p.name)}
             onMouseDown={(e) => handleTransformetMouseDown(e, p.id, p.name)}

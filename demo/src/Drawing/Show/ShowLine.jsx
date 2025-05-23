@@ -44,9 +44,7 @@ const ShowLine = () => {
             stroke={l.stroke}
             strokeWidth={l.strokeWidth}
             lineJoin={l.lineJoin}
-            draggable={
-              btnEnablen ? true : btnName == "rectLayer" ? true : false
-            }
+            draggable={true}
             onDragEnd={(e) => handleDrag(e, l.id)}
             onTransformEnd={(e) => handleTranfomEnd(e, l.id, l.name)}
             onMouseDown={(e) => handleTransformetMouseDown(e, l.id, l.name)}
