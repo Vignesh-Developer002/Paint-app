@@ -32,9 +32,18 @@ const SubStage = () => {
     setObCir,
     showObCircle,
     setShowObCirlce,
+    PolyStage2Complete,
+    setPolyStage2Complete,
+    obPoly,
+    setObPoly,
+    nextStage2Points,
+    setStage2Points,
+    obLine,
+    setObLine,
+    showObLine,
+    setShowObLine,
   } = useContext(globalStore);
 
-  console.log("circle array", showObCircle);
   let rectArr = [...showSingleRect];
   let stageHeight = window.innerHeight;
   let stageWidth = window.innerWidth;
@@ -80,6 +89,40 @@ const SubStage = () => {
         strokeWidth: 1,
         rotation: 0,
       });
+    } else if (btnName === "polygon") {
+      if (!PolyStage2Complete) {
+        let pos = e.target.getStage().getRelativePointerPosition();
+        let x = pos.x;
+        let y = pos.y;
+        setObPoly((prev) => ({
+          ...prev,
+          name: btnName,
+          id: uuidv4(),
+          points: Array.isArray(prev?.points) ? [...prev.points, x, y] : [x, y],
+          fill: "lightGrey",
+          stroke: "Black",
+          strokeWidth: 1,
+          closed: obPoly?.closed || false,
+          rotation: 0,
+        }));
+      }
+    } else if (btnName === "line") {
+      const stage = e.target.getStage();
+      const pointer = stage.getPointerPosition();
+      let x = pointer.x;
+      let y = pointer.y;
+      setObLine({
+        id: uuidv4(),
+        x: 1,
+        y: 1,
+        name: btnName,
+        points: [x, y, x, y],
+        stroke: "Black",
+        fill: "lightGrey",
+        strokeWidth: 1,
+        lineJoin: "round",
+        rotation: 0,
+      });
     }
   }
 
@@ -105,6 +148,23 @@ const SubStage = () => {
           0.5
         ),
       }));
+    } else if (btnName === "polygon") {
+      if (!PolyStage2Complete) {
+        let pos = e.target.getStage().getRelativePointerPosition();
+        let x = pos.x || 0;
+        let y = pos.y || 0;
+        setStage2Points({ x: x, y: y });
+      }
+    } else if (btnName === "line") {
+      const stage = e.target.getStage();
+      const pointer = stage.getPointerPosition();
+      let x = pointer.x;
+      let y = pointer.y;
+
+      setObLine((p) => ({
+        ...p,
+        points: [p?.points?.[0] || 0, p?.points?.[1] || 0, x, y],
+      }));
     }
   }
 
@@ -115,14 +175,19 @@ const SubStage = () => {
     } else if (btnName === "circle") {
       setShowObCirlce((d) => [...d, obCir]);
       setObCir({});
+    } else if (btnName === "line") {
+      setShowObLine((p) => [...p, obLine]);
+      setObLine({});
     }
   }
+
+  console.log("line", showObLine);
   return (
     <>
       {stageVisible && (
         <Stage
           style={{ backgroundColor: "grey" }}
-          ref={stageRef}
+          ref={singleRectRef}
           width={stageWidth}
           height={stageHeight}
           onMouseDown={(e) => onStageMouseDown(e)}
@@ -143,7 +208,6 @@ const SubStage = () => {
                 stroke={"skyblue"}
                 strokeWidth={4}
               />
-
               <DrawSingleComponent />
               <ShowSingleComonent />
             </Group>

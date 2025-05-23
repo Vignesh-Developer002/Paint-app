@@ -14,6 +14,9 @@ const StoreContext = ({ children }) => {
     radius: 0,
   });
   let singleRectRef = useRef();
+  let [stage2PolyClosed, setStage2PolygonClosed] = useState(false); // for tracking the  stage 2 polygon is closed
+  let [nextStage2Points, setStage2Points] = useState({}); // for updating the points for stage 2 polygon
+  let [PolyStage2Complete, setPolyStage2Complete] = useState(false); // for tracking the polygon stage 2 is complete
   let [obRect, setObRect] = useState({}); //object for rect inside
   let [obCir, setObCir] = useState({}); //object for circle inside
   let [obLine, setObLine] = useState({}); //object for line inside
@@ -441,9 +444,6 @@ const StoreContext = ({ children }) => {
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name, multiSel) {
-    // if(){
-
-    // }
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
       let len = multiSel !== undefined ? multiSel.length : null;
@@ -472,6 +472,17 @@ const StoreContext = ({ children }) => {
     }
   }
 
+  // stage 2 polygon circle onClick
+  function handleCircleClick() {
+    if (obPoly["points"].length > 4) {
+      setStage2PolygonClosed(true); // for tracking the circle polygon  for stage2 is clicked or not
+      setObPoly((prev) => ({ ...prev, closed: true }));
+      // setPolyStage2Complete(true);
+    } else {
+      return;
+    }
+  }
+
   // function for handle the handleShapeClick
   const handleShapeClick = (e, id) => {
     const isSelected = selectedIds.includes(id);
@@ -490,6 +501,7 @@ const StoreContext = ({ children }) => {
 
   // useEffect for pushing the polygon data to the array and clearing the polygon object
   useEffect(() => {
+    console.log("normal polygon useEffect");
     if (Object.keys(polygons).length > 0) {
       if (polygons["points"].length > 4) {
         setDrawPolygon((prev) => [...prev, polygons]);
@@ -499,6 +511,19 @@ const StoreContext = ({ children }) => {
 
     setClosed(false); // for tracking the circle is clicked or not
   }, [closed]);
+
+  // useEffect for pushing the stage 2 polygon to the array
+
+  useEffect(() => {
+    console.log("stage2Polygon useEffect");
+    if (Object.keys(obPoly).length > 0) {
+      if (obPoly["points"].length > 4) {
+        setShowObpoly((prev) => [...prev, obPoly]);
+        setObPoly({});
+      }
+    }
+    setStage2PolygonClosed(false);
+  }, [stage2PolyClosed]);
 
   // onStageMouseDown
   function onStageMouseDown(e) {
@@ -556,7 +581,6 @@ const StoreContext = ({ children }) => {
         y: y,
         name: btnName,
         radius: 1,
-        // sideBar.fill || "grey"
         fill: sideBar.fill || "grey",
         stroke: sideBar.stroke || "#000000",
         strokeWidth: 4,
@@ -819,7 +843,6 @@ const StoreContext = ({ children }) => {
     }
   }
 
-  console.log("btnEnable", btnEnablen);
   // function for handleStageVisble
   function handleStageVisble(e) {
     setStageVisible(true);
@@ -836,6 +859,21 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    showObLine,
+    setShowObLine,
+    obLine,
+    setObLine,
+    handleCircleClick,
+    showObPoly,
+    setShowObpoly,
+    stage2PolyClosed,
+    setStage2PolygonClosed,
+    nextStage2Points,
+    setStage2Points,
+    obPoly,
+    setObPoly,
+    PolyStage2Complete,
+    setPolyStage2Complete,
     showObCircle,
     setShowObCirlce,
     obCir,

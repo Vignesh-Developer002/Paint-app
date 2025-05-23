@@ -42,8 +42,8 @@ const ShowRectangle = () => {
               y={r.y}
               width={r.width}
               height={r.height}
-              fill={r.fill === "grey" ? "lightBlue" : r.fill}
-              stroke={r.stroke === "Black" ? "lightGrey" : r.stroke}
+              fill={r.fill}
+              stroke={r.stroke}
               name={r.name}
               strokeWidth={r.strokeWidth}
               draggable={btnEnablen}

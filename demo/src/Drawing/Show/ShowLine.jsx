@@ -41,7 +41,7 @@ const ShowLine = () => {
             name={l.name}
             rotation={l.rotation}
             points={l.points}
-            stroke={l.stroke === "#000000" ? "lightBlue" : l.stroke}
+            stroke={l.stroke}
             strokeWidth={l.strokeWidth}
             lineJoin={l.lineJoin}
             draggable={

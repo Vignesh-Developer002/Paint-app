@@ -9,6 +9,8 @@ const ShowSingleRect = () => {
     singleRectRef,
     showObRect,
     showObCircle,
+    showObPoly,
+    showObLine,
   } = useContext(globalStore);
 
   return (
@@ -57,6 +59,37 @@ const ShowSingleRect = () => {
                   fill={d?.fill}
                   stroke={d?.stroke}
                   strokeWidth={d?.strokeWidth}
+                  rotation={d?.rotation}
+                />
+              ))}
+
+            {Array.isArray(showObPoly) &&
+              showObPoly.map((d) => (
+                <Line
+                  key={d?.id}
+                  id={d?.id}
+                  points={d?.points}
+                  fill={d?.fill}
+                  stroke={d?.stroke}
+                  strokeWidth={d?.strokeWidth}
+                  closed={d?.closed}
+                  name={d?.name}
+                />
+              ))}
+
+            {Array.isArray(showObLine) &&
+              showObLine.map((d) => (
+                <Line
+                  key={d?.id}
+                  id={d?.id}
+                  x={d?.x}
+                  y={d?.y}
+                  name={d?.name}
+                  points={d?.points}
+                  stroke={d?.stroke}
+                  fill={d?.fill}
+                  strokeWidth={d?.strokeWidth}
+                  lineJoin={d?.lineJoin}
                   rotation={d?.rotation}
                 />
               ))}
