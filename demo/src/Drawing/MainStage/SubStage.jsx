@@ -9,7 +9,6 @@ import {
   Line,
 } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext";
-import DrawingComponent from "./DrawingComponent";
 import { v4 as uuidv4 } from "uuid";
 import DrawSingleComponent from "./DrawSingleComponent";
 import ShowSingleComonent from "./ShowSingleComonent";
