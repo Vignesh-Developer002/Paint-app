@@ -13,6 +13,7 @@ const StoreContext = ({ children }) => {
     height: 0,
     radius: 0,
   });
+
   let singleRectRef = useRef(null);
   let [Stage2ShapeColor, setStage2ShapeColor] = useState(null);
   let [stage2PolyClosed, setStage2PolygonClosed] = useState(false); // for tracking the  stage 2 polygon is closed
@@ -100,7 +101,7 @@ const StoreContext = ({ children }) => {
     fontSize: "",
     fontStyle: "",
   });
-
+  console.log("sideBar", sideBar);
   // function for handle the zoom in zoom  out functionality for stage
   function handleCircleWheel(e) {
     const stage = stageRef.current;
@@ -256,49 +257,92 @@ const StoreContext = ({ children }) => {
   // function for handle the perticular shape click
   function handleSelect(id, name) {
     if (name === "rectangle") {
-      let Id, nm, height, width, stroke, fill, radius, strokeWidth;
-      const totalShape = drawing.find((d) => d.id === id);
-      nm = totalShape?.name || "";
-      Id = totalShape["id"];
-      radius = totalShape["radius"];
-      height = totalShape["height"];
-      width = totalShape["width"];
-      strokeWidth = totalShape["strokeWidth"];
-      stroke = totalShape["stroke"];
-      fill = totalShape["fill"];
-      setCurrentShape(nm);
-
-      setSideBar((prev) => ({
-        ...prev,
-        name: nm,
-        strokeWidth: strokeWidth,
-        radius: radius ? radius : 0,
-        height: height,
-        width: width,
-        fill: fill,
-        stroke: stroke,
-      }));
+      if (showObRect.length === 0) {
+        let Id, nm, height, width, stroke, fill, radius, strokeWidth;
+        const totalShape = drawing.find((d) => d.id === id);
+        nm = totalShape["name"];
+        Id = totalShape["id"];
+        radius = totalShape["radius"];
+        height = totalShape["height"];
+        width = totalShape["width"];
+        strokeWidth = totalShape["strokeWidth"];
+        stroke = totalShape["stroke"];
+        fill = totalShape["fill"];
+        setCurrentShape(nm);
+        setSideBar((prev) => ({
+          ...prev,
+          name: nm,
+          strokeWidth: strokeWidth,
+          radius: radius ? radius : 0,
+          height: height,
+          width: width,
+          fill: fill,
+          stroke: stroke,
+        }));
+      } else {
+        let Id, nm, height, width, stroke, fill, strokeWidth;
+        const subStageShape = showObRect.find((d) => d.id === id);
+        console.log(subStageShape);
+        Id = subStageShape["id"];
+        nm = subStageShape["name"];
+        height = subStageShape["height"];
+        width = subStageShape["width"];
+        stroke = subStageShape["stroke"];
+        fill = subStageShape["fill"];
+        strokeWidth = subStageShape["strokeWidth"];
+        setCurrentShape(nm);
+        setSideBar((prev) => ({
+          ...prev,
+          name: nm,
+          strokeWidth: strokeWidth,
+          radius: radius ? radius : 0,
+          height: height,
+          width: width,
+          fill: fill,
+          stroke: stroke,
+        }));
+      }
     } else if (name === "circle") {
-      const totalShape = drawCircle.find((d) => d.id === id);
-      let name = totalShape?.name || "";
-      let ids = totalShape["id"];
-      let radius = totalShape["radius"];
-      let height = totalShape["height"];
-      let width = totalShape["width"];
-      let strokeWidth = totalShape["strokeWidth"];
-      let stroke = totalShape["stroke"];
-      let fill = totalShape["fill"];
+      if (showObCircle.length === 0) {
+        const totalShape = drawCircle.find((d) => d.id === id);
+        let name = totalShape["name"];
+        let ids = totalShape["id"];
+        let radius = totalShape["radius"];
+        let height = totalShape["height"];
+        let width = totalShape["width"];
+        let strokeWidth = totalShape["strokeWidth"];
+        let stroke = totalShape["stroke"];
+        let fill = totalShape["fill"];
 
-      setCurrentShape(name);
-      setSideBar({
-        name: name,
-        strokeWidth: strokeWidth,
-        radius: radius,
-        height: "0",
-        width: "0",
-        fill: fill,
-        stroke: stroke,
-      });
+        setCurrentShape(name);
+        setSideBar({
+          name: name,
+          strokeWidth: strokeWidth,
+          radius: radius,
+          height: "0",
+          width: "0",
+          fill: fill,
+          stroke: stroke,
+        });
+      } else {
+        let Id, nm, height, width, stroke, fill, radius, strokeWidth;
+        const subStageShape = showObCircle.find((d) => d.id === id);
+        Id = subStageShape["id"];
+        nm = subStageShape["name"];
+        radius = subStageShape["radius"];
+        fill = subStageShape["fill"];
+        strokeWidth = subStageShape["strokeWidth"];
+        setCurrentShape(name);
+        setSideBar({
+          name: name,
+          strokeWidth: strokeWidth,
+          radius: radius,
+          height: "0",
+          width: "0",
+          fill: fill,
+          stroke: stroke,
+        });
+      }
     } else if (name === "scrible") {
       let totalShape = drawScribble.find((d) => d.id === id);
       let name = totalShape["name"];
@@ -316,37 +360,78 @@ const StoreContext = ({ children }) => {
         stroke: stroke,
       });
     } else if (name === "line") {
-      let totalShape = drawLine.find((d) => d.id === id);
-      let name = totalShape?.name || "";
-      let fill = totalShape["fill"];
-      let stroke = totalShape["stroke"];
-      let strokeWidth = totalShape["strokeWidth"];
-      setCurrentShape(name);
-      setSideBar({
-        name: name,
-        strokeWidth: strokeWidth,
-        radius: "0",
-        height: "0",
-        width: "0",
-        fill: fill,
-        stroke: stroke,
-      });
+      if (showObLine.length === 0) {
+        let totalShape = drawLine.find((d) => d.id === id);
+        let name = totalShape["name"];
+        let fill = totalShape["fill"];
+        let stroke = totalShape["stroke"];
+        let strokeWidth = totalShape["strokeWidth"];
+        setCurrentShape(name);
+        setSideBar({
+          name: name,
+          strokeWidth: strokeWidth,
+          radius: "0",
+          height: "0",
+          width: "0",
+          fill: fill,
+          stroke: stroke,
+        });
+      } else {
+        let Id, nm, height, width, stroke, fill, radius, strokeWidth;
+        const subStageShape = showObLine.find((d) => d.id === id);
+        console.log(subStageShape);
+        Id = subStageShape["id"];
+        nm = subStageShape["name"];
+        strokeWidth = subStageShape["strokeWidth"];
+        stroke = subStageShape["stroke"];
+        setCurrentShape(name);
+        setSideBar({
+          name: name,
+          strokeWidth: strokeWidth,
+          radius: "0",
+          height: "0",
+          width: "0",
+          fill: "0",
+          stroke: stroke,
+        });
+      }
     } else if (name === "polygon") {
-      let totalShape = drawPolygon.find((d) => d.id === id);
-      let name = totalShape?.name || "";
-      let fill = totalShape["fill"];
-      let stroke = totalShape["stroke"];
-      let strokeWidth = totalShape["strokeWidth"];
-      setCurrentShape(name);
-      setSideBar({
-        name: name,
-        strokeWidth: strokeWidth,
-        radius: "0",
-        height: "0",
-        width: "0",
-        fill: fill,
-        stroke: stroke,
-      });
+      if (showObPoly.length === 0) {
+        let totalShape = drawPolygon.find((d) => d.id === id);
+        let name = totalShape["name"];
+        let fill = totalShape["fill"];
+        let stroke = totalShape["stroke"];
+        let strokeWidth = totalShape["strokeWidth"];
+        setCurrentShape(name);
+        setSideBar({
+          name: name,
+          strokeWidth: strokeWidth,
+          radius: "0",
+          height: "0",
+          width: "0",
+          fill: fill,
+          stroke: stroke,
+        });
+      } else {
+        let Id, nm, height, width, stroke, fill, radius, strokeWidth;
+        const subStageShape = showObPoly.find((d) => d.id === id);
+        console.log("polygonSubStage", subStageShape);
+        Id = subStageShape["id"];
+        nm = subStageShape["name"];
+        fill = subStageShape["fill"];
+        stroke = subStageShape["stroke"];
+        strokeWidth = subStageShape["strokeWidth"];
+        setCurrentShape(name);
+        setSideBar({
+          name: name,
+          strokeWidth: strokeWidth,
+          radius: "0",
+          height: "0",
+          width: "0",
+          fill: fill,
+          stroke: stroke,
+        });
+      }
     } else if (name === "image") {
       let totalShape = images.find((d) => d.id === id);
       let name = totalShape["name"];
@@ -858,8 +943,6 @@ const StoreContext = ({ children }) => {
     setBtnEnable(false);
     setStage2ShapeColor(true);
   }
-
-  // console.log("shapeColor",Stage2ShapeColor);
 
   const contextValue = {
     transformerRef2,

@@ -13,7 +13,7 @@ const ShowSingleRect = () => {
     showObLine,
     Stage2ShapeColor,
   } = useContext(globalStore);
-  console.log("Stage2ShapeColor from subStage", Stage2ShapeColor);
+
 
   return (
     <>

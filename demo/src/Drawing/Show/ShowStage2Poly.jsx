@@ -22,7 +22,7 @@ const ShowStage2Poly = () => {
 
   //function for handletransformEnd i.e) rotation
   function handletransformEnd(e, id) {
-    console.log("rotation happens");
+
     let x = e.target.x();
     let y = e.target.y();
     let rotate = e.target.rotation();
@@ -32,7 +32,7 @@ const ShowStage2Poly = () => {
       )
     );
   }
-  console.log("showObPoly", showObPoly);
+
 
   return (
     <>

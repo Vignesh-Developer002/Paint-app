@@ -4,7 +4,7 @@ import { Line } from "react-konva";
 
 const DrawStage2Line = () => {
   const { obLine } = useContext(globalStore);
-  console.log(obLine);
+
   return (
     <>
       {Object.values(obLine) && (

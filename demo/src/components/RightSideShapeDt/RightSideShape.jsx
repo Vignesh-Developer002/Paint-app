@@ -82,7 +82,7 @@ const RightSideShape = () => {
 
   return (
     <>
-      {!stageVisible && (
+      {(!stageVisible || stageVisible) && (
         <>
           {((idName.id && idName.Name && sideBarView) ||
             btnName === "image") && (

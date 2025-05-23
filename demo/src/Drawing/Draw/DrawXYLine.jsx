@@ -12,7 +12,7 @@ const DrawXyLine = () => {
   let radius = point?.radius;
   let offset = 10000;
 
-  console.log("Hello", x, y, width, height, radius, offset);
+
 
   return (
     <>

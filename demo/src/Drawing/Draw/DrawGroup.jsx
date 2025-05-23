@@ -4,7 +4,6 @@ import { Circle, Group, Line, Rect } from "react-konva";
 
 const DrawGroup = () => {
   const { group, sideBar } = useContext(globalStore);
-  console.log("object group", group);
   return (
     <>
       {Object.values(group) && (
