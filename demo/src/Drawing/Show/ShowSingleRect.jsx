@@ -11,7 +11,9 @@ const ShowSingleRect = () => {
     showObCircle,
     showObPoly,
     showObLine,
+    Stage2ShapeColor,
   } = useContext(globalStore);
+  console.log("Stage2ShapeColor from subStage", Stage2ShapeColor);
 
   return (
     <>
@@ -40,8 +42,8 @@ const ShowSingleRect = () => {
                   y={d?.y || 0}
                   width={d?.width || 0}
                   height={d?.height || 0}
-                  fill={d?.fill || "red"}
-                  stroke={d?.stroke || "red"}
+                  fill={Stage2ShapeColor === true ? "lightBlue" : ""}
+                  stroke={Stage2ShapeColor === true ? "lightGrey" : ""}
                   strokeWidth={d?.strokeWidth || 4}
                   rotation={d?.rotation || 0}
                 />
@@ -56,8 +58,8 @@ const ShowSingleRect = () => {
                   y={d?.y}
                   name={d?.name}
                   radius={d?.radius}
-                  fill={d?.fill}
-                  stroke={d?.stroke}
+                  fill={Stage2ShapeColor === true ? "lightBlue" : ""}
+                  stroke={Stage2ShapeColor === true ? "lightGrey" : ""}
                   strokeWidth={d?.strokeWidth}
                   rotation={d?.rotation}
                 />
@@ -69,8 +71,8 @@ const ShowSingleRect = () => {
                   key={d?.id}
                   id={d?.id}
                   points={d?.points}
-                  fill={d?.fill}
-                  stroke={d?.stroke}
+                  fill={Stage2ShapeColor === true ? "lightBlue" : ""}
+                  stroke={Stage2ShapeColor === true ? "lightGrey" : ""}
                   strokeWidth={d?.strokeWidth}
                   closed={d?.closed}
                   name={d?.name}
@@ -86,8 +88,7 @@ const ShowSingleRect = () => {
                   y={d?.y}
                   name={d?.name}
                   points={d?.points}
-                  stroke={d?.stroke}
-                  fill={d?.fill}
+                  stroke={Stage2ShapeColor === true ? "lightBlue" : ""}
                   strokeWidth={d?.strokeWidth}
                   lineJoin={d?.lineJoin}
                   rotation={d?.rotation}

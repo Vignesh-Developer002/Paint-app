@@ -14,6 +14,7 @@ const StoreContext = ({ children }) => {
     radius: 0,
   });
   let singleRectRef = useRef();
+  let [Stage2ShapeColor, setStage2ShapeColor] = useState(null);
   let [stage2PolyClosed, setStage2PolygonClosed] = useState(false); // for tracking the  stage 2 polygon is closed
   let [nextStage2Points, setStage2Points] = useState({}); // for updating the points for stage 2 polygon
   let [PolyStage2Complete, setPolyStage2Complete] = useState(false); // for tracking the polygon stage 2 is complete
@@ -501,7 +502,6 @@ const StoreContext = ({ children }) => {
 
   // useEffect for pushing the polygon data to the array and clearing the polygon object
   useEffect(() => {
-    console.log("normal polygon useEffect");
     if (Object.keys(polygons).length > 0) {
       if (polygons["points"].length > 4) {
         setDrawPolygon((prev) => [...prev, polygons]);
@@ -515,7 +515,6 @@ const StoreContext = ({ children }) => {
   // useEffect for pushing the stage 2 polygon to the array
 
   useEffect(() => {
-    console.log("stage2Polygon useEffect");
     if (Object.keys(obPoly).length > 0) {
       if (obPoly["points"].length > 4) {
         setShowObpoly((prev) => [...prev, obPoly]);
@@ -848,6 +847,7 @@ const StoreContext = ({ children }) => {
     setStageVisible(true);
     localStorage.setItem("shape", JSON.stringify(true));
     setBtnEnable(true);
+    setStage2ShapeColor(false);
   }
 
   // function for handle the exit logic
@@ -856,9 +856,14 @@ const StoreContext = ({ children }) => {
     res = localStorage.setItem("btnenable", JSON.stringify(false));
     setStageVisible(false);
     setBtnEnable(false);
+    setStage2ShapeColor(true);
   }
 
+  // console.log("shapeColor",Stage2ShapeColor);
+
   const contextValue = {
+    Stage2ShapeColor,
+    setStage2ShapeColor,
     showObLine,
     setShowObLine,
     obLine,

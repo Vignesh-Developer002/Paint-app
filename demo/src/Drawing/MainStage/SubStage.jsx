@@ -42,6 +42,8 @@ const SubStage = () => {
     setObLine,
     showObLine,
     setShowObLine,
+    Stage2ShapeColor,
+    setStage2ShapeColor,
   } = useContext(globalStore);
 
   let rectArr = [...showSingleRect];
@@ -69,8 +71,8 @@ const SubStage = () => {
         y: y,
         width: 0,
         height: 0,
-        fill: "lightGrey",
-        stroke: "black",
+        fill: Stage2ShapeColor === false ? "lightGrey" : "",
+        stroke: Stage2ShapeColor === false ? "black" : "lightGrey",
         name: btnName,
         strokeWidth: 1,
       });
@@ -84,8 +86,8 @@ const SubStage = () => {
         y: y,
         name: btnName,
         radius: 1,
-        fill: "lightGrey",
-        stroke: "black",
+        fill: Stage2ShapeColor === false ? "lightGrey" : "",
+        stroke: Stage2ShapeColor === false ? "black" : "lightGrey",
         strokeWidth: 1,
         rotation: 0,
       });
@@ -99,8 +101,8 @@ const SubStage = () => {
           name: btnName,
           id: uuidv4(),
           points: Array.isArray(prev?.points) ? [...prev.points, x, y] : [x, y],
-          fill: "lightGrey",
-          stroke: "Black",
+          fill: Stage2ShapeColor === false ? "lightGrey" : "",
+          stroke: Stage2ShapeColor === false ? "black" : "lightGrey",
           strokeWidth: 1,
           closed: obPoly?.closed || false,
           rotation: 0,
@@ -117,9 +119,8 @@ const SubStage = () => {
         y: 1,
         name: btnName,
         points: [x, y, x, y],
-        stroke: "Black",
-        fill: "lightGrey",
-        strokeWidth: 1,
+        stroke: Stage2ShapeColor === false ? "Black" : "",
+        strokeWidth: 2,
         lineJoin: "round",
         rotation: 0,
       });
@@ -181,7 +182,7 @@ const SubStage = () => {
     }
   }
 
-  console.log("line", showObLine);
+  console.log("from subStage", Stage2ShapeColor);
   return (
     <>
       {stageVisible && (
