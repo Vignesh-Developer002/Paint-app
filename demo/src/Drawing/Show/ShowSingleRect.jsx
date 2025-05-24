@@ -5,6 +5,7 @@ import { globalStore } from "../../StoreContext/StoreContext";
 const ShowSingleRect = () => {
   const {
     showSingleRect,
+    setShowSingleRect,
     handleStageVisble,
     singleRectRef,
     showObRect,
@@ -16,9 +17,20 @@ const ShowSingleRect = () => {
     transformerRef,
   } = useContext(globalStore);
 
+  // function for handle transform
   function handleTransform(e) {
     const transformerNode = e.currentTarget;
     transformerRef.current.nodes([transformerNode]);
+  }
+
+  // function for handle the drag
+  function handleRectDrag(e, id) {
+    let x = e.target.x();
+    let y = e.target.y();
+    console.log(x, y);
+    setShowSingleRect((p) =>
+      p.map((d) => (d.id === id ? { ...d, x: x, y: y } : d))
+    );
   }
 
   return (
@@ -29,11 +41,14 @@ const ShowSingleRect = () => {
             key={idx}
             onDblClick={(e) => handleStageVisble(e)}
             onMouseDown={(e) => handleTransformetMouseDown(e)}
-            onClick={(e) => handleTransform(e)}
+            onClick={(e) => handleTransform(e, idx)}
+            draggable={true}
+            rotation={d.rotation}
           >
             <Rect
               x={d.x}
               y={d.y}
+              id={d.id}
               rotation={d?.rotation || 0}
               ref={singleRectRef}
               key={idx}
@@ -42,6 +57,7 @@ const ShowSingleRect = () => {
               fill="lightGrey"
               stroke="black"
               strokeWidth={2}
+              onDragEnd={(e) => handleRectDrag(e, d.id)}
             />
 
             {Array.isArray(showObPoly) &&

@@ -12,8 +12,6 @@ const DrawXyLine = () => {
   let radius = point?.radius;
   let offset = 10000;
 
-
-
   return (
     <>
       {/* ----------bottom---x - 6000, y + 300, x + 6000, y + 300------------ */}
@@ -25,8 +23,8 @@ const DrawXyLine = () => {
             x + (width + 6000),
             y + height,
           ]}
-          stroke="grey"
-          strokeWidth={1}
+          stroke="Red"
+          strokeWidth={0.3}
           lineCap="round"
           lineJoin="round"
         />
@@ -41,8 +39,8 @@ const DrawXyLine = () => {
             x + width,
             y + (height + 6000),
           ]}
-          stroke="grey"
-          strokeWidth={1}
+          stroke="Red"
+          strokeWidth={0.3}
           lineCap="round"
           lineJoin="round"
         />
@@ -51,8 +49,8 @@ const DrawXyLine = () => {
       {currentShap === "rectangle" && (
         <Line
           points={[x - (width + 6000), y, x + +6000, y]}
-          stroke="grey"
-          strokeWidth={1}
+          stroke="green"
+          strokeWidth={0.3}
           lineCap="round"
           lineJoin="round"
         />
@@ -61,8 +59,8 @@ const DrawXyLine = () => {
       {currentShap === "rectangle" && (
         <Line
           points={[x, y + (height + 6000), x, y - (height + 6000)]}
-          stroke="grey"
-          strokeWidth={1}
+          stroke="green"
+          strokeWidth={0.3}
           lineCap="round"
           lineJoin="round"
         />

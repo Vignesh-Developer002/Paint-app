@@ -577,6 +577,10 @@ const StoreContext = ({ children }) => {
     setDrawText([]);
     setShowGroup([]);
     setShowSingleRect([]);
+    setShowObRect([]);
+    setShowObCirlce([]);
+    setShowObLine([]);
+    setShowObpoly([]);
   }
 
   console.log("Stage2ShapeColor", Stage2ShapeColor);
@@ -710,9 +714,9 @@ const StoreContext = ({ children }) => {
         name: btnName,
         width: 1,
         height: 1,
-        fill: sideBar.fill ? sideBar.fill : "grey",
-        stroke: sideBar.stroke ? sideBar.stroke : "Black",
-        strokeWidth: 4,
+        fill: sideBar.fill ? sideBar.fill : "lightgrey",
+        stroke: sideBar.stroke ? sideBar.stroke : "black",
+        strokeWidth: 1,
         rotation: 0,
       }));
     } else if (btnName === actions.circle) {
@@ -728,9 +732,9 @@ const StoreContext = ({ children }) => {
         y: y,
         name: btnName,
         radius: 1,
-        fill: sideBar.fill || "grey",
+        fill: sideBar.fill || "lightgrey",
         stroke: sideBar.stroke || "#000000",
-        strokeWidth: 4,
+        strokeWidth: 1,
         rotation: 0,
       });
     } else if (btnName === actions.scribble) {
@@ -745,8 +749,8 @@ const StoreContext = ({ children }) => {
         name: btnName,
         points: [x, y, x, y],
         stroke: sideBar.stroke || "#000000",
-        fill: sideBar.fill || "gray",
-        strokeWidth: 4,
+        fill: sideBar.fill || "lightgray",
+        strokeWidth: 1,
         lineCap: "round",
         lineJoin: "round",
         rotation: 0,
@@ -765,8 +769,8 @@ const StoreContext = ({ children }) => {
         name: btnName,
         points: [x, y, x, y],
         stroke: sideBar.stroke || "#000000",
-        fill: sideBar.fill || "gray",
-        strokeWidth: 4,
+        fill: sideBar.fill || "lightgray",
+        strokeWidth: 1,
         lineJoin: "round",
         rotation: 0,
       });
@@ -782,9 +786,9 @@ const StoreContext = ({ children }) => {
           name: btnName,
           id: uuidv4(),
           points: Array.isArray(prev?.points) ? [...prev.points, x, y] : [x, y],
-          fill: sideBar.fill || "gray",
+          fill: sideBar.fill || "lightgray",
           stroke: sideBar.stroke || "#000000",
-          strokeWidth: 5,
+          strokeWidth: 1,
           closed: polygons?.closed || false,
           rotation: 0,
         }));
@@ -978,7 +982,6 @@ const StoreContext = ({ children }) => {
 
   // Function for handle the whille clicking outside the tranform should be unselect
   function transformUnSelect(e) {
-    // setBtnEnable(false);// -----------------------------------------------------------------------------
     if (e.target === stageRef.current) {
       if (transformerRef.current) {
         transformerRef.current.nodes([]);
