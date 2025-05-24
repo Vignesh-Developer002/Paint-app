@@ -3,9 +3,9 @@
     margin: 2px auto;
     width: 100%;
     height: 90px;
-    border: 1px solid rgba(0, 0, 0, 0.48);
+    border: 1px solid rgba(60, 57, 57, 0.895);
     z-index:2;
-    background-color:rgb(34, 34, 34);
+    background-color:rgba(34, 34, 34, 0.904);
     padding: 0px 50px;
     position: fixed;
     top: 0px;

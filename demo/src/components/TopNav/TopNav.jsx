@@ -20,7 +20,6 @@ const TopNav = () => {
           </div>
           {stageVisible && (
             <div className="exit-content">
-              {/* handleStageVisble() */}
               <div className="exit" onClick={() => handleExit()}>
                 <p>Exit</p>
                 <IoExitOutline className="ext-btn" />

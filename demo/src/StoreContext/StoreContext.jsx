@@ -74,7 +74,6 @@ const StoreContext = ({ children }) => {
   let wd = Math.abs(selectBox?.width);
   let ht = Math.abs(selectBox?.height);
 
-  console.log("showSingleRect", showSingleRect);
   // useEffect for assigning the width and height for xy line
   useEffect(() => {
     setPoint({
@@ -580,20 +579,32 @@ const StoreContext = ({ children }) => {
     setShowSingleRect([]);
   }
 
+  console.log("Stage2ShapeColor", Stage2ShapeColor);
+
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name, multiSel) {
+    console.log("multiselect", multiSel);
+
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
-      let len = multiSel !== undefined ? multiSel.length : null;
+      let len = multiSel !== undefined ? multiSel.length > 1 : null;
       if (
         (multiSel === undefined && Array.isArray(multiSel) === false) ||
         stageVisible
       ) {
+        console.log("1");
         transformerRef.current.nodes([transformerNode]);
         setSideBarView(true);
         setIdName((prev) => ({ ...prev, id: id, Name: name }));
         handleSelect(id, name);
-      } else if (len) {
+      }
+      if (Stage2ShapeColor === true && stageVisible === false) {
+        console.log("2");
+        transformerRef.current.shouldOverdrawWholeArea(false);
+        transformerRef.current.nodes([]);
+      }
+      if (len) {
+        console.log("3");
         transformerRef.current.shouldOverdrawWholeArea(true);
         transformerRef.current.nodes(multiSel);
         setSideBarView(true);
@@ -618,7 +629,6 @@ const StoreContext = ({ children }) => {
     if (obPoly["points"].length > 4) {
       setStage2PolygonClosed(true); // for tracking the circle polygon  for stage2 is clicked or not
       setObPoly((prev) => ({ ...prev, closed: true }));
-      // setPolyStage2Complete(true);
     } else {
       return;
     }
@@ -628,7 +638,6 @@ const StoreContext = ({ children }) => {
   const handleShapeClick = (e, id) => {
     const isSelected = selectedIds.includes(id);
     const isMultiSelect = e.evt.shiftKey || e.evt.ctrlKey || e.evt.metaKey;
-
     if (isMultiSelect) {
       setSelectedIds(
         isSelected
@@ -653,7 +662,6 @@ const StoreContext = ({ children }) => {
   }, [closed]);
 
   // useEffect for pushing the stage 2 polygon to the array
-
   useEffect(() => {
     if (Object.keys(obPoly).length > 0) {
       if (obPoly["points"].length > 4) {

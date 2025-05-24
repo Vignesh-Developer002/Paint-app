@@ -212,7 +212,6 @@ const SubStage = () => {
     }
   }, [drag]);
 
-  console.log("btnName", btnName);
   return (
     <>
       {stageVisible && (

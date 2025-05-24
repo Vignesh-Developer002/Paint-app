@@ -12,6 +12,8 @@ const ShowRectangle = () => {
     btnEnablen,
   } = useContext(globalStore);
 
+  // function for handle rectangle drag
+
   function handleRectDrag(e, id) {
     let x = e.target.x();
     let y = e.target.y();

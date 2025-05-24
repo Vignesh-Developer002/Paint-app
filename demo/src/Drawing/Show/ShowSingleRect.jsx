@@ -12,25 +12,36 @@ const ShowSingleRect = () => {
     showObPoly,
     showObLine,
     Stage2ShapeColor,
+    handleTransformetMouseDown,
+    transformerRef,
   } = useContext(globalStore);
+
+  function handleTransform(e) {
+    const transformerNode = e.currentTarget;
+    transformerRef.current.nodes([transformerNode]);
+  }
 
   return (
     <>
       {Array.isArray(showSingleRect) &&
         showSingleRect.map((d, idx) => (
-          <Group key={idx}>
+          <Group
+            key={idx}
+            onDblClick={(e) => handleStageVisble(e)}
+            onMouseDown={(e) => handleTransformetMouseDown(e)}
+            onClick={(e) => handleTransform(e)}
+          >
             <Rect
-              ref={singleRectRef}
-              key={idx}
               x={d.x}
               y={d.y}
+              rotation={d?.rotation || 0}
+              ref={singleRectRef}
+              key={idx}
               width={d?.width || 0}
               height={d?.height || 0}
               fill="lightGrey"
               stroke="black"
               strokeWidth={2}
-              rotation={d?.rotation || 0}
-              onDblClick={(e) => handleStageVisble(e)}
             />
 
             {Array.isArray(showObPoly) &&
