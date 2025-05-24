@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Stage,
   Layer,
@@ -37,7 +37,15 @@ const SubStage = () => {
     setObLine,
     setShowObLine,
     Stage2ShapeColor,
+    handleTransformetMouseDown,
+    sideBar,
   } = useContext(globalStore);
+
+  const [rotation, setRotation] = useState(0);
+  const [drag, setDrag] = useState({
+    x: 0,
+    y: 0,
+  });
 
   let rectArr = [...showSingleRect];
   let stageHeight = window.innerHeight;
@@ -175,6 +183,36 @@ const SubStage = () => {
     }
   }
 
+  // function for handle the transform end
+  function handleTransformEnd(e, id, name) {
+    let rotate = e.target.rotation();
+    localStorage.setItem("rotation", JSON.stringify(rotate));
+    setRotation(rotate);
+  }
+
+  // function for handle the drag
+  function handleRectDrag(e, id) {
+    let x = e.target.x();
+    let y = e.target.y();
+    setDrag((prev) => ({ ...prev, x: x, y: y }));
+    localStorage.setItem("dragxy", JSON.stringify({ x: x, y: y }));
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem("rotation")) {
+      let res = JSON.parse(localStorage.getItem("rotation"));
+      setRotation(res);
+    }
+  }, [rotation]);
+
+  useEffect(() => {
+    if (localStorage.getItem("dragxy")) {
+      let res2 = JSON.parse(localStorage.getItem("dragxy"));
+      setDrag({ x: res2?.x, y: res2?.y });
+    }
+  }, [drag]);
+
+  console.log("btnName", btnName);
   return (
     <>
       {stageVisible && (
@@ -195,16 +233,29 @@ const SubStage = () => {
                 id={uuidv4()}
                 height={height}
                 width={width}
-                x={x}
-                y={y}
+                x={x ? x : drag?.x ? drag?.x : x}
+                y={y ? y : drag?.y ? drag?.y : y}
+                name="rectangle"
                 fill="white"
                 stroke={"skyblue"}
                 strokeWidth={4}
+                // draggable={
+                //   btnName === "circle" ||
+                //   btnName === "rectangle" ||
+                //   btnName === "line" ||
+                //   btnName === "polygon"
+                //     ? false
+                //     : true
+                // }
+                // rotation={rotation}
+                // onMouseDown={(e) => handleTransformetMouseDown(e)}
+                // onTransformEnd={(e) => handleTransformEnd(e)}
+                // onDragEnd={(e) => handleRectDrag(e)}
               />
               <DrawSingleComponent />
               <ShowSingleComonent />
+              <Transformer ref={transformerRef} resizeEnabled={false} />
             </Group>
-            <Transformer ref={transformerRef} resizeEnabled={false} />
           </Layer>
         </Stage>
       )}

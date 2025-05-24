@@ -74,6 +74,7 @@ const StoreContext = ({ children }) => {
   let wd = Math.abs(selectBox?.width);
   let ht = Math.abs(selectBox?.height);
 
+  console.log("showSingleRect", showSingleRect);
   // useEffect for assigning the width and height for xy line
   useEffect(() => {
     setPoint({
@@ -101,7 +102,7 @@ const StoreContext = ({ children }) => {
     fontSize: "",
     fontStyle: "",
   });
-  console.log("sideBar", sideBar);
+
   // function for handle the zoom in zoom  out functionality for stage
   function handleCircleWheel(e) {
     const stage = stageRef.current;
@@ -335,7 +336,6 @@ const StoreContext = ({ children }) => {
       } else {
         let Id, nm, height, width, stroke, fill, strokeWidth;
         const subStageShape = showObRect.find((d) => d.id === id);
-        console.log(subStageShape);
         Id = subStageShape["id"];
         nm = subStageShape["name"];
         height = subStageShape["height"];
@@ -432,7 +432,6 @@ const StoreContext = ({ children }) => {
       } else {
         let Id, nm, height, width, stroke, fill, radius, strokeWidth;
         const subStageShape = showObLine.find((d) => d.id === id);
-        console.log(subStageShape);
         Id = subStageShape["id"];
         nm = subStageShape["name"];
         strokeWidth = subStageShape["strokeWidth"];
@@ -468,7 +467,6 @@ const StoreContext = ({ children }) => {
       } else {
         let Id, nm, height, width, stroke, fill, radius, strokeWidth;
         const subStageShape = showObPoly.find((d) => d.id === id);
-        console.log("polygonSubStage", subStageShape);
         Id = subStageShape["id"];
         nm = subStageShape["name"];
         fill = subStageShape["fill"];
@@ -587,7 +585,10 @@ const StoreContext = ({ children }) => {
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
       let len = multiSel !== undefined ? multiSel.length : null;
-      if (multiSel === undefined && Array.isArray(multiSel) === false) {
+      if (
+        (multiSel === undefined && Array.isArray(multiSel) === false) ||
+        stageVisible
+      ) {
         transformerRef.current.nodes([transformerNode]);
         setSideBarView(true);
         setIdName((prev) => ({ ...prev, id: id, Name: name }));

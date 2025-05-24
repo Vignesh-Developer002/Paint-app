@@ -14,17 +14,6 @@ const ShowSingleRect = () => {
     Stage2ShapeColor,
   } = useContext(globalStore);
 
-  console.log(
-    " outside RECT",
-    showObRect,
-    " outside CIRCLE",
-    showObCircle,
-    " outside line",
-    showObLine,
-    " outsidePolyg",
-    showObPoly
-  );
-
   return (
     <>
       {Array.isArray(showSingleRect) &&
