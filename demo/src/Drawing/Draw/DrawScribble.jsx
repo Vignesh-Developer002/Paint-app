@@ -13,6 +13,7 @@ const DrawScribble = () => {
           strokeWidth={scribble?.strokeWidth}
           lineCap={scribble?.lineCap || "round"}
           lineJoin={scribble?.lineJoin || "round"}
+          tension={0.1}
         />
       )}
     </>

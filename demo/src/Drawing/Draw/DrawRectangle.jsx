@@ -4,10 +4,12 @@ import { Rect } from "react-konva";
 
 const DrawRectangle = () => {
   const { currentlyDrawnShap } = useContext(globalStore);
-
+  let ht = Math.abs(currentlyDrawnShap["height"]);
+  let wd = Math.abs(currentlyDrawnShap["width"]);
+  console.log(ht, wd);
   return (
     <>
-      {Object.values(currentlyDrawnShap) && (
+      {ht > 5 && wd > 5 && Object.values(currentlyDrawnShap) && (
         <Rect
           x={currentlyDrawnShap?.x || 0}
           y={currentlyDrawnShap?.y || 0}

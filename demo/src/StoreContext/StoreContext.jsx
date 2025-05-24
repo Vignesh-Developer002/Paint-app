@@ -750,7 +750,7 @@ const StoreContext = ({ children }) => {
         points: [x, y, x, y],
         stroke: sideBar.stroke || "#000000",
         fill: sideBar.fill || "lightgray",
-        strokeWidth: 1,
+        strokeWidth: 5,
         lineCap: "round",
         lineJoin: "round",
         rotation: 0,

@@ -49,7 +49,7 @@ const ShowCircle = () => {
             strokeWidth={c.strokeWidth}
             onDragEnd={(e) => handleDragEnd(e, c.id)}
             onTransformEnd={(e) => handleTransformEnd(e, c.id, c.name)}
-            draggable={true}
+            draggable={btnName === "select" ? true : false}
             rotation={c.rotation || 0}
             onMouseDown={(e) => handleTransformetMouseDown(e, c.id, c.name)}
             onClick={() => handleClick()}

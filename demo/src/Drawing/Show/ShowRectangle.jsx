@@ -10,6 +10,7 @@ const ShowRectangle = () => {
     handleShapeClick,
     handleStageVisble,
     btnEnablen,
+    btnName,
   } = useContext(globalStore);
 
   // function for handle rectangle drag
@@ -48,7 +49,7 @@ const ShowRectangle = () => {
               stroke={r.stroke}
               name={r.name}
               strokeWidth={r.strokeWidth}
-              draggable={true}
+              draggable={btnName === "select" ? true : false}
               rotation={r.rotation || 0}
               onDragEnd={(e) => handleRectDrag(e, r.id)}
               onMouseDown={(e) => handleTransformetMouseDown(e, r.id, r.name)}

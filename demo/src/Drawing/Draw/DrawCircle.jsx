@@ -4,10 +4,10 @@ import { globalStore } from "../../StoreContext/StoreContext";
 
 const DrawCircle = () => {
   const { currentlyDrawnCircle } = useContext(globalStore);
-
+  let rad = currentlyDrawnCircle["radius"];
   return (
     <>
-      {Object.values(currentlyDrawnCircle) && (
+      {rad > 5 && Object.values(currentlyDrawnCircle) && (
         <Circle
           x={currentlyDrawnCircle?.x}
           y={currentlyDrawnCircle?.y}
