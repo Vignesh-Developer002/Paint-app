@@ -19,31 +19,31 @@ const ShowSingleRect = () => {
 
   // function for handle transform
   function handleTransform(e) {
+    console.log("transform happens");
     const transformerNode = e.currentTarget;
     transformerRef.current.nodes([transformerNode]);
   }
 
   // function for handle the drag
-  function handleRectDrag(e, id) {
+  function handleDrag(e, id) {
+    console.log("drag happens");
     let x = e.target.x();
     let y = e.target.y();
-    console.log(x, y);
     setShowSingleRect((p) =>
       p.map((d) => (d.id === id ? { ...d, x: x, y: y } : d))
     );
   }
 
+  console.log("stageShapeColor", Stage2ShapeColor);
   return (
     <>
       {Array.isArray(showSingleRect) &&
         showSingleRect.map((d, idx) => (
           <Group
-            key={idx}
-            onDblClick={(e) => handleStageVisble(e)}
-            onMouseDown={(e) => handleTransformetMouseDown(e)}
             onClick={(e) => handleTransform(e, idx)}
+            onMouseDown={(e) => handleTransformetMouseDown(e)}
+            onDblClick={(e) => handleStageVisble(e)}
             draggable={true}
-            rotation={d.rotation}
           >
             <Rect
               x={d.x}
@@ -57,7 +57,7 @@ const ShowSingleRect = () => {
               fill="lightGrey"
               stroke="black"
               strokeWidth={2}
-              onDragEnd={(e) => handleRectDrag(e, d.id)}
+              onDragEnd={(e) => handleDrag(e, d.id)}
             />
 
             {Array.isArray(showObPoly) &&

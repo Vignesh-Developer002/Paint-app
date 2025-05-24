@@ -232,12 +232,12 @@ const SubStage = () => {
                 id={uuidv4()}
                 height={height}
                 width={width}
-                x={x ? x : drag?.x ? drag?.x : x}
-                y={y ? y : drag?.y ? drag?.y : y}
                 name="rectangle"
                 fill="white"
                 stroke={"skyblue"}
                 strokeWidth={4}
+                x={x}
+                y={y}
                 // draggable={
                 //   btnName === "circle" ||
                 //   btnName === "rectangle" ||

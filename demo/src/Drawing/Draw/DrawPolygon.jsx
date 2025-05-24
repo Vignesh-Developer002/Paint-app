@@ -3,13 +3,8 @@ import { Circle, Line } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext.jsx";
 
 const DrawPolygon = () => {
-  const {
-    polygons,
-    nextPoint,
-    handleAnchorClick,
-    isComplete,
-    initialRadius,
-  } = useContext(globalStore);
+  const { polygons, nextPoint, handleAnchorClick, isComplete, initialRadius } =
+    useContext(globalStore);
 
   return (
     <>
