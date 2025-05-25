@@ -47,10 +47,11 @@ const SubStage = () => {
     y: 0,
   });
 
-  let rectArr = [...showSingleRect];
+  // let rectArr = [...showSingleRect];
   let stageHeight = window.innerHeight;
   let stageWidth = window.innerWidth;
   let width, height, x, y;
+
   let res = showSingleRect.map((d) => {
     if (d.width > 0 && d.height > 0) {
       height = d.height;
@@ -59,6 +60,8 @@ const SubStage = () => {
       y = d.y;
     }
   });
+
+  console.log("x", x, "y", y);
 
   function onStageMouseDown(e) {
     singleRectRef.current = true;
@@ -229,6 +232,8 @@ const SubStage = () => {
           <Layer>
             <Group>
               <Rect
+                x={x}
+                y={y}
                 id={uuidv4()}
                 height={height}
                 width={width}
@@ -236,20 +241,6 @@ const SubStage = () => {
                 fill="white"
                 stroke={"skyblue"}
                 strokeWidth={4}
-                x={x}
-                y={y}
-                // draggable={
-                //   btnName === "circle" ||
-                //   btnName === "rectangle" ||
-                //   btnName === "line" ||
-                //   btnName === "polygon"
-                //     ? false
-                //     : true
-                // }
-                // rotation={rotation}
-                // onMouseDown={(e) => handleTransformetMouseDown(e)}
-                // onTransformEnd={(e) => handleTransformEnd(e)}
-                // onDragEnd={(e) => handleRectDrag(e)}
               />
               <DrawSingleComponent />
               <ShowSingleComonent />

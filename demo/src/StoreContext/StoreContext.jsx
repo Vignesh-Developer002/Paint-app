@@ -71,6 +71,7 @@ const StoreContext = ({ children }) => {
   const [currentShap, setCurrentShape] = useState(); // for assigning the current selected shape name
   const [selectBox, setSelectionBox] = useState({}); //slecting box box layer
   const [btnEnablen, setBtnEnable] = useState(false); // for enable and disable the button
+  const [dragHappen, setDragHappens] = useState(false); // for single rect
   let wd = Math.abs(selectBox?.width);
   let ht = Math.abs(selectBox?.height);
 
@@ -596,19 +597,16 @@ const StoreContext = ({ children }) => {
         (multiSel === undefined && Array.isArray(multiSel) === false) ||
         stageVisible
       ) {
-        console.log("1");
         transformerRef.current.nodes([transformerNode]);
         setSideBarView(true);
         setIdName((prev) => ({ ...prev, id: id, Name: name }));
         handleSelect(id, name);
       }
       if (Stage2ShapeColor === true && stageVisible === false) {
-        console.log("2");
         transformerRef.current.shouldOverdrawWholeArea(false);
         transformerRef.current.nodes([]);
       }
       if (len) {
-        console.log("3");
         transformerRef.current.shouldOverdrawWholeArea(true);
         transformerRef.current.nodes(multiSel);
         setSideBarView(true);
@@ -1009,6 +1007,7 @@ const StoreContext = ({ children }) => {
     localStorage.setItem("shape", JSON.stringify(true));
     setBtnEnable(true);
     setStage2ShapeColor(false);
+    setDragHappens(false)//------------------------------------------------------------------
   }
 
   // function for handle the exit logic
@@ -1018,6 +1017,7 @@ const StoreContext = ({ children }) => {
     setStageVisible(false);
     setBtnEnable(false);
     setStage2ShapeColor(true);
+    setDragHappens(true);//------------------------------------------------------------------
   }
 
   const contextValue = {
@@ -1139,6 +1139,8 @@ const StoreContext = ({ children }) => {
     rectMouseDown,
     setRectMouseDown,
     singleRectRef,
+    dragHappen,
+    setDragHappens,
   };
 
   return (
