@@ -55,7 +55,7 @@ const MainStage = () => {
           </Layer>
         </Stage>
       ) : (
-        <SubStage btnEnablen={btnEnablen} />
+        <SubStage />
       )}
     </>
   );

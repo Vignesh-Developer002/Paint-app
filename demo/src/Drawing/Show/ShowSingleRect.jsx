@@ -18,8 +18,10 @@ const ShowSingleRect = () => {
     btnName,
     dragHappen,
     setDragHappens,
+    stageRef,
   } = useContext(globalStore);
 
+  const groupRef = useRef(null);
   // function for handle transform
   function handleTransform(e) {
     const transformerNode = e.currentTarget;
@@ -27,116 +29,119 @@ const ShowSingleRect = () => {
   }
 
   // function for handle the drag
-  function handleDrag(e, id) {
-    // localStorage.setItem("draghappens", JSON.stringify("true"));
-    let x = e.target.x();
-    let y = e.target.y();
+  function handleRectDrag(e, id) {
+    let pos = e.target.getStage().getRelativePointerPosition();
+    let x = pos.x;
+    let y = pos.y;
+    console.log("handledrag", x, y);
     setShowSingleRect((p) =>
       p.map((d) => (d.id === id ? { ...d, x: x, y: y } : d))
     );
   }
 
+  console.log(showSingleRect);
+
   //function for tranformend
   function handleTransformEnd(e, id, name) {
-    // console.log("rotation happens at transform end");
+    console.log("rotation happens at transform end");
     let x = e.target.x();
     let y = e.target.y();
     let rotate = e.target.rotation();
-    // console.log("rotation", rotate);
+    console.log("handleTransformEnd", x, y, rotate);
+    console.log("rotation", rotate);
     setShowSingleRect((prev) =>
       prev.map((d) =>
         d.id === id ? { ...d, x: x, y: y, rotation: rotate } : d
       )
     );
   }
-
-  console.log("dragHappens", dragHappen);
+  //----------------------------   outside single rectangle -----------------------------
   return (
     <>
       {Array.isArray(showSingleRect) &&
         showSingleRect.map((d, idx) => (
           <Group
+            ref={groupRef}
             key={d.id}
             onDblClick={(e) => handleStageVisble(e)}
-            draggable={btnName === "select" ? true : false}
             x={0}
             y={0}
-            rotation={d.rotation}
+            draggable={btnName === "select" ? true : false}
           >
             <Rect
-              x={d.x}
-              y={d.y}
-              onTransformEnd={(e) => handleTransformEnd(e, d.id, d.name)}
-              onDragEnd={(e) => handleDrag(e, d.id)}
-              onClick={(e) => handleTransform(e, idx)}
               fill="lightGrey"
               stroke="black"
               id={d.id}
               ref={singleRectRef}
               key={d.id}
+              strokeWidth={2}
               width={d?.width || 0}
               height={d?.height || 0}
-              strokeWidth={2}
-              rotation={0}
+              onMouseDown={(e) => handleTransform(e, d.id, d.name)}
+              onDragEnd={(e) => handleRectDrag(e, d.id)}
+              x={d.x}
+              y={d.y}
+              // onTransformEnd={(e) => handleTransformEnd(e, d.id, d.name)}
+              // rotation={d.rotation}
             />
             {Array.isArray(showObPoly) &&
-              showObPoly.map((d) => (
+              showObPoly.map((a) => (
                 <Line
-                  key={d?.id}
-                  id={d?.id}
-                  x={d?.x}
-                  y={d?.y}
-                  points={d?.points}
+                  key={a?.id}
+                  id={a?.id}
+                  x={a?.x}
+                  y={a?.y}
+                  points={a?.points}
                   fill={Stage2ShapeColor === true ? "lightBlue" : ""}
                   stroke={Stage2ShapeColor === true ? "lightGrey" : ""}
-                  strokeWidth={d?.strokeWidth}
-                  closed={d?.closed}
-                  name={d?.name}
-                  rotation={d?.rotation}
+                  strokeWidth={a?.strokeWidth}
+                  closed={a?.closed}
+                  name={a?.name}
+                  rotation={a?.rotation}
                 />
               ))}
             {Array.isArray(showObRect) &&
-              showObRect.map((d, idx) => (
+              showObRect.map((b, idx) => (
                 <Rect
-                  key={d.id}
-                  x={d?.x || 0}
-                  y={d?.y || 0}
-                  width={d?.width || 0}
-                  height={d?.height || 0}
+                  key={b.id}
+                  x={b?.x || 0}
+                  y={b?.y || 0}
+                  width={b?.width || 0}
+                  height={b?.height || 0}
                   fill={Stage2ShapeColor === true ? "lightBlue" : ""}
                   stroke={Stage2ShapeColor === true ? "lightGrey" : ""}
-                  strokeWidth={d?.strokeWidth || 4}
-                  rotation={d?.rotation || 0}
+                  strokeWidth={b?.strokeWidth || 4}
+                  rotation={b?.rotation || 0}
                 />
               ))}
             {Array.isArray(showObCircle) &&
-              showObCircle.map((d) => (
+              showObCircle.map((c) => (
                 <Circle
-                  key={d?.id}
-                  id={d?.id}
-                  x={d?.x}
-                  y={d?.y}
-                  name={d?.name}
-                  radius={d?.radius}
+                  key={c?.id}
+                  id={c?.id}
+                  x={c?.x}
+                  y={c?.y}
+                  name={c?.name}
+                  radius={c?.radius}
                   fill={Stage2ShapeColor === true ? "lightBlue" : ""}
                   stroke={Stage2ShapeColor === true ? "lightGrey" : ""}
-                  strokeWidth={d?.strokeWidth}
-                  rotation={d?.rotation}
+                  strokeWidth={c?.strokeWidth}
+                  rotation={c?.rotation}
                 />
               ))}
             {Array.isArray(showObLine) &&
-              showObLine.map((d) => (
+              showObLine.map((e) => (
                 <Line
-                  key={d?.id}
-                  id={d?.id}
-                  x={d?.x}
-                  y={d?.y}
-                  name={d?.name}
-                  points={d?.points}
+                  key={e?.id}
+                  id={e?.id}
+                  x={e?.x}
+                  y={e?.y}
+                  name={e?.name}
+                  points={e?.points}
                   stroke={Stage2ShapeColor === true ? "lightBlue" : ""}
-                  strokeWidth={d?.strokeWidth}
-                  lineJoin={d?.lineJoin}
-                  rotation={d?.rotation}
+                  strokeWidth={e?.strokeWidth}
+                  lineJoin={e?.lineJoin}
+                  rotation={e?.rotation}
                 />
               ))}
           </Group>

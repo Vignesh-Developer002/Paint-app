@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   Stage,
   Layer,
@@ -40,6 +40,7 @@ const SubStage = () => {
     handleTransformetMouseDown,
     sideBar,
   } = useContext(globalStore);
+  const groupRef = useRef(null);
 
   const [rotation, setRotation] = useState(0);
   const [drag, setDrag] = useState({
@@ -61,12 +62,10 @@ const SubStage = () => {
     }
   });
 
-  console.log("x", x, "y", y);
-
   function onStageMouseDown(e) {
     singleRectRef.current = true;
     if (btnName === "rectangle") {
-      let pos = e.target.getStage().getRelativePointerPosition();
+      let pos = groupRef.current.getRelativePointerPosition();
       let x = pos.x;
       let y = pos.y;
       setObRect({
@@ -81,7 +80,7 @@ const SubStage = () => {
         strokeWidth: 1,
       });
     } else if (btnName === "circle") {
-      let pos = e.target.getStage().getRelativePointerPosition();
+      let pos = groupRef.current.getRelativePointerPosition();
       let x = pos.x;
       let y = pos.y;
       setObCir({
@@ -97,7 +96,7 @@ const SubStage = () => {
       });
     } else if (btnName === "polygon") {
       if (!PolyStage2Complete) {
-        let pos = e.target.getStage().getRelativePointerPosition();
+        let pos = groupRef.current.getRelativePointerPosition();
         let x = pos.x;
         let y = pos.y;
         setObPoly((prev) => ({
@@ -113,8 +112,8 @@ const SubStage = () => {
         }));
       }
     } else if (btnName === "line") {
-      const stage = e.target.getStage();
-      const pointer = stage.getRelativePointerPosition();
+      // const stage = e.target.getStage();
+      const pointer = groupRef.current.getRelativePointerPosition();
       let x = pointer.x;
       let y = pointer.y;
       setObLine({
@@ -134,7 +133,7 @@ const SubStage = () => {
   function onStageMouseMove(e) {
     singleRectRef.current = true;
     if (btnName === "rectangle") {
-      let pos = e.target.getStage().getRelativePointerPosition();
+      let pos = groupRef.current.getRelativePointerPosition();
       let x = pos.x;
       let y = pos.y;
       setObRect((p) => ({
@@ -143,7 +142,7 @@ const SubStage = () => {
         height: y - p.y || 0,
       }));
     } else if (btnName === "circle") {
-      let pos = e.target.getStage().getRelativePointerPosition();
+      let pos = groupRef.current.getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
       setObCir((pre) => ({
@@ -155,14 +154,14 @@ const SubStage = () => {
       }));
     } else if (btnName === "polygon") {
       if (!PolyStage2Complete) {
-        let pos = e.target.getStage().getRelativePointerPosition();
+        let pos = groupRef.current.getRelativePointerPosition();
         let x = pos.x || 0;
         let y = pos.y || 0;
         setStage2Points({ x: x, y: y });
       }
     } else if (btnName === "line") {
-      const stage = e.target.getStage();
-      const pointer = stage.getRelativePointerPosition();
+      // const stage = e.target.getStage();
+      const pointer = groupRef.current.getRelativePointerPosition();
       let x = pointer.x;
       let y = pointer.y;
 
@@ -208,14 +207,16 @@ const SubStage = () => {
           ref={stageRef}
           width={stageWidth}
           height={stageHeight}
-          onMouseDown={(e) => onStageMouseDown(e)}
-          onMouseMove={(e) => onStageMouseMove(e)}
-          onMouseUp={(e) => onStageMouseOut(e)}
-          onClick={(e) => transformUnSelect(e)}
           onWheel={(e) => handleCircleWheel(e)}
         >
           <Layer>
-            <Group>
+            <Group
+              ref={groupRef}
+              onMouseDown={(e) => onStageMouseDown(e)}
+              onMouseMove={(e) => onStageMouseMove(e)}
+              onMouseUp={(e) => onStageMouseOut(e)}
+              onClick={(e) => transformUnSelect(e)}
+            >
               <Rect
                 x={x}
                 y={y}
@@ -227,10 +228,11 @@ const SubStage = () => {
                 stroke={"skyblue"}
                 strokeWidth={4}
               />
+
               <DrawSingleComponent />
               <ShowSingleComonent />
+              <Transformer ref={transformerRef} resizeEnabled={false} />
             </Group>
-            <Transformer ref={transformerRef} resizeEnabled={false} />
           </Layer>
         </Stage>
       )}

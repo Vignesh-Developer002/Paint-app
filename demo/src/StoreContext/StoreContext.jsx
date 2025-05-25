@@ -1007,7 +1007,7 @@ const StoreContext = ({ children }) => {
     localStorage.setItem("shape", JSON.stringify(true));
     setBtnEnable(true);
     setStage2ShapeColor(false);
-    setDragHappens(false)//------------------------------------------------------------------
+    setDragHappens(false); //------------------------------------------------------------------
   }
 
   // function for handle the exit logic
@@ -1017,7 +1017,7 @@ const StoreContext = ({ children }) => {
     setStageVisible(false);
     setBtnEnable(false);
     setStage2ShapeColor(true);
-    setDragHappens(true);//------------------------------------------------------------------
+    setDragHappens(true); //------------------------------------------------------------------
   }
 
   const contextValue = {
