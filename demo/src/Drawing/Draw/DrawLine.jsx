@@ -4,7 +4,7 @@ import { globalStore } from "../../StoreContext/StoreContext.jsx";
 
 const DrawLine = () => {
   const { lines } = useContext(globalStore);
- 
+  console.log("line", lines);
 
   return (
     <>

@@ -955,14 +955,23 @@ const StoreContext = ({ children }) => {
       );
     } else if (btnName === actions.rectangle) {
       isPaint.current = false;
-      setDrawing((prev) => [...prev, currentlyDrawnShap]);
+      if (
+        Math.abs(currentlyDrawnShap["width"]) > 5 &&
+        Math.abs(currentlyDrawnShap["height"]) > 5
+      ) {
+        setDrawing((prev) => [...prev, currentlyDrawnShap]);
+      }
       setCurrentlyDrawnShape({}); // resetting the currently drawn shape
     } else if (btnName === actions.circle) {
       isPaint.current = false;
-      setDrawCircle((prev) => [...prev, currentlyDrawnCircle]);
+      if (currentlyDrawnCircle["radius"] > 5) {
+        setDrawCircle((prev) => [...prev, currentlyDrawnCircle]);
+      }
       setCurrentlyDrawnCircle({}); // resetting the currently drawn circle shape
     } else if (btnName === actions.scribble) {
-      setDrawScribble((prev) => [...prev, scribble]);
+      if (scribble["points"].length > 20) {
+        setDrawScribble((prev) => [...prev, scribble]);
+      }
       setScribble({}); // resetting the currently drawn scribble shape
     } else if (btnName === actions.line) {
       setDrawLine((prev) => [...prev, lines]);
@@ -975,7 +984,9 @@ const StoreContext = ({ children }) => {
     } else if (btnName === "group") {
       setGroup({});
     } else if (btnName === "rectLayer") {
-      setShowSingleRect((pre) => [...pre, drawsingleRect]);
+      if (drawsingleRect["width"] > 20 && drawsingleRect["height"] > 20) {
+        setShowSingleRect((pre) => [...pre, drawsingleRect]);
+      }
       setDrawSingleRect({});
     }
   }

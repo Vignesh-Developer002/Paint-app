@@ -15,6 +15,7 @@ const ShowSingleRect = () => {
     Stage2ShapeColor,
     handleTransformetMouseDown,
     transformerRef,
+    btnName,
   } = useContext(globalStore);
 
   // function for handle transform
@@ -34,24 +35,38 @@ const ShowSingleRect = () => {
     );
   }
 
-  console.log("stageShapeColor", Stage2ShapeColor);
+  //function for tranformend
+  function handleTransformEnd(e, id, name) {
+    let x = e.target.x();
+    let y = e.target.y();
+    let rotate = e.target.rotation();
+    setShowSingleRect((prev) =>
+      prev.map((d) =>
+        d.id === id ? { ...d, x: x, y: y, rotation: rotate } : d
+      )
+    );
+  }
+
   return (
     <>
       {Array.isArray(showSingleRect) &&
         showSingleRect.map((d, idx) => (
           <Group
+            key={d.id}
             onClick={(e) => handleTransform(e, idx)}
             onMouseDown={(e) => handleTransformetMouseDown(e)}
             onDblClick={(e) => handleStageVisble(e)}
-            draggable={true}
+            draggable={btnName === "select" ? true : false}
+            // rotation={d?.rotation || 0}
           >
             <Rect
               x={d.x}
+              onTransformEnd={(e) => handleTransformEnd(e, d.id, d.name)}
+              // rotation={d?.rotation}
               y={d.y}
               id={d.id}
-              rotation={d?.rotation || 0}
               ref={singleRectRef}
-              key={idx}
+              key={d.id}
               width={d?.width || 0}
               height={d?.height || 0}
               fill="lightGrey"
@@ -79,7 +94,7 @@ const ShowSingleRect = () => {
             {Array.isArray(showObRect) &&
               showObRect.map((d, idx) => (
                 <Rect
-                  key={idx}
+                  key={d.id}
                   x={d?.x || 0}
                   y={d?.y || 0}
                   width={d?.width || 0}

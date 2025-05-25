@@ -9,10 +9,12 @@ const DrawSingleRect = () => {
     showSingleRect,
     setShowSingleRect,
   } = useContext(globalStore);
+
   return (
     <>
       {Object.values(drawsingleRect) && (
         <Rect
+          key={drawsingleRect["id"]}
           x={drawsingleRect?.x || 0}
           y={drawsingleRect?.y || 0}
           width={drawsingleRect?.width || 0}
