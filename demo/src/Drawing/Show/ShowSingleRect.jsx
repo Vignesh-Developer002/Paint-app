@@ -57,31 +57,17 @@ const ShowSingleRect = () => {
         showSingleRect.map((d, idx) => (
           <Group
             key={d.id}
-            // onMouseDown={(e) => handleTransformetMouseDown(e)}
             onDblClick={(e) => handleStageVisble(e)}
             draggable={btnName === "select" ? true : false}
-            onTransformEnd={(e) => handleTransformEnd(e, d.id, d.name)}
-            onDragEnd={(e) => handleDrag(e, d.id)}
-            // x={d.x}-default
-            // y={d.y}-default
-            // x={0}-second logic
-            // y={0}-second logic
-            x={!dragHappen ? d.x : 0}
-            y={!dragHappen ? d.y : 0}
-            // rotation={d?.rotation}
-            // x={d.x}
-            // y={d.y}
+            x={0}
+            y={0}
+            rotation={d.rotation}
           >
             <Rect
-              x={!dragHappen ? 0 : d.x}
-              y={!dragHappen ? 0 : d.y}
-              // x={0}
-              // y={0}
-              // x={0}-default
-              // y={0}-default
-              // x={d.x}-second logic
-              // y={d.y}-second logic
-              rotation={0}
+              x={d.x}
+              y={d.y}
+              onTransformEnd={(e) => handleTransformEnd(e, d.id, d.name)}
+              onDragEnd={(e) => handleDrag(e, d.id)}
               onClick={(e) => handleTransform(e, idx)}
               fill="lightGrey"
               stroke="black"
@@ -91,8 +77,8 @@ const ShowSingleRect = () => {
               width={d?.width || 0}
               height={d?.height || 0}
               strokeWidth={2}
+              rotation={0}
             />
-
             {Array.isArray(showObPoly) &&
               showObPoly.map((d) => (
                 <Line
@@ -123,7 +109,6 @@ const ShowSingleRect = () => {
                   rotation={d?.rotation || 0}
                 />
               ))}
-
             {Array.isArray(showObCircle) &&
               showObCircle.map((d) => (
                 <Circle
@@ -139,7 +124,6 @@ const ShowSingleRect = () => {
                   rotation={d?.rotation}
                 />
               ))}
-
             {Array.isArray(showObLine) &&
               showObLine.map((d) => (
                 <Line

@@ -114,7 +114,7 @@ const SubStage = () => {
       }
     } else if (btnName === "line") {
       const stage = e.target.getStage();
-      const pointer = stage.getPointerPosition();
+      const pointer = stage.getRelativePointerPosition();
       let x = pointer.x;
       let y = pointer.y;
       setObLine({
@@ -162,7 +162,7 @@ const SubStage = () => {
       }
     } else if (btnName === "line") {
       const stage = e.target.getStage();
-      const pointer = stage.getPointerPosition();
+      const pointer = stage.getRelativePointerPosition();
       let x = pointer.x;
       let y = pointer.y;
 
@@ -184,21 +184,6 @@ const SubStage = () => {
       setShowObLine((p) => [...p, obLine]);
       setObLine({});
     }
-  }
-
-  // function for handle the transform end
-  function handleTransformEnd(e, id, name) {
-    let rotate = e.target.rotation();
-    localStorage.setItem("rotation", JSON.stringify(rotate));
-    setRotation(rotate);
-  }
-
-  // function for handle the drag
-  function handleRectDrag(e, id) {
-    let x = e.target.x();
-    let y = e.target.y();
-    setDrag((prev) => ({ ...prev, x: x, y: y }));
-    localStorage.setItem("dragxy", JSON.stringify({ x: x, y: y }));
   }
 
   useEffect(() => {
@@ -244,8 +229,8 @@ const SubStage = () => {
               />
               <DrawSingleComponent />
               <ShowSingleComonent />
-              <Transformer ref={transformerRef} resizeEnabled={false} />
             </Group>
+            <Transformer ref={transformerRef} resizeEnabled={false} />
           </Layer>
         </Stage>
       )}
