@@ -3,15 +3,8 @@ import { Circle } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext.jsx";
 
 const ShowCircle = () => {
-  const {
-    handleTransformetMouseDown,
-    drawCircle,
-    setDrawCircle,
-    btnEnablen,
-    btnName,
-    singleRectRef,
-    stageVisible,
-  } = useContext(globalStore);
+  const { handleTransformetMouseDown, drawCircle, setDrawCircle, btnName } =
+    useContext(globalStore);
 
   function handleDragEnd(e, id) {
     let x = e.target.x();
@@ -52,7 +45,6 @@ const ShowCircle = () => {
             draggable={btnName === "select" ? true : false}
             rotation={c.rotation || 0}
             onMouseDown={(e) => handleTransformetMouseDown(e, c.id, c.name)}
-            onClick={() => handleClick()}
           />
         ))}
     </>

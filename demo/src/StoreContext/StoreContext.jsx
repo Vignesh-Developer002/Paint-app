@@ -591,38 +591,42 @@ const StoreContext = ({ children }) => {
     setShowObpoly([]);
   }
 
-  console.log("Stage2ShapeColor", Stage2ShapeColor);
-  console.log("stageVisible", stageVisible);
-
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name, multiSel) {
-    console.log("multiselect", multiSel);
+    console.log("multiselect", Array.isArray(multiSel), multiSel, stageVisible);
+    console.log("id", id, "name", name, "multisel", multiSel, "e", e);
 
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
-      let len = multiSel !== undefined ? multiSel.length > 1 : null;
+      let len = multiSel !== undefined && multiSel.length > 1 ? true : false;
+      let len2 = multiSel !== undefined && multiSel.length > 7 ? true : false;
+
+      console.log("len", len, "len2", len2, "stageVisible", stageVisible);
       if (
-        (multiSel === undefined && Array.isArray(multiSel) === false) ||
+        (multiSel === undefined &&
+          Array.isArray(multiSel) === false &&
+          stageVisible === false) ||
         stageVisible
       ) {
         transformerRef.current.nodes([transformerNode]);
         setSideBarView(true);
         setIdName((prev) => ({ ...prev, id: id, Name: name }));
         handleSelect(id, name);
-      }
-      if (Stage2ShapeColor === true && stageVisible === false) {
-        transformerRef.current.shouldOverdrawWholeArea(false);
-        transformerRef.current.nodes([]);
-      }
-      if (len) {
+      } else if (len && stageVisible === false && !len2) {
         transformerRef.current.shouldOverdrawWholeArea(true);
         transformerRef.current.nodes(multiSel);
         setSideBarView(true);
       }
+      // } else if (len2) {
+      //   transformerRef.current.shouldOverdrawWholeArea(false);
+      //   transformerRef.current.nodes([]);
+      // }
     } else {
       return;
     }
   }
+
+  console.log("stagecolor", Stage2ShapeColor);
 
   // polygon circle onClick
   function handleAnchorClick() {
@@ -950,6 +954,7 @@ const StoreContext = ({ children }) => {
       let rectangleShape = stage.find(".rectangle");
       let circleShape = stage.find(".circle");
       let polygon = stage.find(".polygon");
+
       var box = selectionArrowRef.current.getClientRect(); // blue color slected layer
       let shapes = [...rectangleShape, ...circleShape, ...polygon];
       var selected = shapes.filter((shape) =>

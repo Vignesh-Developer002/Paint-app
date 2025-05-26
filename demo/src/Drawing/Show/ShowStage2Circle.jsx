@@ -41,8 +41,6 @@ const ShowStage2Circle = () => {
             y={d?.y}
             name={d?.name}
             radius={d?.radius}
-            // fill={Stage2ShapeColor === false ? "lightgrey" : ""}
-            // stroke={Stage2ShapeColor === false ? "black" : ""}
             fill={Stage2ShapeColor === false ? d.fill : "lightblue"}
             stroke={Stage2ShapeColor === false ? d.stroke : "lightblue"}
             strokeWidth={d?.strokeWidth}

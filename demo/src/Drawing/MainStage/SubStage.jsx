@@ -42,27 +42,6 @@ const SubStage = () => {
   } = useContext(globalStore);
   const groupRef = useRef(null);
 
-  // const [rotation, setRotation] = useState(0);
-  // const [drag, setDrag] = useState({
-  //   x: 0,
-  //   y: 0,
-  // });
-
-  // let rectArr = [...showSingleRect];
-  // let stageHeight = window.innerHeight;
-  // let stageWidth = window.innerWidth;
-  // let width, height, x, y, rot;
-
-  // let res = showSingleRect.map((d) => {
-  //   if (d.width > 0 && d.height > 0) {
-  //     height = d.height;
-  //     width = d.width;
-  //     x = d.x;
-  //     y = d.y;
-  //     rot = d.rotation;
-  //   }
-  // });
-
   function onStage2MouseDown(e) {
     singleRectRef.current = true;
     if (btnName === "rectangle") {
@@ -191,7 +170,7 @@ const SubStage = () => {
       {stageVisible && (
         <Stage
           style={{ backgroundColor: "grey" }}
-          ref={stageRef}
+          // ref={stageRef}
           width={window.innerWidth}
           height={window.innerHeight}
           onWheel={(e) => handleCircleWheel(e)}
