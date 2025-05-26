@@ -21,7 +21,7 @@ const StoreContext = ({ children }) => {
   let cirRef = useRef(null); // single rect inside cirRef shape
   let lineRef = useRef(null); // // single rect inside line shape
   const [listern, setListern] = useState(null);
-  let [Stage2ShapeColor, setStage2ShapeColor] = useState(null);
+  let [Stage2ShapeColor, setStage2ShapeColor] = useState(true);
   let [stage2PolyClosed, setStage2PolygonClosed] = useState(false); // for tracking the  stage 2 polygon is closed
   let [nextStage2Points, setStage2Points] = useState({}); // for updating the points for stage 2 polygon
   let [PolyStage2Complete, setPolyStage2Complete] = useState(false); // for tracking the polygon stage 2 is complete
@@ -153,7 +153,7 @@ const StoreContext = ({ children }) => {
   // useEffect for update the values
   useEffect(() => {
     if (names === "rectangle") {
-      if (showObRect.length === 0) {
+      if (drawing.length !== 0 && Stage2ShapeColor) {
         setDrawing((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -168,7 +168,7 @@ const StoreContext = ({ children }) => {
               : d
           )
         );
-      } else {
+      } else if (showObRect.length !== 0 && !Stage2ShapeColor) {
         setShowObRect((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -185,7 +185,7 @@ const StoreContext = ({ children }) => {
         );
       }
     } else if (names === "circle") {
-      if (showObCircle.length === 0) {
+      if (drawCircle.length !== 0 && Stage2ShapeColor) {
         setDrawCircle((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -199,7 +199,7 @@ const StoreContext = ({ children }) => {
               : d
           )
         );
-      } else {
+      } else if (showObCircle.length !== 0 && !Stage2ShapeColor) {
         setShowObCirlce((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -228,7 +228,7 @@ const StoreContext = ({ children }) => {
         )
       );
     } else if (names === "line") {
-      if (showObLine.length === 0) {
+      if (drawLine.length !== 0 && Stage2ShapeColor) {
         setDrawLine((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -241,7 +241,7 @@ const StoreContext = ({ children }) => {
               : d
           )
         );
-      } else {
+      } else if (showObLine.length !== 0 && !Stage2ShapeColor) {
         setShowObLine((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -251,7 +251,7 @@ const StoreContext = ({ children }) => {
         );
       }
     } else if (names === "polygon") {
-      if (showObPoly.length === 0) {
+      if (drawPolygon.length !== 0 && Stage2ShapeColor) {
         setDrawPolygon((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -259,7 +259,7 @@ const StoreContext = ({ children }) => {
               : d
           )
         );
-      } else {
+      } else if (showObPoly.length !== 0 && !Stage2ShapeColor) {
         setShowObpoly((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -317,7 +317,7 @@ const StoreContext = ({ children }) => {
   // function for handle the perticular shape click
   function handleSelect(id, name) {
     if (name === "rectangle") {
-      if (showObRect.length === 0 && showSingleRect.length === 0) {
+      if (drawing.length !== 0 && Stage2ShapeColor === true) {
         let Id, nm, height, width, stroke, fill, radius, strokeWidth;
         const totalShape = drawing.find((d) => d.id === id);
         nm = totalShape["name"];
@@ -339,7 +339,7 @@ const StoreContext = ({ children }) => {
           fill: fill,
           stroke: stroke,
         }));
-      } else {
+      } else if (showObRect.length !== 0 && !Stage2ShapeColor) {
         let Id, nm, height, width, stroke, fill, strokeWidth;
         const subStageShape = showObRect.find((d) => d.id === id);
         Id = subStageShape["id"];
@@ -362,7 +362,7 @@ const StoreContext = ({ children }) => {
         }));
       }
     } else if (name === "circle") {
-      if (showObCircle.length === 0) {
+      if (drawCircle.length !== 0 && Stage2ShapeColor === true) {
         const totalShape = drawCircle.find((d) => d.id === id);
         let name = totalShape["name"];
         let ids = totalShape["id"];
@@ -383,7 +383,7 @@ const StoreContext = ({ children }) => {
           fill: fill,
           stroke: stroke,
         });
-      } else {
+      } else if (showObCircle.length !== 0 && !Stage2ShapeColor) {
         let Id, nm, height, width, stroke, fill, radius, strokeWidth;
         const subStageShape = showObCircle.find((d) => d.id === id);
         Id = subStageShape["id"];
@@ -391,6 +391,7 @@ const StoreContext = ({ children }) => {
         radius = subStageShape["radius"];
         fill = subStageShape["fill"];
         strokeWidth = subStageShape["strokeWidth"];
+        stroke = subStageShape["stroke"];
         setCurrentShape(name);
         setSideBar({
           name: name,
@@ -419,7 +420,7 @@ const StoreContext = ({ children }) => {
         stroke: stroke,
       });
     } else if (name === "line") {
-      if (showObLine.length === 0) {
+      if (drawLine.length !== 0 && Stage2ShapeColor === true) {
         let totalShape = drawLine.find((d) => d.id === id);
         let name = totalShape["name"];
         let fill = totalShape["fill"];
@@ -435,7 +436,7 @@ const StoreContext = ({ children }) => {
           fill: fill,
           stroke: stroke,
         });
-      } else {
+      } else if (showObLine.length !== 0 && !Stage2ShapeColor) {
         let Id, nm, height, width, stroke, fill, radius, strokeWidth;
         const subStageShape = showObLine.find((d) => d.id === id);
         Id = subStageShape["id"];
@@ -454,7 +455,7 @@ const StoreContext = ({ children }) => {
         });
       }
     } else if (name === "polygon") {
-      if (showObPoly.length === 0) {
+      if (drawPolygon.length !== 0 && Stage2ShapeColor === true) {
         let totalShape = drawPolygon.find((d) => d.id === id);
         let name = totalShape["name"];
         let fill = totalShape["fill"];
@@ -470,7 +471,7 @@ const StoreContext = ({ children }) => {
           fill: fill,
           stroke: stroke,
         });
-      } else {
+      } else if (showObPoly.length !== 0 && !Stage2ShapeColor) {
         let Id, nm, height, width, stroke, fill, radius, strokeWidth;
         const subStageShape = showObPoly.find((d) => d.id === id);
         Id = subStageShape["id"];
@@ -591,6 +592,7 @@ const StoreContext = ({ children }) => {
   }
 
   console.log("Stage2ShapeColor", Stage2ShapeColor);
+  console.log("stageVisible", stageVisible);
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name, multiSel) {

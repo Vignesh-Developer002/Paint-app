@@ -42,8 +42,8 @@ const ShowStage2Rect = () => {
             y={d?.y || 0}
             width={d?.width || 0}
             height={d?.height || 0}
-            fill={Stage2ShapeColor === false ? "lightgrey" : ""}
-            stroke={Stage2ShapeColor === false ? "black" : ""}
+            fill={Stage2ShapeColor === false ? d.fill : "lightblue"}
+            stroke={Stage2ShapeColor === false ? d.stroke : "lightblue"}
             strokeWidth={d?.strokeWidth || 4}
             rotation={d?.rotation || 0}
             draggable={Stage2ShapeColor === false ? true : false}

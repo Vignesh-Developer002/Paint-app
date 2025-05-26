@@ -44,8 +44,10 @@ const ShowStage2Poly = () => {
             key={d?.id}
             id={d?.id}
             points={d?.points}
-            fill={Stage2ShapeColor === false ? "lightgrey" : ""}
-            stroke={Stage2ShapeColor === false ? "black" : ""}
+            // fill={Stage2ShapeColor === false ? "lightgrey" : ""}
+            // stroke={Stage2ShapeColor === false ? "black" : ""}
+            fill={Stage2ShapeColor === false ? d.fill : "lightblue"}
+            stroke={Stage2ShapeColor === false ? d.stroke : "lightblue"}
             strokeWidth={d?.strokeWidth}
             closed={d?.closed}
             name={d?.name}

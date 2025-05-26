@@ -41,7 +41,9 @@ const ShowStage2Line = () => {
             y={d?.y}
             name={d?.name}
             points={d?.points}
-            stroke={Stage2ShapeColor === false ? "black" : ""}
+            strokeWidth={d?.strokeWidth}
+            // stroke={Stage2ShapeColor === false ? "black" : ""}
+            stroke={Stage2ShapeColor === false ? d.stroke : "lightblue"}
             lineJoin={d?.lineJoin}
             rotation={d?.rotation}
             draggable={Stage2ShapeColor === false ? true : false}

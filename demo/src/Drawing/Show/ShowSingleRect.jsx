@@ -58,8 +58,8 @@ const ShowSingleRect = () => {
                   key={a?.id}
                   id={a?.id}
                   points={a?.points}
-                  fill={"lightblue"}
-                  stroke={"lightgrey"}
+                  // fill={"lightblue"}
+                  // stroke={"lightgrey"}
                   strokeWidth={a?.strokeWidth}
                   closed={a?.closed}
                   name={a?.name}
@@ -78,8 +78,6 @@ const ShowSingleRect = () => {
                   y={b?.y || 0}
                   width={b?.width || 0}
                   height={b?.height || 0}
-                  fill={Stage2ShapeColor === true ? "lightBlue" : ""}
-                  stroke={Stage2ShapeColor === true ? "lightgrey" : ""}
                   strokeWidth={b?.strokeWidth || 4}
                   rotation={b?.rotation || 0}
                   draggable={Stage2ShapeColor === true ? false : true}
@@ -96,8 +94,8 @@ const ShowSingleRect = () => {
                   y={d?.y}
                   name={d?.name}
                   radius={d?.radius}
-                  fill={Stage2ShapeColor === true ? "lightBlue" : ""}
-                  stroke={Stage2ShapeColor === true ? "lightgrey" : ""}
+                  // fill={Stage2ShapeColor === true ? "lightBlue" : ""}
+                  // stroke={Stage2ShapeColor === true ? "lightgrey" : ""}
                   strokeWidth={d?.strokeWidth}
                   rotation={d?.rotation}
                   draggable={Stage2ShapeColor === true ? false : true}
@@ -114,7 +112,7 @@ const ShowSingleRect = () => {
                   y={d?.y}
                   name={d?.name}
                   points={d?.points}
-                  stroke={Stage2ShapeColor === true ? "lightBlue" : ""}
+                  // stroke={Stage2ShapeColor === true ? "lightBlue" : ""}
                   strokeWidth={d?.strokeWidth}
                   lineJoin={d?.lineJoin}
                   rotation={d?.rotation}
