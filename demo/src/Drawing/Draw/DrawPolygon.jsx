@@ -10,6 +10,8 @@ const DrawPolygon = () => {
     <>
       {Object.keys(polygons) && (
         <Line
+          // x={polygons?.x}
+          // y={polygons?.y}
           id={polygons?.id}
           points={polygons?.points?.concat([nextPoint.x, nextPoint.y])}
           fill={polygons?.fill}

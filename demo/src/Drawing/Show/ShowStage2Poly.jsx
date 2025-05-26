@@ -13,8 +13,10 @@ const ShowStage2Poly = () => {
 
   //function for handle the handel drag
   function handlePolygonDrag(e, id) {
+    console.log("drag end happens in polygon");
     let x = e.target.x();
     let y = e.target.y();
+    // localStorage.setItem("polygonDrag", JSON.stringify({ x, y }));
     setShowObpoly((prev) =>
       prev.map((p) => (p.id === id ? { ...p, x: x, y: y } : p))
     );
@@ -22,17 +24,17 @@ const ShowStage2Poly = () => {
 
   //function for handletransformEnd i.e) rotation
   function handletransformEnd(e, id) {
-
+    console.log("tranform end happens in polygon");
     let x = e.target.x();
     let y = e.target.y();
     let rotate = e.target.rotation();
+    // localStorage.setItem("polygonDrag", JSON.stringify({ x, y }));
     setShowObpoly((prev) =>
       prev.map((d) =>
         d.id === id ? { ...d, x: x, y: y, rotation: rotate } : d
       )
     );
   }
-
 
   return (
     <>
@@ -42,8 +44,8 @@ const ShowStage2Poly = () => {
             key={d?.id}
             id={d?.id}
             points={d?.points}
-            fill={d?.fill}
-            stroke={d?.stroke}
+            fill={Stage2ShapeColor === false ? "lightgrey" : ""}
+            stroke={Stage2ShapeColor === false ? "black" : ""}
             strokeWidth={d?.strokeWidth}
             closed={d?.closed}
             name={d?.name}
@@ -52,6 +54,7 @@ const ShowStage2Poly = () => {
             onDragEnd={(e) => handlePolygonDrag(e, d.id)}
             onTransformEnd={(e) => handletransformEnd(e, d.id, d.name)}
             onMouseDown={(e) => handleTransformetMouseDown(e, d.id, d.name)}
+            listening={Stage2ShapeColor === false ? true : false}
           />
         ))}
     </>

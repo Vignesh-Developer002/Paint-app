@@ -20,6 +20,10 @@ const RightSideShape = () => {
     setDisble,
     setDrawText,
     stageVisible,
+    polyRef,
+    rectRef,
+    cirRef,
+    lineRef,
   } = useContext(globalStore);
 
   let Text = sideBar.text;

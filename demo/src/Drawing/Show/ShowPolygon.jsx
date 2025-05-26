@@ -15,16 +15,21 @@ const ShowPolygon = () => {
   function handlePolygonDrag(e, id) {
     let x = e.target.x();
     let y = e.target.y();
+    console.log(x, y, "normal polygon drag", id);
     setDrawPolygon((prev) =>
       prev.map((p) => (p.id === id ? { ...p, x: x, y: y } : p))
     );
   }
+
+  console.log("state update polygon", drawPolygon);
 
   //function for handletransformEnd i.e) rotation
   function handletransformEnd(e, id) {
     let x = e.target.x();
     let y = e.target.y();
     let rotate = e.target.rotation();
+
+    console.log("normal polygon rotation", rotate, x, y, id);
     setDrawPolygon((prev) =>
       prev.map((d) =>
         d.id === id ? { ...d, x: x, y: y, rotation: rotate } : d
@@ -37,6 +42,8 @@ const ShowPolygon = () => {
       {Array.isArray(drawPolygon) &&
         drawPolygon.map((p, idx) => (
           <Line
+            // x={p.x}
+            // y={p.y}
             key={idx}
             id={p.id}
             points={p.points}

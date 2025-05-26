@@ -15,6 +15,12 @@ const StoreContext = ({ children }) => {
   });
 
   let singleRectRef = useRef(null);
+  const groupRef = useRef(null); // for single ref
+  let polyRef = useRef(null); // single rect inside polygon shape
+  let rectRef = useRef(null); // single rect inside circles shape
+  let cirRef = useRef(null); // single rect inside cirRef shape
+  let lineRef = useRef(null); // // single rect inside line shape
+  const [listern, setListern] = useState(null);
   let [Stage2ShapeColor, setStage2ShapeColor] = useState(null);
   let [stage2PolyClosed, setStage2PolygonClosed] = useState(false); // for tracking the  stage 2 polygon is closed
   let [nextStage2Points, setStage2Points] = useState({}); // for updating the points for stage 2 polygon
@@ -311,7 +317,7 @@ const StoreContext = ({ children }) => {
   // function for handle the perticular shape click
   function handleSelect(id, name) {
     if (name === "rectangle") {
-      if (showObRect.length === 0) {
+      if (showObRect.length === 0 && showSingleRect.length === 0) {
         let Id, nm, height, width, stroke, fill, radius, strokeWidth;
         const totalShape = drawing.find((d) => d.id === id);
         nm = totalShape["name"];
@@ -768,7 +774,7 @@ const StoreContext = ({ children }) => {
         points: [x, y, x, y],
         stroke: sideBar.stroke || "#000000",
         fill: sideBar.fill || "lightgray",
-        strokeWidth: 1,
+        strokeWidth: 2,
         lineJoin: "round",
         rotation: 0,
       });
@@ -780,6 +786,8 @@ const StoreContext = ({ children }) => {
         let x = pos.x || 0;
         let y = pos.y || 0;
         setPolygons((prev) => ({
+          // x: x,
+          // y: y,
           ...prev,
           name: btnName,
           id: uuidv4(),
@@ -824,7 +832,7 @@ const StoreContext = ({ children }) => {
         width: 1,
         height: 1,
         fill: sideBar.fill ? sideBar.fill : "Lightgrey",
-        stroke: sideBar.stroke ? sideBar.stroke : "Black",
+        stroke: sideBar.stroke ? sideBar.stroke : "black",
         strokeWidth: 2,
         rotation: 0,
       });
@@ -1014,6 +1022,7 @@ const StoreContext = ({ children }) => {
   function handleExit() {
     let res;
     res = localStorage.setItem("btnenable", JSON.stringify(false));
+
     setStageVisible(false);
     setBtnEnable(false);
     setStage2ShapeColor(true);
@@ -1141,6 +1150,12 @@ const StoreContext = ({ children }) => {
     singleRectRef,
     dragHappen,
     setDragHappens,
+    listern,
+    setListern,
+    polyRef,
+    rectRef,
+    cirRef,
+    lineRef,
   };
 
   return (

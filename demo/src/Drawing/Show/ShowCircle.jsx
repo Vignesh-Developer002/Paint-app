@@ -52,7 +52,7 @@ const ShowCircle = () => {
             draggable={btnName === "select" ? true : false}
             rotation={c.rotation || 0}
             onMouseDown={(e) => handleTransformetMouseDown(e, c.id, c.name)}
-            onClick={() => handleClick()}
+            // onClick={() => handleClick()}
           />
         ))}
     </>

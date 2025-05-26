@@ -42,14 +42,15 @@ const ShowStage2Rect = () => {
             y={d?.y || 0}
             width={d?.width || 0}
             height={d?.height || 0}
-            fill={d?.fill || "red"}
-            stroke={d?.stroke || "red"}
+            fill={Stage2ShapeColor === false ? "lightgrey" : ""}
+            stroke={Stage2ShapeColor === false ? "black" : ""}
             strokeWidth={d?.strokeWidth || 4}
             rotation={d?.rotation || 0}
             draggable={Stage2ShapeColor === false ? true : false}
             onDragEnd={(e) => handleRectDrag(e, d.id)}
             onMouseDown={(e) => handleTransformetMouseDown(e, d.id, d.name)}
             onTransformEnd={(e) => handleTransformEnd(e, d.id, d.name)}
+            listening={Stage2ShapeColor === false ? true : false}
           />
         ))}
     </>

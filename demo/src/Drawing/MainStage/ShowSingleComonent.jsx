@@ -7,10 +7,10 @@ import ShowStage2Line from "../Show/ShowStage2Line";
 const ShowSingleComonent = () => {
   return (
     <>
+      <ShowStage2Poly />
       <ShowStage2Rect />
       <ShowStage2Circle />
-      <ShowStage2Poly />
-      <ShowStage2Line/>
+      <ShowStage2Line />
     </>
   );
 };

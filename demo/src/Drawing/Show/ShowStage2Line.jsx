@@ -41,15 +41,14 @@ const ShowStage2Line = () => {
             y={d?.y}
             name={d?.name}
             points={d?.points}
-            stroke={d?.stroke}
-            fill={d?.fill}
-            strokeWidth={d?.strokeWidth}
+            stroke={Stage2ShapeColor === false ? "black" : ""}
             lineJoin={d?.lineJoin}
             rotation={d?.rotation}
             draggable={Stage2ShapeColor === false ? true : false}
             onDragEnd={(e) => handleDrag(e, d.id)}
             onTransformEnd={(e) => handleTranfomEnd(e, d.id, d.name)}
             onMouseDown={(e) => handleTransformetMouseDown(e, d.id, d.name)}
+            listening={Stage2ShapeColor === false ? true : false}
           />
         ))}
     </>

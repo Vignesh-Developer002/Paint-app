@@ -41,14 +41,15 @@ const ShowStage2Circle = () => {
             y={d?.y}
             name={d?.name}
             radius={d?.radius}
-            fill={d?.fill}
-            stroke={d?.stroke}
+            fill={Stage2ShapeColor === false ? "lightgrey" : ""}
+            stroke={Stage2ShapeColor === false ? "black" : ""}
             strokeWidth={d?.strokeWidth}
             rotation={d?.rotation}
             draggable={Stage2ShapeColor === false ? true : false}
             onDragEnd={(e) => handleDragEnd(e, d.id)}
             onTransformEnd={(e) => handleTransformEnd(e, d.id, d.name)}
             onMouseDown={(e) => handleTransformetMouseDown(e, d.id, d.name)}
+            listening={Stage2ShapeColor === false ? true : false}
           />
         ))}
     </>
