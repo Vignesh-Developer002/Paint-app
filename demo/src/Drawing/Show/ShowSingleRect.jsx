@@ -7,28 +7,26 @@ import ShowSingleComonent from "../MainStage/ShowSingleComonent";
 const ShowSingleRect = () => {
   const {
     showSingleRect,
-    setShowSingleRect,
     handleStageVisble,
-    singleRectRef,
-    showObRect,
-    showObCircle,
-    showObPoly,
-    showObLine,
-    Stage2ShapeColor,
-    handleTransformetMouseDown,
-    transformerRef,
-    btnName,
-    dragHappen,
-    setDragHappens,
-    stageRef,
-    listern,
-    setListern,
     groupRef,
-    polyRef,
-    rectRef,
-    cirRef,
-    lineRef,
+    handleTransformetMouseDown,
+    setShowSingleRect,
+    btnName,
   } = useContext(globalStore);
+
+  const [drag, setDrag] = useState(false);
+
+  function handleSingleRectDrag(e, id) {
+    console.log("drag happens");
+    setDrag(true);
+    let x = e.target.x();
+    let y = e.target.y();
+    setShowSingleRect((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, x: x, y: y } : r))
+    );
+  }
+
+  console.log("dddgdg", showSingleRect);
 
   //----------------------------   outside single rectangle -----------------------------
 
@@ -36,84 +34,29 @@ const ShowSingleRect = () => {
     <>
       {Array.isArray(showSingleRect) &&
         showSingleRect.map((d) => (
-          <Group key={d.id} onDblClick={(e) => handleStageVisble(e)}>
+          <Group
+            ref={groupRef}
+            key={d.id}
+            onDblClick={(e) => handleStageVisble(e)}
+            onMouseDown={(e) => handleTransformetMouseDown(e, d.id, d.name)}
+            draggable={btnName === "select"}
+            onDragEnd={(e) => handleSingleRectDrag(e, d.id)}
+            x={d?.x || 0} /* toggle - drag happen */
+            y={d?.y || 0} /* toggle - drag happen */
+          >
             <Rect
-              ref={groupRef}
               key={d?.id}
-              x={d?.x || 0}
-              y={d?.y || 0}
+              // x={d?.x || 0} /* default */
+              // y={d?.y || 0} /* default */
+              // x={0} /* toggle */
+              // y={0} /* toggle */
               width={d?.width || 0}
               height={d?.height || 0}
-              // fill={d?.fill || "red"}
-              // stroke={d?.stroke || "red"}
               fill={"lightGrey"}
               stroke={"black"}
               strokeWidth={d?.strokeWidth || 4}
               rotation={d?.rotation || 0}
             />
-            {/* {Array.isArray(showObPoly) &&
-              showObPoly.map((a) => (
-                <Line
-                  key={a?.id}
-                  id={a?.id}
-                  points={a?.points}
-                  strokeWidth={a?.strokeWidth}
-                  closed={a?.closed}
-                  name={a?.name}
-                  draggable={Stage2ShapeColor === true ? false : true}
-                  rotation={a?.rotation || 0}
-                  ref={polyRef}
-                  listening={Stage2ShapeColor === true ? false : true}
-                />
-              ))}
-            {Array.isArray(showObRect) &&
-              showObRect.map((b) => (
-                <Rect
-                  key={b.id}
-                  x={b?.x || 0}
-                  y={b?.y || 0}
-                  width={b?.width || 0}
-                  height={b?.height || 0}
-                  strokeWidth={b?.strokeWidth || 4}
-                  rotation={b?.rotation || 0}
-                  draggable={Stage2ShapeColor === true ? false : true}
-                  listening={Stage2ShapeColor === true ? false : true}
-                  ref={rectRef}
-                />
-              ))}
-            {Array.isArray(showObCircle) &&
-              showObCircle.map((d, idx) => (
-                <Circle
-                  key={d?.id}
-                  id={d?.id}
-                  x={d?.x}
-                  y={d?.y}
-                  name={d?.name}
-                  radius={d?.radius}
-                  strokeWidth={d?.strokeWidth}
-                  rotation={d?.rotation}
-                  draggable={Stage2ShapeColor === true ? false : true}
-                  ref={cirRef}
-                  fill={Stage2ShapeColor === true ? false : true}
-                  listening={false}
-                />
-              ))}
-            {Array.isArray(showObLine) &&
-              showObLine.map((d) => (
-                <Line
-                  key={d?.id}
-                  id={d?.id}
-                  x={d?.x}
-                  y={d?.y}
-                  name={d?.name}
-                  points={d?.points}
-                  strokeWidth={d?.strokeWidth}
-                  lineJoin={d?.lineJoin}
-                  rotation={d?.rotation}
-                  ref={lineRef}
-                  listening={Stage2ShapeColor === true ? false : true}
-                />
-              ))} */}
             <DrawSingleComponent />
             <ShowSingleComonent />
           </Group>

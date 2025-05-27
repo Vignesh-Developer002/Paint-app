@@ -154,7 +154,6 @@ const StoreContext = ({ children }) => {
   useEffect(() => {
     if (names === "rectangle" || names === "rectangle3") {
       if (drawing.length !== 0 && Stage2ShapeColor) {
-        console.log("assigning normal rectangle state");
         setDrawing((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -170,7 +169,6 @@ const StoreContext = ({ children }) => {
           )
         );
       } else if (showObRect.length !== 0 && !Stage2ShapeColor) {
-        console.log("assigning  rectangle3 state");
         setShowObRect((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -188,7 +186,6 @@ const StoreContext = ({ children }) => {
       }
     } else if (names === "circle" || names === "circle3") {
       if (drawCircle.length !== 0 && Stage2ShapeColor) {
-        console.log("assigning normal circle state");
         setDrawCircle((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -203,7 +200,6 @@ const StoreContext = ({ children }) => {
           )
         );
       } else if (showObCircle.length !== 0 && !Stage2ShapeColor) {
-        console.log("assigning  circle3 state");
         setShowObCirlce((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -233,7 +229,6 @@ const StoreContext = ({ children }) => {
       );
     } else if (names === "line" || names === "line3") {
       if (drawLine.length !== 0 && Stage2ShapeColor) {
-        console.log("assigning the normal line state");
         setDrawLine((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -247,7 +242,6 @@ const StoreContext = ({ children }) => {
           )
         );
       } else if (showObLine.length !== 0 && !Stage2ShapeColor) {
-        console.log("assigning the line3 state");
         setShowObLine((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -258,7 +252,6 @@ const StoreContext = ({ children }) => {
       }
     } else if (names === "polygon" || names === "polygon3") {
       if (drawPolygon.length !== 0 && Stage2ShapeColor) {
-        console.log("assign normal polygon state");
         setDrawPolygon((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -267,7 +260,6 @@ const StoreContext = ({ children }) => {
           )
         );
       } else if (showObPoly.length !== 0 && !Stage2ShapeColor) {
-        console.log("assign  polygon3 state");
         setShowObpoly((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -383,7 +375,6 @@ const StoreContext = ({ children }) => {
         Stage2ShapeColor === true &&
         name !== "circle3"
       ) {
-        console.log("entered normal circle");
         const totalShape = drawCircle.find((d) => d.id === id);
         let name = totalShape["name"];
         let ids = totalShape["id"];
@@ -409,7 +400,6 @@ const StoreContext = ({ children }) => {
         !Stage2ShapeColor &&
         name === "circle3"
       ) {
-        console.log("entered  circle3");
         let Id, nm, height, width, stroke, fill, radius, strokeWidth;
         const subStageShape = showObCircle.find((d) => d.id === id);
         Id = subStageShape["id"];
@@ -451,7 +441,6 @@ const StoreContext = ({ children }) => {
         Stage2ShapeColor === true &&
         name !== "line3"
       ) {
-        console.log("entered normal line");
         let totalShape = drawLine.find((d) => d.id === id);
         let name = totalShape["name"];
         let fill = totalShape["fill"];
@@ -472,7 +461,6 @@ const StoreContext = ({ children }) => {
         !Stage2ShapeColor &&
         name === "line3"
       ) {
-        console.log("entered line3");
         let Id, nm, height, width, stroke, fill, radius, strokeWidth;
         const subStageShape = showObLine.find((d) => d.id === id);
         Id = subStageShape["id"];
@@ -637,25 +625,12 @@ const StoreContext = ({ children }) => {
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name, multiSel) {
-    let len = multiSel !== undefined && multiSel.length > 1 ? true : false;
-    console.log(
-      "1.",
-      " ArrayisArray",
-      Array.isArray(multiSel),
-      "multisel",
-      multiSel,
-      "stageVisible",
-      stageVisible,
-      "len",
-      len
-    );
-    console.log("2", "id", id, "name", name, "multisel", multiSel, "e", e);
+    // let len = multiSel !== undefined && multiSel.length > 1 ? true : false;
 
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
       // let len = multiSel !== undefined && multiSel.length > 1 ? true : false;
 
-      // console.log("len", len, "len2", len2, "stageVisible", stageVisible);
       if (
         (multiSel === undefined &&
           Array.isArray(multiSel) === false &&
@@ -671,10 +646,6 @@ const StoreContext = ({ children }) => {
         transformerRef.current.nodes(multiSel);
         setSideBarView(true);
       }
-      // } else if (len2) {
-      //   transformerRef.current.shouldOverdrawWholeArea(false);
-      //   transformerRef.current.nodes([]);
-      // }
     } else {
       return;
     }

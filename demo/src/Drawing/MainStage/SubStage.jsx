@@ -37,15 +37,12 @@ const SubStage = () => {
     setObLine,
     setShowObLine,
     Stage2ShapeColor,
-    handleTransformetMouseDown,
-    sideBar,
   } = useContext(globalStore);
   const groupRef = useRef(null);
 
   function onStage2MouseDown(e) {
-    singleRectRef.current = true;
     if (btnName === "rectangle") {
-      let pos = e.target.getStage().getRelativePointerPosition();
+      let pos = groupRef.current?.getRelativePointerPosition();
       let x = pos.x;
       let y = pos.y;
       setObRect({
@@ -60,7 +57,7 @@ const SubStage = () => {
         strokeWidth: 1,
       });
     } else if (btnName === "circle") {
-      let pos = e.target.getStage().getRelativePointerPosition();
+      let pos = groupRef.current?.getRelativePointerPosition();
       let x = pos.x;
       let y = pos.y;
       setObCir({
@@ -76,7 +73,7 @@ const SubStage = () => {
       });
     } else if (btnName === "polygon") {
       if (!PolyStage2Complete) {
-        let pos = e.target.getStage().getRelativePointerPosition();
+        let pos = groupRef.current?.getRelativePointerPosition();
         let x = pos.x;
         let y = pos.y;
         setObPoly((prev) => ({
@@ -92,8 +89,7 @@ const SubStage = () => {
         }));
       }
     } else if (btnName === "line") {
-      // const stage = e.target.getStage();
-      const pointer = e.target.getStage().getRelativePointerPosition();
+      const pointer = groupRef.current?.getRelativePointerPosition();
       let x = pointer.x;
       let y = pointer.y;
       setObLine({
@@ -111,9 +107,8 @@ const SubStage = () => {
   }
 
   function onStage2MouseMove(e) {
-    singleRectRef.current = true;
     if (btnName === "rectangle") {
-      let pos = e.target.getStage().getRelativePointerPosition();
+      let pos = groupRef.current?.getRelativePointerPosition();
       let x = pos.x;
       let y = pos.y;
       setObRect((p) => ({
@@ -122,7 +117,7 @@ const SubStage = () => {
         height: y - p.y || 0,
       }));
     } else if (btnName === "circle") {
-      let pos = e.target.getStage().getRelativePointerPosition();
+      let pos = groupRef.current?.getRelativePointerPosition();
       let x = pos.x || 0;
       let y = pos.y || 0;
       setObCir((pre) => ({
@@ -134,14 +129,13 @@ const SubStage = () => {
       }));
     } else if (btnName === "polygon") {
       if (!PolyStage2Complete) {
-        let pos = e.target.getStage().getRelativePointerPosition();
+        let pos = groupRef.current?.getRelativePointerPosition();
         let x = pos.x || 0;
         let y = pos.y || 0;
         setStage2Points({ x: x, y: y });
       }
     } else if (btnName === "line") {
-      // const stage = e.target.getStage();
-      const pointer = e.target.getStage().getRelativePointerPosition();
+      const pointer = groupRef.current?.getRelativePointerPosition();
       let x = pointer.x;
       let y = pointer.y;
 
@@ -164,7 +158,11 @@ const SubStage = () => {
       setObLine({});
     }
   }
-  // stageShapeColor - false
+
+  console.log("groupRef", groupRef.current);
+
+  console.log("dddgdg", showSingleRect);
+
   return (
     <>
       {stageVisible && (
@@ -174,19 +172,26 @@ const SubStage = () => {
           width={window.innerWidth}
           height={window.innerHeight}
           onWheel={(e) => handleCircleWheel(e)}
-          onMouseDown={(e) => onStage2MouseDown(e)}
-          onMouseMove={(e) => onStage2MouseMove(e)}
-          onMouseUp={(e) => onStage2MouseOut(e)}
+          // onMouseDown={(e) => onStage2MouseDown(e)}
+          // onMouseMove={(e) => onStage2MouseMove(e)}
+          // onMouseUp={(e) => onStage2MouseOut(e)}
           onClick={(e) => transformUnSelect(e)}
         >
           <Layer>
             {Array.isArray(showSingleRect) &&
               showSingleRect.map((d) => (
-                <Group key={d.id}>
+                <Group
+                  ref={groupRef}
+                  key={d.id}
+                  x={d?.x || 0}
+                  y={d?.y || 0}
+                  draggable={btnName === "select"}
+                  onMouseDown={(e) => onStage2MouseDown(e)}
+                  onMouseMove={(e) => onStage2MouseMove(e)}
+                  onMouseUp={(e) => onStage2MouseOut(e)}
+                >
                   <Rect
                     key={d?.id}
-                    x={d?.x || 0}
-                    y={d?.y || 0}
                     width={d?.width || 0}
                     height={d?.height || 0}
                     fill={"white"}

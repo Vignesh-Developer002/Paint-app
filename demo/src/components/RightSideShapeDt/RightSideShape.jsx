@@ -115,14 +115,16 @@ const RightSideShape = () => {
 
   return (
     <>
-      {(!stageVisible || stageVisible) && (
+      {((!stageVisible && idName.Name !== "rectLayer") || stageVisible) && (
         <>
           {((idName.id && idName.Name && sideBarView) ||
             btnName === "image") && (
             <div className="right-side-container">
               <div className="inner-content">
                 <h1 className="heading">
-                  {handleShapeName(currentShap).toUpperCase()}
+                  {handleShapeName(currentShap)
+                    ? handleShapeName(currentShap).toUpperCase()
+                    : ""}
                 </h1>
                 {/* flex-column */}
                 <div className="main-content">
