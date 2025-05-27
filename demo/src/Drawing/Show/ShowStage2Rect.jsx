@@ -40,6 +40,7 @@ const ShowStage2Rect = () => {
             key={idx}
             x={d?.x || 0}
             y={d?.y || 0}
+            name={d?.name}
             width={d?.width || 0}
             height={d?.height || 0}
             fill={Stage2ShapeColor === false ? d.fill : "lightblue"}

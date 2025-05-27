@@ -26,6 +26,35 @@ const RightSideShape = () => {
     lineRef,
   } = useContext(globalStore);
 
+  function handleShapeName(shape) {
+    let name;
+    if (shape == "rectangle") {
+      return (name = shape);
+    } else if (shape == "rectangle3") {
+      return (name = shape.slice(0, 9));
+    } else if (shape === "circle") {
+      return (name = shape);
+    } else if (shape === "circle3") {
+      return (name = shape.slice(0, 6));
+    } else if (shape === "scrible") {
+      return (name = shape);
+    } else if (shape === "line") {
+      return (name = shape);
+    } else if (shape === "line3") {
+      return (name = shape.slice(0, 4));
+    } else if (shape === "polygon") {
+      return (name = shape);
+    } else if (shape === "polygon3") {
+      return (name = shape.slice(0, 7));
+    } else if (shape === "image") {
+      return (name = shape);
+    } else if (shape === "text") {
+      return (name = shape);
+    } else if (shape === "group") {
+      return (name = shape);
+    }
+  }
+
   let Text = sideBar.text;
   let fontSize = Number(sideBar.fontSize);
   let ids = idName.id;
@@ -93,7 +122,7 @@ const RightSideShape = () => {
             <div className="right-side-container">
               <div className="inner-content">
                 <h1 className="heading">
-                  {currentShap ? currentShap.toUpperCase() : ""}
+                  {handleShapeName(currentShap).toUpperCase()}
                 </h1>
                 {/* flex-column */}
                 <div className="main-content">
@@ -111,7 +140,9 @@ const RightSideShape = () => {
                           <StrokeColor />
                         </div>
                         <hr />
-                        {idName.Name !== "scrible" && idName.Name !== "line" ? (
+                        {idName.Name !== "scrible" &&
+                        idName.Name !== "line" &&
+                        idName.Name !== "line3" ? (
                           <>
                             {" "}
                             <div className="fill-color">
@@ -142,7 +173,8 @@ const RightSideShape = () => {
                       </>
                     )}
 
-                  {idName.Name === "circle" && btnName !== "image" ? (
+                  {(idName.Name === "circle" && btnName !== "image") ||
+                  idName.Name === "circle3" ? (
                     <div className="circle-radius">
                       <p> Radius :</p>
                       <input
@@ -156,6 +188,7 @@ const RightSideShape = () => {
                     <></>
                   )}
                   {idName.Name === "rectangle" ||
+                  idName.Name === "rectangle3" ||
                   idName.Name == "image" ||
                   idName.Name === "group" ? (
                     <>
@@ -180,6 +213,7 @@ const RightSideShape = () => {
                       </div>
                       <hr />
                       {idName.Name !== "rectangle" &&
+                        idName.Name !== "rectangle3" &&
                         idName.Name !== "group" && (
                           <div className="opacity">
                             <p>Opacity :</p>

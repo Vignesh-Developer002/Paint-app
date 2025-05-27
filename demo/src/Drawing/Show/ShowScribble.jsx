@@ -8,6 +8,7 @@ const ShowScribble = () => {
     handleTransformetMouseDown,
     setDrawScribble,
     handleShapeClick,
+    btnName,
   } = useContext(globalStore);
 
   function handleRectDrag(e, id) {
@@ -40,7 +41,7 @@ const ShowScribble = () => {
             strokeWidth={d.strokeWidth}
             lineCap={d.lineCap}
             lineJoin={d.lineJoin}
-            draggable={true}
+            draggable={btnName === "select" ? true : false}
             onDragEnd={(e) => handleRectDrag(e, d.id)}
             onMouseDown={(e) => handleTransformetMouseDown(e, d.id, d.name)}
             onTransformEnd={(e) => handleTransformEnd(e, d.id, d.name)}

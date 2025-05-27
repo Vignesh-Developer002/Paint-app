@@ -21,8 +21,6 @@ const ShowPolygon = () => {
     );
   }
 
-  console.log("state update polygon", drawPolygon);
-
   //function for handletransformEnd i.e) rotation
   function handletransformEnd(e, id) {
     let x = e.target.x();

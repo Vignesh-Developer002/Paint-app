@@ -52,11 +52,11 @@ const SubStage = () => {
         id: uuidv4(),
         x: x,
         y: y,
-        width: 0,
-        height: 0,
+        width: 1,
+        height: 1,
         fill: Stage2ShapeColor === false ? "lightGrey" : "",
         stroke: Stage2ShapeColor === false ? "black" : "lightGrey",
-        name: btnName,
+        name: "rectangle3",
         strokeWidth: 1,
       });
     } else if (btnName === "circle") {
@@ -67,7 +67,7 @@ const SubStage = () => {
         id: uuidv4(),
         x: x,
         y: y,
-        name: btnName,
+        name: "circle3",
         radius: 1,
         fill: Stage2ShapeColor === false ? "lightGrey" : "",
         stroke: Stage2ShapeColor === false ? "black" : "lightGrey",
@@ -81,7 +81,7 @@ const SubStage = () => {
         let y = pos.y;
         setObPoly((prev) => ({
           ...prev,
-          name: btnName,
+          name: "polygon3",
           id: uuidv4(),
           points: Array.isArray(prev?.points) ? [...prev.points, x, y] : [x, y],
           fill: Stage2ShapeColor === false ? "lightGrey" : "",
@@ -100,7 +100,7 @@ const SubStage = () => {
         id: uuidv4(),
         x: 1,
         y: 1,
-        name: btnName,
+        name: "line3",
         points: [x, y, x, y],
         stroke: Stage2ShapeColor === false ? "Black" : "",
         strokeWidth: 3,
@@ -170,7 +170,7 @@ const SubStage = () => {
       {stageVisible && (
         <Stage
           style={{ backgroundColor: "grey" }}
-          // ref={stageRef}
+          ref={stageRef}
           width={window.innerWidth}
           height={window.innerHeight}
           onWheel={(e) => handleCircleWheel(e)}

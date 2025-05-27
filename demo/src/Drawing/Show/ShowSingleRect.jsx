@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Group, Rect, Circle, Line, Transformer } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext";
 import DrawSingleComponent from "../MainStage/DrawSingleComponent";
@@ -31,24 +31,23 @@ const ShowSingleRect = () => {
   } = useContext(globalStore);
 
   //----------------------------   outside single rectangle -----------------------------
-  // stageShapeColor -true
+
   return (
     <>
       {Array.isArray(showSingleRect) &&
         showSingleRect.map((d) => (
-          <Group
-            ref={groupRef}
-            key={d.id}
-            onDblClick={(e) => handleStageVisble(e)}
-          >
+          <Group key={d.id} onDblClick={(e) => handleStageVisble(e)}>
             <Rect
+              ref={groupRef}
               key={d?.id}
               x={d?.x || 0}
               y={d?.y || 0}
               width={d?.width || 0}
               height={d?.height || 0}
-              fill={d?.fill || "red"}
-              stroke={d?.stroke || "red"}
+              // fill={d?.fill || "red"}
+              // stroke={d?.stroke || "red"}
+              fill={"lightGrey"}
+              stroke={"black"}
               strokeWidth={d?.strokeWidth || 4}
               rotation={d?.rotation || 0}
             />

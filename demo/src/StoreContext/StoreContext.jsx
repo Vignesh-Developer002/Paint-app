@@ -20,7 +20,7 @@ const StoreContext = ({ children }) => {
   let rectRef = useRef(null); // single rect inside circles shape
   let cirRef = useRef(null); // single rect inside cirRef shape
   let lineRef = useRef(null); // // single rect inside line shape
-  const [listern, setListern] = useState(null);
+  const [listern, setListern] = useState("");
   let [Stage2ShapeColor, setStage2ShapeColor] = useState(true);
   let [stage2PolyClosed, setStage2PolygonClosed] = useState(false); // for tracking the  stage 2 polygon is closed
   let [nextStage2Points, setStage2Points] = useState({}); // for updating the points for stage 2 polygon
@@ -152,8 +152,9 @@ const StoreContext = ({ children }) => {
 
   // useEffect for update the values
   useEffect(() => {
-    if (names === "rectangle") {
+    if (names === "rectangle" || names === "rectangle3") {
       if (drawing.length !== 0 && Stage2ShapeColor) {
+        console.log("assigning normal rectangle state");
         setDrawing((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -169,6 +170,7 @@ const StoreContext = ({ children }) => {
           )
         );
       } else if (showObRect.length !== 0 && !Stage2ShapeColor) {
+        console.log("assigning  rectangle3 state");
         setShowObRect((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -184,8 +186,9 @@ const StoreContext = ({ children }) => {
           )
         );
       }
-    } else if (names === "circle") {
+    } else if (names === "circle" || names === "circle3") {
       if (drawCircle.length !== 0 && Stage2ShapeColor) {
+        console.log("assigning normal circle state");
         setDrawCircle((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -200,6 +203,7 @@ const StoreContext = ({ children }) => {
           )
         );
       } else if (showObCircle.length !== 0 && !Stage2ShapeColor) {
+        console.log("assigning  circle3 state");
         setShowObCirlce((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -227,8 +231,9 @@ const StoreContext = ({ children }) => {
             : d
         )
       );
-    } else if (names === "line") {
+    } else if (names === "line" || names === "line3") {
       if (drawLine.length !== 0 && Stage2ShapeColor) {
+        console.log("assigning the normal line state");
         setDrawLine((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -242,6 +247,7 @@ const StoreContext = ({ children }) => {
           )
         );
       } else if (showObLine.length !== 0 && !Stage2ShapeColor) {
+        console.log("assigning the line3 state");
         setShowObLine((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -250,8 +256,9 @@ const StoreContext = ({ children }) => {
           )
         );
       }
-    } else if (names === "polygon") {
+    } else if (names === "polygon" || names === "polygon3") {
       if (drawPolygon.length !== 0 && Stage2ShapeColor) {
+        console.log("assign normal polygon state");
         setDrawPolygon((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -260,6 +267,7 @@ const StoreContext = ({ children }) => {
           )
         );
       } else if (showObPoly.length !== 0 && !Stage2ShapeColor) {
+        console.log("assign  polygon3 state");
         setShowObpoly((prev) =>
           prev.map((d) =>
             d.id === ids
@@ -316,8 +324,12 @@ const StoreContext = ({ children }) => {
 
   // function for handle the perticular shape click
   function handleSelect(id, name) {
-    if (name === "rectangle") {
-      if (drawing.length !== 0 && Stage2ShapeColor === true) {
+    if (name === "rectangle" || name === "rectangle3") {
+      if (
+        drawing.length !== 0 &&
+        Stage2ShapeColor === true &&
+        name !== "rectangle3"
+      ) {
         let Id, nm, height, width, stroke, fill, radius, strokeWidth;
         const totalShape = drawing.find((d) => d.id === id);
         nm = totalShape["name"];
@@ -339,7 +351,11 @@ const StoreContext = ({ children }) => {
           fill: fill,
           stroke: stroke,
         }));
-      } else if (showObRect.length !== 0 && !Stage2ShapeColor) {
+      } else if (
+        showObRect.length !== 0 &&
+        !Stage2ShapeColor &&
+        name === "rectangle3"
+      ) {
         let Id, nm, height, width, stroke, fill, strokeWidth;
         const subStageShape = showObRect.find((d) => d.id === id);
         Id = subStageShape["id"];
@@ -361,8 +377,13 @@ const StoreContext = ({ children }) => {
           stroke: stroke,
         }));
       }
-    } else if (name === "circle") {
-      if (drawCircle.length !== 0 && Stage2ShapeColor === true) {
+    } else if (name === "circle" || name === "circle3") {
+      if (
+        drawCircle.length !== 0 &&
+        Stage2ShapeColor === true &&
+        name !== "circle3"
+      ) {
+        console.log("entered normal circle");
         const totalShape = drawCircle.find((d) => d.id === id);
         let name = totalShape["name"];
         let ids = totalShape["id"];
@@ -383,7 +404,12 @@ const StoreContext = ({ children }) => {
           fill: fill,
           stroke: stroke,
         });
-      } else if (showObCircle.length !== 0 && !Stage2ShapeColor) {
+      } else if (
+        showObCircle.length !== 0 &&
+        !Stage2ShapeColor &&
+        name === "circle3"
+      ) {
+        console.log("entered  circle3");
         let Id, nm, height, width, stroke, fill, radius, strokeWidth;
         const subStageShape = showObCircle.find((d) => d.id === id);
         Id = subStageShape["id"];
@@ -419,8 +445,13 @@ const StoreContext = ({ children }) => {
         fill: fill,
         stroke: stroke,
       });
-    } else if (name === "line") {
-      if (drawLine.length !== 0 && Stage2ShapeColor === true) {
+    } else if (name === "line" || name === "line3") {
+      if (
+        drawLine.length !== 0 &&
+        Stage2ShapeColor === true &&
+        name !== "line3"
+      ) {
+        console.log("entered normal line");
         let totalShape = drawLine.find((d) => d.id === id);
         let name = totalShape["name"];
         let fill = totalShape["fill"];
@@ -436,7 +467,12 @@ const StoreContext = ({ children }) => {
           fill: fill,
           stroke: stroke,
         });
-      } else if (showObLine.length !== 0 && !Stage2ShapeColor) {
+      } else if (
+        showObLine.length !== 0 &&
+        !Stage2ShapeColor &&
+        name === "line3"
+      ) {
+        console.log("entered line3");
         let Id, nm, height, width, stroke, fill, radius, strokeWidth;
         const subStageShape = showObLine.find((d) => d.id === id);
         Id = subStageShape["id"];
@@ -454,8 +490,12 @@ const StoreContext = ({ children }) => {
           stroke: stroke,
         });
       }
-    } else if (name === "polygon") {
-      if (drawPolygon.length !== 0 && Stage2ShapeColor === true) {
+    } else if (name === "polygon" || name === "polygon3") {
+      if (
+        drawPolygon.length !== 0 &&
+        Stage2ShapeColor === true &&
+        name !== "polygon3"
+      ) {
         let totalShape = drawPolygon.find((d) => d.id === id);
         let name = totalShape["name"];
         let fill = totalShape["fill"];
@@ -471,7 +511,11 @@ const StoreContext = ({ children }) => {
           fill: fill,
           stroke: stroke,
         });
-      } else if (showObPoly.length !== 0 && !Stage2ShapeColor) {
+      } else if (
+        showObPoly.length !== 0 &&
+        !Stage2ShapeColor &&
+        name === "polygon3"
+      ) {
         let Id, nm, height, width, stroke, fill, radius, strokeWidth;
         const subStageShape = showObPoly.find((d) => d.id === id);
         Id = subStageShape["id"];
@@ -593,15 +637,25 @@ const StoreContext = ({ children }) => {
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name, multiSel) {
-    console.log("multiselect", Array.isArray(multiSel), multiSel, stageVisible);
-    console.log("id", id, "name", name, "multisel", multiSel, "e", e);
+    let len = multiSel !== undefined && multiSel.length > 1 ? true : false;
+    console.log(
+      "1.",
+      " ArrayisArray",
+      Array.isArray(multiSel),
+      "multisel",
+      multiSel,
+      "stageVisible",
+      stageVisible,
+      "len",
+      len
+    );
+    console.log("2", "id", id, "name", name, "multisel", multiSel, "e", e);
 
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
-      let len = multiSel !== undefined && multiSel.length > 1 ? true : false;
-      let len2 = multiSel !== undefined && multiSel.length > 7 ? true : false;
+      // let len = multiSel !== undefined && multiSel.length > 1 ? true : false;
 
-      console.log("len", len, "len2", len2, "stageVisible", stageVisible);
+      // console.log("len", len, "len2", len2, "stageVisible", stageVisible);
       if (
         (multiSel === undefined &&
           Array.isArray(multiSel) === false &&
@@ -612,7 +666,7 @@ const StoreContext = ({ children }) => {
         setSideBarView(true);
         setIdName((prev) => ({ ...prev, id: id, Name: name }));
         handleSelect(id, name);
-      } else if (len && stageVisible === false && !len2) {
+      } else if (Array.isArray(multiSel) === true && stageVisible === false) {
         transformerRef.current.shouldOverdrawWholeArea(true);
         transformerRef.current.nodes(multiSel);
         setSideBarView(true);
@@ -625,8 +679,6 @@ const StoreContext = ({ children }) => {
       return;
     }
   }
-
-  console.log("stagecolor", Stage2ShapeColor);
 
   // polygon circle onClick
   function handleAnchorClick() {
@@ -1023,17 +1075,18 @@ const StoreContext = ({ children }) => {
     setBtnEnable(true);
     setStage2ShapeColor(false);
     setDragHappens(false); //------------------------------------------------------------------
+    // setListern(true);
   }
 
   // function for handle the exit logic
   function handleExit() {
     let res;
     res = localStorage.setItem("btnenable", JSON.stringify(false));
-
     setStageVisible(false);
     setBtnEnable(false);
     setStage2ShapeColor(true);
     setDragHappens(true); //------------------------------------------------------------------
+    localStorage.removeItem("singleRectColor");
   }
 
   const contextValue = {
