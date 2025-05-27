@@ -40,8 +40,8 @@ const ShowPolygon = () => {
       {Array.isArray(drawPolygon) &&
         drawPolygon.map((p, idx) => (
           <Line
-            // x={p.x}
-            // y={p.y}
+            x={p.x}
+            y={p.y}
             key={idx}
             id={p.id}
             points={p.points}

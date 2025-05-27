@@ -35,6 +35,8 @@ const ShowScribble = () => {
       {Array.isArray(drawScribble) &&
         drawScribble.map((d, idx) => (
           <Line
+            x={d?.x}
+            y={d?.y}
             key={idx}
             points={d.points}
             stroke={d.stroke}

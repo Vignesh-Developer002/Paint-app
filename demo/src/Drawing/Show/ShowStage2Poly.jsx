@@ -16,7 +16,6 @@ const ShowStage2Poly = () => {
     console.log("drag end happens in polygon");
     let x = e.target.x();
     let y = e.target.y();
-    // localStorage.setItem("polygonDrag", JSON.stringify({ x, y }));
     setShowObpoly((prev) =>
       prev.map((p) => (p.id === id ? { ...p, x: x, y: y } : p))
     );
@@ -28,7 +27,6 @@ const ShowStage2Poly = () => {
     let x = e.target.x();
     let y = e.target.y();
     let rotate = e.target.rotation();
-    // localStorage.setItem("polygonDrag", JSON.stringify({ x, y }));
     setShowObpoly((prev) =>
       prev.map((d) =>
         d.id === id ? { ...d, x: x, y: y, rotation: rotate } : d
@@ -41,11 +39,11 @@ const ShowStage2Poly = () => {
       {Array.isArray(showObPoly) &&
         showObPoly.map((d) => (
           <Line
+            x={d?.x}
+            y={d?.y}
             key={d?.id}
             id={d?.id}
             points={d?.points}
-            // fill={Stage2ShapeColor === false ? "lightgrey" : ""}
-            // stroke={Stage2ShapeColor === false ? "black" : ""}
             fill={Stage2ShapeColor === false ? d.fill : "lightblue"}
             stroke={Stage2ShapeColor === false ? d.stroke : "lightblue"}
             strokeWidth={d?.strokeWidth}

@@ -17,7 +17,7 @@ const ShowLine = () => {
     let x = e.target.x();
     let y = e.target.y();
     setDrawLine((prev) =>
-      prev.map((l) => (l.id === id ? { ...l, x: x, y: y } : l))
+      prev.map((l) => (l.id === id ? { ...l, x:x, y:y } : l))
     );
   }
 
@@ -37,6 +37,8 @@ const ShowLine = () => {
       {Array.isArray(drawLine) &&
         drawLine.map((l, idx) => (
           <Line
+            x={l?.x}
+            y={l?.y}
             key={idx}
             name={l.name}
             rotation={l.rotation}

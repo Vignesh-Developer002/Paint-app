@@ -826,8 +826,6 @@ const StoreContext = ({ children }) => {
       let y = pos.y || 0;
       setLines({
         id: uuidv4(),
-        x: x,
-        y: y,
         name: btnName,
         points: [x, y, x, y],
         stroke: sideBar.stroke || "#000000",
@@ -844,8 +842,6 @@ const StoreContext = ({ children }) => {
         let x = pos.x || 0;
         let y = pos.y || 0;
         setPolygons((prev) => ({
-          // x: x,
-          // y: y,
           ...prev,
           name: btnName,
           id: uuidv4(),
