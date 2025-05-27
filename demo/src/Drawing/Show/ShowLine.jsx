@@ -8,9 +8,7 @@ const ShowLine = () => {
     handleTransformetMouseDown,
     drawLine,
     setDrawLine,
-    handleShapeClick,
-    btnEnablen,
-    btnName,
+   
   } = useContext(globalStore);
 
   function handleDrag(e, id) {

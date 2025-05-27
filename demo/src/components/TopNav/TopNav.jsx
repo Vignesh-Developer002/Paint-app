@@ -5,8 +5,7 @@ import { globalStore } from "../../StoreContext/StoreContext";
 import { PiPaintBrushFill } from "react-icons/pi";
 
 const TopNav = () => {
-  const { handleStageVisble, stageVisible, handleExit } =
-    useContext(globalStore);
+  const { stageVisible, handleExit } = useContext(globalStore);
 
   return (
     <>

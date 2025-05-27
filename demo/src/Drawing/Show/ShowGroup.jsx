@@ -3,7 +3,7 @@ import { globalStore } from "../../StoreContext/StoreContext";
 import { Group, Rect, Line, Circle } from "react-konva";
 
 const ShowGroup = () => {
-  const { ShowGroup, setShowGroup, handleTransformetMouseDown, sideBar } =
+  const { ShowGroup,  handleTransformetMouseDown } =
     useContext(globalStore);
   return (
     <>

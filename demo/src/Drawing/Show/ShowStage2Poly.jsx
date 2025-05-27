@@ -5,7 +5,6 @@ import { Line } from "react-konva";
 const ShowStage2Poly = () => {
   const {
     showObPoly,
-    nextStage2Points,
     Stage2ShapeColor,
     setShowObpoly,
     handleTransformetMouseDown,

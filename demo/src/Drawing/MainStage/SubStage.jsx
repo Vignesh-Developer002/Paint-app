@@ -172,9 +172,6 @@ const SubStage = () => {
           width={window.innerWidth}
           height={window.innerHeight}
           onWheel={(e) => handleCircleWheel(e)}
-          // onMouseDown={(e) => onStage2MouseDown(e)}
-          // onMouseMove={(e) => onStage2MouseMove(e)}
-          // onMouseUp={(e) => onStage2MouseOut(e)}
           onClick={(e) => transformUnSelect(e)}
         >
           <Layer>
@@ -185,7 +182,7 @@ const SubStage = () => {
                   key={d.id}
                   x={d?.x || 0}
                   y={d?.y || 0}
-                  draggable={btnName === "select"}
+                  // draggable={btnName === "select"}
                   onMouseDown={(e) => onStage2MouseDown(e)}
                   onMouseMove={(e) => onStage2MouseMove(e)}
                   onMouseUp={(e) => onStage2MouseOut(e)}

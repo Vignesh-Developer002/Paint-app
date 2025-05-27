@@ -7,7 +7,6 @@ const ShowScribble = () => {
     drawScribble,
     handleTransformetMouseDown,
     setDrawScribble,
-    handleShapeClick,
     btnName,
   } = useContext(globalStore);
 

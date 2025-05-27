@@ -8,7 +8,6 @@ const ShowPolygon = () => {
     handleTransformetMouseDown,
     drawPolygon,
     setDrawPolygon,
-    btnEnablen,
     btnName,
   } = useContext(globalStore);
 

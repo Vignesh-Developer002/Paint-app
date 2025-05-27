@@ -11,9 +11,6 @@ const IconGroup = () => {
     setBtn,
     handleClear,
     setCurrentShape,
-    stageVisible,
-    btnEnablen,
-    setBtnEnable,
   } = useContext(globalStore);
 
   //function for findinfd the name of the perticular clicked button

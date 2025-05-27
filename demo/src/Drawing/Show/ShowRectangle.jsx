@@ -7,9 +7,6 @@ const ShowRectangle = () => {
     handleTransformetMouseDown,
     drawing,
     setDrawing,
-    handleShapeClick,
-    handleStageVisble,
-    btnEnablen,
     btnName,
   } = useContext(globalStore);
 

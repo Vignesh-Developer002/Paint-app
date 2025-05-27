@@ -3,12 +3,7 @@ import { globalStore } from "../../StoreContext/StoreContext";
 import { Rect } from "react-konva";
 
 const DrawSingleRect = () => {
-  const {
-    drawsingleRect,
-    setDrawSingleRect,
-    showSingleRect,
-    setShowSingleRect,
-  } = useContext(globalStore);
+  const { drawsingleRect } = useContext(globalStore);
 
   return (
     <>

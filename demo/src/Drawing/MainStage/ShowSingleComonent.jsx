@@ -1,4 +1,3 @@
-import React from "react";
 import ShowStage2Rect from "../Show/ShowStage2Rect";
 import ShowStage2Circle from "../Show/ShowStage2Circle";
 import ShowStage2Poly from "../Show/ShowStage2Poly";

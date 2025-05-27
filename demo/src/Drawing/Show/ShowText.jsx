@@ -3,12 +3,7 @@ import { globalStore } from "../../StoreContext/StoreContext";
 import { Text } from "react-konva";
 
 const ShowText = () => {
-  const {
-    drawText,
-    setDrawText,
-    handleTransformetMouseDown,
-    handleShapeClick,
-  } = useContext(globalStore);
+  const { drawText, handleTransformetMouseDown } = useContext(globalStore);
   return (
     <>
       {Array.isArray(drawText) &&

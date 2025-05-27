@@ -6,7 +6,6 @@ const DrawStage2Poly = () => {
   const {
     obPoly,
     nextStage2Points,
-    setStage2Points,
     PolyStage2Complete,
     initialRadius,
     handleCircleClick,

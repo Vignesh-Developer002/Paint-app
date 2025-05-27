@@ -41,15 +41,11 @@ const ShowSingleRect = () => {
             onMouseDown={(e) => handleTransformetMouseDown(e, d.id, d.name)}
             draggable={btnName === "select"}
             onDragEnd={(e) => handleSingleRectDrag(e, d.id)}
-            x={d?.x || 0} /* toggle - drag happen */
-            y={d?.y || 0} /* toggle - drag happen */
+            x={d?.x || 0}
+            y={d?.y || 0}
           >
             <Rect
               key={d?.id}
-              // x={d?.x || 0} /* default */
-              // y={d?.y || 0} /* default */
-              // x={0} /* toggle */
-              // y={0} /* toggle */
               width={d?.width || 0}
               height={d?.height || 0}
               fill={"lightGrey"}
