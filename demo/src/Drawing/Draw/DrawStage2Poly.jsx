@@ -10,6 +10,8 @@ const DrawStage2Poly = () => {
     initialRadius,
     handleCircleClick,
   } = useContext(globalStore);
+
+  // console.log("obPoly", obPoly);
   return (
     <>
       {Object.values(obPoly) && (
@@ -27,10 +29,10 @@ const DrawStage2Poly = () => {
         />
       )}
 
-      {!PolyStage2Complete ? (
+      {!PolyStage2Complete && Object.keys(obPoly).length !== 0 ? (
         <Circle
-          x={obPoly?.points?.[0] ?? ""}
-          y={obPoly?.points?.[1] ?? ""}
+          x={obPoly?.points?.[0] ?? undefined}
+          y={obPoly?.points?.[1] ?? undefined}
           fill="red"
           radius={!PolyStage2Complete ? initialRadius : 0}
           onClick={handleCircleClick}

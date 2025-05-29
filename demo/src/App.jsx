@@ -7,16 +7,21 @@ import { actions } from "./Actions/Action.jsx";
 import MainStage from "./Drawing/MainStage/MainStage.jsx";
 import RightSideShape from "./components/RightSideShapeDt/RightSideShape.jsx";
 import TopNav from "./components/TopNav/TopNav.jsx";
+import Joystick2 from "./components/JoyStick/Joystick2.jsx";
 
 const App = () => {
   return (
     <div className="app-container">
-      <TopNav/>
+      <TopNav />
       <div className="top-nav">
         <IconGroup />
-        <RightSideShape/>
+        <RightSideShape />
       </div>
       <MainStage />
+      <div className="joystick-content">
+        {/* <Joystick /> */}
+        <Joystick2 />
+      </div>
     </div>
   );
 };

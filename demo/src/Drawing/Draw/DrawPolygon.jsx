@@ -6,6 +6,7 @@ const DrawPolygon = () => {
   const { polygons, nextPoint, handleAnchorClick, isComplete, initialRadius } =
     useContext(globalStore);
 
+  console.log("polygons", polygons);
   return (
     <>
       {Object.keys(polygons) && (
@@ -22,10 +23,10 @@ const DrawPolygon = () => {
         />
       )}
       {/* isComplete */}
-      {!isComplete ? (
+      {!isComplete && Object.keys(polygons).length !==0 ? (
         <Circle
-          x={polygons?.points?.[0] ?? ""}
-          y={polygons?.points?.[1] ?? ""}
+          x={polygons?.points?.[0] ?? undefined}
+          y={polygons?.points?.[1] ?? undefined}
           fill="red"
           radius={!isComplete ? initialRadius : 0}
           onClick={handleAnchorClick}

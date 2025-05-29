@@ -159,10 +159,6 @@ const SubStage = () => {
     }
   }
 
-  console.log("groupRef", groupRef.current);
-
-  console.log("dddgdg", showSingleRect);
-
   return (
     <>
       {stageVisible && (

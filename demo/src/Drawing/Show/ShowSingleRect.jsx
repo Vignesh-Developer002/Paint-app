@@ -17,7 +17,6 @@ const ShowSingleRect = () => {
   const [drag, setDrag] = useState(false);
 
   function handleSingleRectDrag(e, id) {
-    console.log("drag happens");
     setDrag(true);
     let x = e.target.x();
     let y = e.target.y();
@@ -25,8 +24,6 @@ const ShowSingleRect = () => {
       prev.map((r) => (r.id === id ? { ...r, x: x, y: y } : r))
     );
   }
-
-  console.log("dddgdg", showSingleRect);
 
   //----------------------------   outside single rectangle -----------------------------
 

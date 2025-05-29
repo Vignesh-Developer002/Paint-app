@@ -10,3 +10,14 @@
     justify-content: center;
     /* border: 1px solid; */
 }
+
+.joystick-content{
+    /* background-color: grey; */
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 150px;
+    bottom: 100px;
+    border-radius: 50%;
+      z-index: 3;
+}

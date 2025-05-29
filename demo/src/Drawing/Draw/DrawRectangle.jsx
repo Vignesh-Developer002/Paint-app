@@ -6,7 +6,6 @@ const DrawRectangle = () => {
   const { currentlyDrawnShap } = useContext(globalStore);
   let ht = Math.abs(currentlyDrawnShap["height"]);
   let wd = Math.abs(currentlyDrawnShap["width"]);
-  console.log(ht, wd);
   return (
     <>
       {ht > 5 && wd > 5 && Object.values(currentlyDrawnShap) && (

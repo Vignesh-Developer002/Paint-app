@@ -6,7 +6,7 @@ import DrawStage2Poly from "../Draw/DrawStage2Poly";
 import DrawStage2Line from "../Draw/DrawStage2Line";
 
 const DrawSingleComponent = () => {
-  const { btnName } = useContext(globalStore);
+  const { btnName, groupRef } = useContext(globalStore);
   return (
     <>
       {btnName === "rectangle" ? <DrawStage2Rect /> : <></>}

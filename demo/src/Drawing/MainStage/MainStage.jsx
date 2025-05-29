@@ -1,4 +1,4 @@
-import { Layer, Stage, Transformer } from "react-konva";
+import { Layer, Stage, Transformer, Group } from "react-konva";
 import React, { useContext, useRef } from "react";
 import ShowComponent from "./ShowComponent";
 import { globalStore } from "../../StoreContext/StoreContext";
@@ -18,8 +18,14 @@ const MainStage = () => {
     transformUnSelect,
     handleCircleWheel,
     stageVisible,
-    btnEnablen,
+    position,
+    joystickBtnClick,
+    setJoystickBtnClick,
+    offset,
+    setOffset,
   } = useContext(globalStore);
+
+  console.log("joystickBtnClick", joystickBtnClick);
 
   let stage = document.getElementById("stageClass");
   if (stage) {
@@ -33,6 +39,7 @@ const MainStage = () => {
       stage.style.cursor = "default";
     }
   }
+
   return (
     <>
       {stageVisible === false ? (
@@ -45,14 +52,28 @@ const MainStage = () => {
           onMouseMove={onStageMouseMove}
           onMouseUp={onStageMouseOut}
           onClick={(e) => transformUnSelect(e)}
-          draggable={draggable}
+          draggable={draggable || joystickBtnClick === true}
           onWheel={(e) => handleCircleWheel(e)}
         >
-          <Layer>
-            <ShowComponent />
-            <DrawingComponent />
-            <Transformer ref={transformerRef} resizeEnabled={false} />
-          </Layer>
+          {joystickBtnClick === false && (
+            <Layer
+              x={joystickBtnClick === false ? 0 : offset.x}
+              y={joystickBtnClick === false ? 0 : offset.y}
+            >
+              <ShowComponent />
+              <DrawingComponent />
+              <Transformer ref={transformerRef} resizeEnabled={false} />
+            </Layer>
+          )}
+          {joystickBtnClick === true && (
+            <Layer>
+              <Group x={offset.x} y={offset.y}>
+                <ShowComponent />
+                <DrawingComponent />
+                <Transformer ref={transformerRef} resizeEnabled={false} />
+              </Group>
+            </Layer>
+          )}
         </Stage>
       ) : (
         <SubStage />

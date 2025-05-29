@@ -14,6 +14,31 @@ const StoreContext = ({ children }) => {
     radius: 0,
   });
 
+  //joystick
+  const size = 200;
+  const center = size / 2;
+  const [position, setPosition] = useState({ x: center, y: center }); // this for handle and tracking the value for joystick button
+  const [joystickBtnClick, setJoystickBtnClick] = useState(false);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+  // console.log(offset, "offset");
+
+  //  function moveByAngle(angleDeg, distance) {
+  //   const rad = (angleDeg * Math.PI) / 180;
+  //   return {
+  //     dx: Math.cos(rad) * distance,
+  //     dy: Math.sin(rad) * distance,
+  //   };
+  // }
+
+  // const moveStage = (angleDeg, distance = 10) => {
+  //   const { dx, dy } = moveByAngle(angleDeg, distance);
+  //   setOffset((prev) => ({
+  //     x: prev.x + dx,
+  //     y: prev.y + dy,
+  //   }));
+  // };
+  //-----------------------------------------
   let singleRectRef = useRef(null);
   const groupRef = useRef(null); // for single ref
   let polyRef = useRef(null); // single rect inside polygon shape
@@ -68,7 +93,7 @@ const StoreContext = ({ children }) => {
   const [btnName, setBtnName] = useState("");
   const [fillColor, setFillColor] = useState(""); // fillColor
   const [strokeColor, setStrokeColor] = useState(""); // strokeColor
-  const [initialRadius, setinitialRadius] = useState(5); // initial circle radius state
+  const [initialRadius, setinitialRadius] = useState(4); // initial circle radius state
   const isPaint = useRef(false); // mouseRef
   const stageRef = useRef(null); // stage ref
   const [mouseDown, setMouseDown] = useState(false); // for tracking the mouse for useEffect run
@@ -1057,6 +1082,14 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    offset,
+    setOffset,
+    joystickBtnClick,
+    setJoystickBtnClick,
+    center,
+    size,
+    position,
+    setPosition,
     transformerRef2,
     Stage2ShapeColor,
     setStage2ShapeColor,
