@@ -1,8 +1,18 @@
 import React, { useContext, useState } from "react";
-import { Stage, Layer, Circle } from "react-konva";
+import { Stage, Layer, Circle, Image as KonvaImage } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext";
+import useImage from "use-image";
+// import assets from "../../assets/assets";
 
+// const [DownArrow] = useImage();
+// const [LeftArrow] = useImage();
+// const [rightArrow] = useImage();
 const Joystick2 = () => {
+  const [upArrow] = useImage("/arrows/up.svg");
+  const [downArrow] = useImage("/arrows/down.svg");
+  const [leftArrow] = useImage("/arrows/left.svg");
+  const [rightArrow] = useImage("/arrows/right.svg");
+
   const {
     position,
     setPosition,
@@ -18,12 +28,12 @@ const Joystick2 = () => {
   // const size = 200;
   // const radius = 50; // max movement radius for knob
   // const center = size / 2;
-  const radius = 50; // max movement radius for knob
+  const radius = 40; // max movement radius for knob
   // const [position, setPosition] = useState({ x: center, y: center });
 
   const handleDragMove = (e) => {
     const { x, y } = e.target.position();
-    console.log("x", x, "y", y);
+    // console.log("x", x, "y", y);
     const dx = x - center;
     const dy = y - center;
     const distance = Math.sqrt(dx * dx + dy * dy);
@@ -46,7 +56,6 @@ const Joystick2 = () => {
     }
     if (x >= 103) {
       // right
-
       moveStage(180); // default -left -180(as per seats.io we set it in opposite direction that is left)
     }
 
@@ -73,7 +82,7 @@ const Joystick2 = () => {
     setJoystickBtnClick(false);
   }
 
-  //-----------------------------------------------
+  //---------------------------------------------
   function moveByAngle(angleDeg, distance) {
     const rad = (angleDeg * Math.PI) / 180;
     return {
@@ -90,36 +99,89 @@ const Joystick2 = () => {
     }));
   };
 
-  // console.log("angle", Number(angel) * (180 / Math.PI));
-  return (
-      <Stage width={size} height={size}>
-        <Layer>
-          {/* Joystick base */}
-          <Circle
-            x={center}
-            y={center}
-            radius={radius + 20}
-            fill="#ddd"
-            stroke="lightGrey"
-            strokeWidth={2}
-          />
+  // function for handleColor()
+  function handleColor(e) {
+    let direction = e.target?.attrs?.id;
+    console.log(direction);
+    setJoystickBtnClick(true);
+    if (direction === "up") {
+      moveStage(90);
+    } else if (direction === "down") {
+      moveStage(270);
+    } else if (direction === "left") {
+      moveStage(0);
+    } else if (direction === "right") {
+      moveStage(180);
+    }
+  }
 
-          {/* Draggable knob */}
-          <Circle
-            x={position.x}
-            y={position.y}
-            radius={20}
-            fill="#555"
-            draggable
-            onMouseDown={() => {
-              handleStageDrage2();
-            }}
-            onMouseUp={ handleJoystickReset}
-            onDragMove={handleDragMove}
-            onDragEnd={handleDragEnd}
-          />
-        </Layer>
-      </Stage>
+  console.log("joystick", joystickBtnClick);
+  return (
+    <Stage width={200} height={200}>
+      <Layer>
+        {/* Joystick base */}
+        <Circle
+          x={center}
+          y={center}
+          radius={radius}
+          fill="#ddd"
+          stroke="lightGrey"
+          strokeWidth={2}
+        />
+        <KonvaImage
+          // stroke={"red"}
+          id="up"
+          onMouseDown={(e) => handleColor(e)}
+          image={upArrow}
+          x={center - 9}
+          y={center - radius - 0}
+          width={18}
+          height={18}
+        />
+        <KonvaImage
+          id="down"
+          onMouseDown={(e) => handleColor(e)}
+          image={downArrow}
+          x={center - 9}
+          y={center + radius - 18}
+          width={18}
+          height={18}
+        />
+        <KonvaImage
+          id="left"
+          onMouseDown={(e) => handleColor(e)}
+          image={leftArrow}
+          x={center - radius - 1}
+          y={center - 8}
+          width={18}
+          height={18}
+        />
+        <KonvaImage
+          id="right"
+          onMouseDown={(e) => handleColor(e)}
+          image={rightArrow}
+          x={center + radius - 17}
+          y={center - 9}
+          width={18}
+          height={18}
+        />
+
+        {/* Draggable knob */}
+        <Circle
+          x={position.x}
+          y={position.y}
+          radius={15}
+          fill="#555"
+          draggable
+          onMouseDown={() => {
+            handleStageDrage2();
+          }}
+          onMouseUp={handleJoystickReset}
+          onDragMove={handleDragMove}
+          onDragEnd={handleDragEnd}
+        />
+      </Layer>
+    </Stage>
   );
 };
 

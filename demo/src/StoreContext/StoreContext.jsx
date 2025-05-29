@@ -86,7 +86,7 @@ const StoreContext = ({ children }) => {
   const [selectBox, setSelectionBox] = useState({}); //slecting box box layer
   const [btnEnablen, setBtnEnable] = useState(false); // for enable and disable the button
   const [dragHappen, setDragHappens] = useState(false); // for single rect
-  const [restrictSidrBar, setRestrictSideBar]=useState(false)// for restrict the side nbar
+  const [restrictSidrBar, setRestrictSideBar] = useState(false); // for restrict the side nbar
   let wd = Math.abs(selectBox?.width);
   let ht = Math.abs(selectBox?.height);
 
@@ -325,8 +325,6 @@ const StoreContext = ({ children }) => {
 
   // function for handle the perticular shape click
   function handleSelect(id, name) {
-
-    console.log(id,name)
     if (name === "rectangle" || name === "rectangle3") {
       if (
         drawing.length !== 0 &&
@@ -636,12 +634,10 @@ const StoreContext = ({ children }) => {
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name, multiSel) {
-    console.log("hello")
     // let len = multiSel !== undefined && multiSel.length > 1 ? true : false;
 
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
-      // let len = multiSel !== undefined && multiSel.length > 1 ? true : false;
 
       if (
         (multiSel === undefined &&

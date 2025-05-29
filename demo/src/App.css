@@ -16,8 +16,8 @@
     width: 100px;
     height: 100px;
     position: absolute;
-    left: 150px;
-    bottom: 100px;
+    left: 80px;
+    bottom: 140px;
     border-radius: 50%;
       z-index: 3;
 }

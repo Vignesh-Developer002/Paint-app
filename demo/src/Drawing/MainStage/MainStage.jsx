@@ -25,7 +25,6 @@ const MainStage = () => {
     setOffset,
   } = useContext(globalStore);
 
-  console.log("joystickBtnClick", joystickBtnClick);
 
   let stage = document.getElementById("stageClass");
   if (stage) {
