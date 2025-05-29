@@ -111,7 +111,7 @@ const RightSideShape = () => {
 
   return (
     <>
-      {((!stageVisible && idName.Name !== "rectLayer") || stageVisible) && (
+      {((!stageVisible && idName.Name !== "rectLayer") || (stageVisible && idName.Name !=="rectLayer")) && (
         <>
           {((idName.id && idName.Name && sideBarView) ||
             btnName === "image") && (
@@ -140,7 +140,7 @@ const RightSideShape = () => {
                         <hr />
                         {idName.Name !== "scrible" &&
                         idName.Name !== "line" &&
-                        idName.Name !== "line3" ? (
+                        idName.Name !== "line3" && idName.Name !=="rectLayer" ? (
                           <>
                             {" "}
                             <div className="fill-color">
@@ -157,17 +157,24 @@ const RightSideShape = () => {
                         ) : (
                           <></>
                         )}
+                        {/* -------------------------------- */}
 
-                        <div className="stroke-width">
-                          <p>Stroke Width :</p>
-                          <input
-                            type="number"
-                            name="strokeWidth"
-                            value={sideBar.strokeWidth}
-                            onChange={(e) => handleInputValue(e)}
-                          />
-                        </div>
-                        <hr />
+                        {idName.Name !=="rectLayer" && (
+                          <>
+                            <div className="stroke-width">
+                              <p>Stroke Width :</p>
+                              <input
+                                type="number"
+                                name="strokeWidth"
+                                value={sideBar.strokeWidth}
+                                onChange={(e) => handleInputValue(e)}
+                              />
+                            </div>
+                            <hr />
+                          </>
+                        )}
+
+                        {/* -------------------------------- */}
                       </>
                     )}
 

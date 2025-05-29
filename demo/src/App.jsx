@@ -19,7 +19,6 @@ const App = () => {
       </div>
       <MainStage />
       <div className="joystick-content">
-        {/* <Joystick /> */}
         <Joystick2 />
       </div>
     </div>

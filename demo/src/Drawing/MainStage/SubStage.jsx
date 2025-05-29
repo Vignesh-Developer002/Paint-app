@@ -37,6 +37,7 @@ const SubStage = () => {
     setObLine,
     setShowObLine,
     Stage2ShapeColor,
+    id,
   } = useContext(globalStore);
   const groupRef = useRef(null);
 
@@ -159,6 +160,9 @@ const SubStage = () => {
     }
   }
 
+  let res = document.getElementById(id);
+  console.log(res, "res");
+
   return (
     <>
       {stageVisible && (
@@ -184,6 +188,7 @@ const SubStage = () => {
                   onMouseUp={(e) => onStage2MouseOut(e)}
                 >
                   <Rect
+                    id={id}
                     key={d?.id}
                     width={d?.width || 0}
                     height={d?.height || 0}
