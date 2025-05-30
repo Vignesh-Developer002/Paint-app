@@ -8,8 +8,13 @@ import MainStage from "./Drawing/MainStage/MainStage.jsx";
 import RightSideShape from "./components/RightSideShapeDt/RightSideShape.jsx";
 import TopNav from "./components/TopNav/TopNav.jsx";
 import Joystick2 from "./components/JoyStick/Joystick2.jsx";
+import { FaMinus } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa";
 
 const App = () => {
+  const { handleZoom, scale, inc } = useContext(globalStore);
+  console.log(typeof inc,inc === 500,"inc")
+
   return (
     <div className="app-container">
       <TopNav />
@@ -19,7 +24,28 @@ const App = () => {
       </div>
       <MainStage />
       <div className="joystick-content">
-        <Joystick2 />
+        <div className="zoomer-content">
+          <Joystick2 />
+          <div className="bottomzoom">
+            <div className="main-zoom">
+              <button
+                className="inc"
+                disabled={inc === -200 ? true : false}
+                onClick={() => handleZoom(false)}
+              >
+                <FaMinus size={12} fill={inc===-200?"lightGrey":"#030064"} className="incDec" />
+              </button>
+              <p className="zoomlevel">{inc}%</p>
+              <button
+                className="dec"
+                disabled={inc === 500 ? true : false}
+                onClick={() => handleZoom(true)}
+              >
+                <FaPlus size={12} fill={inc< 500 ?"#030064":"lightGrey"} className="incDec" />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

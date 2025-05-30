@@ -117,7 +117,7 @@ const Joystick2 = () => {
 
   console.log("joystick", joystickBtnClick);
   return (
-    <Stage width={200} height={200}>
+    <Stage width={size} height={size}>
       <Layer>
         {/* Joystick base */}
         <Circle

@@ -22,6 +22,7 @@ const StoreContext = ({ children }) => {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
   //-----------------------------------------
+
   let singleRectRef = useRef(null);
   const groupRef = useRef(null); // for single ref
   let polyRef = useRef(null); // single rect inside polygon shape
@@ -89,6 +90,59 @@ const StoreContext = ({ children }) => {
   const [restrictSidrBar, setRestrictSideBar] = useState(false); // for restrict the side nbar
   let wd = Math.abs(selectBox?.width);
   let ht = Math.abs(selectBox?.height);
+
+  //--------------------------------Zoom in and Zoom out functionality------------------------------------------------------
+  // zoom in and zoom out functionality state variable for plus and minus btns
+
+  //function for handle increment
+  const [inc, setInc] = useState(100);
+  const handleInc = () => {
+    setInc((pre) => pre + 10);
+  };
+  // function for handle the decrement
+  function handleDec() {
+    setInc((pre) => pre - 10);
+  }
+
+  const [scale, setScale] = useState(1);
+  const handleZoom = (zoomIn) => {
+    if (zoomIn === true) {
+      handleInc();
+    } else if (zoomIn === false) {
+      handleDec();
+    }
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    const scaleBy = 1.1;
+    const oldScale = scale;
+    const newScale = zoomIn ? oldScale * scaleBy : oldScale / scaleBy;
+
+    // Get the center point of the viewport
+    const center = {
+      x: stage.width() / 2,
+      y: stage.height() / 2,
+    };
+
+    // Calculate new position so the center stays in the same place
+    const mousePointTo = {
+      x: (center.x - stage.x()) / oldScale,
+      y: (center.y - stage.y()) / oldScale,
+    };
+
+    const newPos = {
+      x: center.x - mousePointTo.x * newScale,
+      y: center.y - mousePointTo.y * newScale,
+    };
+
+    stage.scale({ x: newScale, y: newScale });
+    stage.position(newPos);
+    stage.batchDraw();
+
+    setScale(newScale);
+  };
+
+  //-------------------------------------------------------------------------
 
   // useEffect for assigning the width and height for xy line
   useEffect(() => {
@@ -1065,6 +1119,10 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    inc,
+    handleZoom,
+    scale,
+    setScale,
     offset,
     setOffset,
     joystickBtnClick,

@@ -23,8 +23,8 @@ const MainStage = () => {
     setJoystickBtnClick,
     offset,
     setOffset,
+    scale,
   } = useContext(globalStore);
-
 
   let stage = document.getElementById("stageClass");
   if (stage) {
@@ -43,6 +43,8 @@ const MainStage = () => {
     <>
       {stageVisible === false ? (
         <Stage
+          // scaleX={1.1*scale}
+          // scaleY={scale}
           id="stageClass"
           ref={stageRef}
           width={window.innerWidth}
