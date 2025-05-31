@@ -13,7 +13,6 @@ import { FaPlus } from "react-icons/fa";
 
 const App = () => {
   const { handleZoom, scale, inc } = useContext(globalStore);
-  console.log(typeof inc,inc === 500,"inc")
 
   return (
     <div className="app-container">
@@ -26,14 +25,19 @@ const App = () => {
       <div className="joystick-content">
         <div className="zoomer-content">
           <Joystick2 />
-          <div className="bottomzoom">
+          {/* --- */}
+          <div className="bottomzoom" onSelect={(e)=>e.preventDefault()}>
             <div className="main-zoom">
               <button
                 className="inc"
                 disabled={inc === -200 ? true : false}
                 onClick={() => handleZoom(false)}
               >
-                <FaMinus size={12} fill={inc===-200?"lightGrey":"#030064"} className="incDec" />
+                <FaMinus
+                  size={12}
+                  fill={inc === -200 ? "lightGrey" : "#030064"}
+                  className="incDec"
+                />
               </button>
               <p className="zoomlevel">{inc}%</p>
               <button
@@ -41,10 +45,15 @@ const App = () => {
                 disabled={inc === 500 ? true : false}
                 onClick={() => handleZoom(true)}
               >
-                <FaPlus size={12} fill={inc< 500 ?"#030064":"lightGrey"} className="incDec" />
+                <FaPlus
+                  size={12}
+                  fill={inc < 500 ? "#030064" : "lightGrey"}
+                  className="incDec"
+                />
               </button>
             </div>
           </div>
+          {/* ----- */}
         </div>
       </div>
     </div>

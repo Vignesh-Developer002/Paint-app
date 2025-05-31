@@ -170,7 +170,7 @@ const Joystick2 = () => {
         <Circle
           x={position.x}
           y={position.y}
-          radius={15}
+          radius={17}
           fill="#555"
           draggable
           onMouseDown={() => {

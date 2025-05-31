@@ -12,6 +12,9 @@ import { FaUpload } from "react-icons/fa";
 import { MdTextIncrease } from "react-icons/md";
 import { FaObjectGroup } from "react-icons/fa";
 import { RiRectangleFill } from "react-icons/ri";
+import { MdLibraryAdd } from "react-icons/md";
+import { FaCopy } from "react-icons/fa";
+import { FaPaste } from "react-icons/fa";
 
 export const actions = {
   select: "select",
@@ -28,6 +31,9 @@ export const actions = {
   upload: "image",
   text: "text",
   group: "group",
+  duplicate: "duplicate",
+  copy: "copy",
+  paste: "paste",
 };
 
 const StrokeColor = () => {
@@ -261,6 +267,57 @@ export const drawData = [
           height: "100%",
           border: "none",
           fontSize: "25px",
+          outline: "none",
+        }}
+      />
+    ),
+  },
+];
+
+export const extraShapes = [
+  {
+    id: actions.duplicate,
+    icons: (
+      <MdLibraryAdd
+      title="duplicate"
+        fill="#242424"
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          fontSize: "20px",
+          outline: "none",
+        }}
+      />
+    ),
+  },
+  {
+    id: actions.copy,
+    icons: (
+      <FaCopy
+        title="copy"
+        fill="#242424"
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          fontSize: "20px",
+          outline: "none",
+        }}
+      />
+    ),
+  },
+  {
+    id: actions.paste,
+    icons: (
+      <FaPaste
+        title="paste"
+        fill="#242424"
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+          fontSize: "20px",
           outline: "none",
         }}
       />

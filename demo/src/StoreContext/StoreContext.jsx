@@ -181,6 +181,12 @@ const StoreContext = ({ children }) => {
       x: (pointer.x - stage.x()) / oldScale,
       y: (pointer.y - stage.y()) / oldScale,
     };
+    console.log(e.evt.deltaY);
+    if (e.evt.deltaY > 0) {
+      handleZoom(true);
+    } else if (e.evt.deltaY < 0) {
+      handleZoom(false);
+    }
     let direction = e.evt.deltaY > 0 ? 1 : -1;
     const scaleBy = 1.01;
     const newScale = direction > 0 ? oldScale * scaleBy : oldScale / scaleBy;

@@ -1,0 +1,56 @@
+.bottomNav_main{
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    border:1px solid rgba(0, 0, 0, 0.184);
+    background-color: #ebebeb;
+    z-index: 2;
+    top: 62px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 100px 10px 20px ;
+}
+
+.sub-content{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    /* padding: 10px 20px; */
+    /* border: 1px solid; */
+}
+.left-side-cancel-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.cancel{
+    cursor: pointer;
+}
+.fullscreen{
+    color: #96a1b2;
+}
+.btn,.bottom-icon-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 15px;
+    background-color:#ffffff;
+    border:none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.left-side-prev{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+/* additional shape  */
+.additionalShape{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
