@@ -73,3 +73,13 @@
     border-radius: 50%;
 }
 
+/* preview */
+.prev{
+    width: 500px;
+    height: 400px;
+    /* border: 1px solid; */
+    position: absolute;
+    right:410px;
+    top: 120px;
+}
+

@@ -45,14 +45,25 @@ let ShapeComponent = ({
           {...shape}
         />
       );
+
     case "Line":
-      return <Line {...shape} draggable={draggable} />;
+      // defaultly the line has no x and y values so we need to drag the line to set the x and y values, so it will work fine
+      return (
+        <Line
+          {...shape}
+          draggable={draggable}
+          onMouseDown={(e) => handleTransformetMouseDown(e, id, name)}
+          onDragEnd={(e) => handleDragEnd(e, id)}
+          onTransformEnd={(e) => handleTransformEnd(e, id, name)}
+        />
+      );
     case "Polygon":
+      // defaultly the polygon has no x and y values so we need to drag the polygon to set the x and y values, so it will work fine
       return (
         <Line
           onMouseDown={(e) => handleTransformetMouseDown(e, id, name)}
-        //   onDragEnd={(e) => handleDragEnd(e, id)}
-        //   onTransformEnd={(e) => handleTransformEnd(e, id, name)}
+          onDragEnd={(e) => handleDragEnd(e, id)}
+          onTransformEnd={(e) => handleTransformEnd(e, id, name)}
           {...shape}
           draggable={draggable}
         />

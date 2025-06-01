@@ -10,6 +10,7 @@ import TopNav from "./components/TopNav/TopNav.jsx";
 import Joystick2 from "./components/JoyStick/Joystick2.jsx";
 import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
+import Preview from "./components/Preview/Preview.jsx";
 
 const App = () => {
   const { handleZoom, scale, inc } = useContext(globalStore);
@@ -21,12 +22,15 @@ const App = () => {
         <IconGroup />
         <RightSideShape />
       </div>
+      <div className="prev">
+        <Preview />
+      </div>
       <MainStage />
       <div className="joystick-content">
         <div className="zoomer-content">
           <Joystick2 />
           {/* --- */}
-          <div className="bottomzoom" onSelect={(e)=>e.preventDefault()}>
+          <div className="bottomzoom" onSelect={(e) => e.preventDefault()}>
             <div className="main-zoom">
               <button
                 className="inc"

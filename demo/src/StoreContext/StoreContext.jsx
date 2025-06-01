@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { actions } from "../Actions/Action";
 import { v4 as uuidv4 } from "uuid";
-import { Line, Circle, Rect, RegularPolygon } from "react-konva";
 
 export const globalStore = createContext();
 const StoreContext = ({ children }) => {
@@ -220,7 +219,6 @@ const StoreContext = ({ children }) => {
       console.log("no btn is clicked");
     }
   }
-
 
   // ------------------------copy end----------------------------------------
 
