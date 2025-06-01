@@ -11,9 +11,10 @@ import Joystick2 from "./components/JoyStick/Joystick2.jsx";
 import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
 import Preview from "./components/Preview/Preview.jsx";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
-  const { handleZoom, scale, inc } = useContext(globalStore);
+  const { handleZoom, scale, inc, preview } = useContext(globalStore);
 
   return (
     <div className="app-container">
@@ -22,9 +23,11 @@ const App = () => {
         <IconGroup />
         <RightSideShape />
       </div>
-      <div className="prev">
-        <Preview />
-      </div>
+      {preview && (
+        <div className="prev">
+          <Preview />
+        </div>
+      )}
       <MainStage />
       <div className="joystick-content">
         <div className="zoomer-content">
@@ -33,6 +36,7 @@ const App = () => {
           <div className="bottomzoom" onSelect={(e) => e.preventDefault()}>
             <div className="main-zoom">
               <button
+                title="Zoom out"
                 className="inc"
                 disabled={inc === -200 ? true : false}
                 onClick={() => handleZoom(false)}
@@ -43,8 +47,9 @@ const App = () => {
                   className="incDec"
                 />
               </button>
-              <p className="zoomlevel">{inc}%</p>
+              {/* <p className="zoomlevel">{inc}%</p> */}
               <button
+                title="Zoom in"
                 className="dec"
                 disabled={inc === 500 ? true : false}
                 onClick={() => handleZoom(true)}
@@ -60,6 +65,7 @@ const App = () => {
           {/* ----- */}
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

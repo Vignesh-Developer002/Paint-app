@@ -48,8 +48,9 @@ const StrokeColor = () => {
         style={{
           width: "80px",
           height: "50px",
-          border: "none",
           cursor: "pointer",
+           backgroundColor:"white",
+          border:"1px solid lightGrey"
         }}
       />
     </>
@@ -68,12 +69,12 @@ export const FillColor = () => {
         name="fill"
         value={sideBar.fill}
         onChange={(e) => handleInputValue(e)}
-        style={{
+         style={{
           width: "80px",
           height: "50px",
-          border: "none",
           cursor: "pointer",
-          fontSize: "25px",
+           backgroundColor:"white",
+          border:"1px solid lightGrey"
         }}
       />
     </>

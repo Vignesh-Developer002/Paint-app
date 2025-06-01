@@ -42,12 +42,13 @@ const MainStage = () => {
     }
   }
 
+
   return (
     <>
       {stageVisible === false ? (
         <Stage
-          // scaleX={1.1*scale}
-          // scaleY={scale}
+          x={offset.x}
+          y={offset.y}
           id="stageClass"
           ref={stageRef}
           width={window.innerWidth}
@@ -61,8 +62,8 @@ const MainStage = () => {
         >
           {joystickBtnClick === false && (
             <Layer
-              x={joystickBtnClick === false ? 0 : offset.x}
-              y={joystickBtnClick === false ? 0 : offset.y}
+            // x={joystickBtnClick === false ? 0 : offset.x}
+            // y={joystickBtnClick === false ? 0 : offset.y}
             >
               {shape.map((d, idx) => (
                 <ShapeComponent
@@ -81,7 +82,8 @@ const MainStage = () => {
           )}
           {joystickBtnClick === true && (
             <Layer>
-              <Group x={offset.x} y={offset.y}>
+              {/* x={offset.x} y={offset.y} */}
+              <Group>
                 {shape.map((d, idx) => (
                   <ShapeComponent
                     key={idx}

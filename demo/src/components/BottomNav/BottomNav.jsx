@@ -7,7 +7,8 @@ import { extraShapes } from "../../Actions/Action";
 import { globalStore } from "../../StoreContext/StoreContext";
 
 const BottomNav = () => {
-  const { handleBottomNavBtn, idName } = useContext(globalStore);
+  const { handleBottomNavBtn, idName, preview, setPreview, handlePreviwImage } =
+    useContext(globalStore);
 
   return (
     <div className="bottomNav_main">
@@ -22,7 +23,7 @@ const BottomNav = () => {
           <p className="fullscreen">Full Screen</p>
         </div>
         <div className="left-side-prev">
-          <button className="btn">
+          <button className="btn" onClick={() =>  setPreview((pre) => !pre)}>
             <IoMdEye size={20} className="eye" title="preview" />
           </button>
           <button className="btn">

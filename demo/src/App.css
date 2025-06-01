@@ -37,23 +37,25 @@
 }
 
 .bottomzoom{
-    top: 155px;
+    top: 150px;
     left: 39px;
     width: 60%;
     position: absolute;
     height: 40px;
     z-index: 3;
-    border: 1px solid lightgray;
+    /* border: 1px solid lightgray; */
     border-radius: 8px;
      display: flex;
     align-items: center;
-    background-color: #ececf4;
+    /* background-color: #ececf4; */
 }
 .main-zoom{
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: center;
+    gap: 10px;
     padding: 0 6px; 
   
 }
@@ -70,16 +72,27 @@
     align-items: center;
     border: none;
     background-color: #e0dfff;
-    border-radius: 50%;
+    /* border-radius: 50%; */
+
 }
 
 /* preview */
 .prev{
     width: 500px;
-    height: 400px;
-    /* border: 1px solid; */
+    height: 500px;
+    /* border: 1px solid green; */
     position: absolute;
     right:410px;
     top: 120px;
+    transition: 2s ease-in;
+    animation-name: prev;
+    animation-duration: 1s;
+}
+@keyframes prev {
+    0%{
+        opacity: 0;
+    }100%{
+        opacity: 1;
+    }
 }
 

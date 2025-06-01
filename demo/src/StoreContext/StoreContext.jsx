@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { actions } from "../Actions/Action";
 import { v4 as uuidv4 } from "uuid";
+import toast from "react-hot-toast";
 
 export const globalStore = createContext();
 const StoreContext = ({ children }) => {
@@ -22,6 +23,19 @@ const StoreContext = ({ children }) => {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
   //-----------------------------------------
+
+  // -----------------preview state variable------------------
+  const [preview, setPreview] = useState(false); // for show and hide the preview content
+  const [previewImage, setPreviewImage] = useState(null); // for setting the preview image from the stage
+
+  // function for handle the preview image
+  function handlePreviwImage() {
+    setPreview((pre) => !pre);
+    const uri = stageRef.current.toDataURL({ pixelRatio: 2 });
+    setPreviewImage(uri);
+  }
+
+  //---------------------preview state variable-end-----------------
 
   let singleRectRef = useRef(null);
   const groupRef = useRef(null); // for single ref
@@ -129,7 +143,6 @@ const StoreContext = ({ children }) => {
       x: (center.x - stage.x()) / oldScale,
       y: (center.y - stage.y()) / oldScale,
     };
-
     const newPos = {
       x: center.x - mousePointTo.x * newScale,
       y: center.y - mousePointTo.y * newScale,
@@ -138,7 +151,6 @@ const StoreContext = ({ children }) => {
     stage.scale({ x: newScale, y: newScale });
     stage.position(newPos);
     stage.batchDraw();
-
     setScale(newScale);
   };
 
@@ -170,8 +182,6 @@ const StoreContext = ({ children }) => {
     Rectangle: Konva.Rect,
   };
 
-  console.log("entire shapes", entireShapes);
-
   // function for handle copy
   function handleCopy(shape) {
     setCopiedShape(shape);
@@ -179,24 +189,26 @@ const StoreContext = ({ children }) => {
   console.log("copiedShape", copiedShape);
   function handleBottomNavBtn(btn, name) {
     const { Name, id } = name;
+
+    console.log(btn, Name, id);
     if (btn === "copy" && down === true) {
-      console.log("clicked copy");
+      toast.success("copied..");
       let res = entireShapes.find((d) => d.id === id);
       handleCopy(res);
-      console.log("result", res);
     } else if (
       btn === "paste" &&
       down === true &&
       copiedShape &&
       stageRef.current
     ) {
-      console.log("clicked paste");
       const stage = stageRef.current.getStage();
-      const centerX = stage.width() / 2;
-      const centerY = stage.height() / 2;
+      let scale = stage.scaleX();
+      let position = stage.position();
+      const centerX = (stage.width() / 2 - position.x) / scale;
+      const centerY = (stage.height() / 2 - position.y) / scale;
+
       let { id, ...shapeConfig } = copiedShape;
 
-      console.log("shapeConfi", shapeConfig);
       const KonvaClass = shapeMap[copiedShape.type];
       const tempShape = new KonvaClass(shapeConfig);
       const bbox = tempShape.getClientRect();
@@ -206,7 +218,6 @@ const StoreContext = ({ children }) => {
 
       const newShape = {
         ...copiedShape,
-        // id: `shape-${Date.now()}`,
         id: uuidv4(),
         x: copiedShape.x + (centerX - offsetX),
         y: copiedShape.y + (centerY - offsetY),
@@ -259,11 +270,11 @@ const StoreContext = ({ children }) => {
       x: (pointer.x - stage.x()) / oldScale,
       y: (pointer.y - stage.y()) / oldScale,
     };
-    if (e.evt.deltaY > 0) {
-      handleZoom(true);
-    } else if (e.evt.deltaY < 0) {
-      handleZoom(false);
-    }
+    // if (e.evt.deltaY > 0) {
+    //   handleZoom(true);
+    // } else if (e.evt.deltaY < 0) {
+    //   handleZoom(false);
+    // }
     let direction = e.evt.deltaY > 0 ? 1 : -1;
     const scaleBy = 1.01;
     const newScale = direction > 0 ? oldScale * scaleBy : oldScale / scaleBy;
@@ -729,8 +740,6 @@ const StoreContext = ({ children }) => {
       });
     }
   }
-
-  console.log("Shape name", idName.Name, "shape id", idName.id, "down", down);
 
   // useEffect for pushing the image in to an array(-----------IMAGE---------)
   let op = sideBar.opacity;
@@ -1208,6 +1217,11 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    previewImage,
+    setPreviewImage,
+    handlePreviwImage,
+    preview,
+    setPreview,
     handleBottomNavBtn,
     duplicateBtn,
     setDuplicateBtn,
