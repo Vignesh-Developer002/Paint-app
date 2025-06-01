@@ -89,8 +89,8 @@ export const drawData = [
         data-tooltip-content="Select"
         data-tooltip-place="right"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           outline: "none",
           fontSize: "25px",
@@ -106,8 +106,8 @@ export const drawData = [
         data-tooltip-content="Circle"
         data-tooltip-place="right"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           outline: "none",
           fontSize: "25px",
@@ -123,8 +123,8 @@ export const drawData = [
         data-tooltip-content="Rectangle"
         data-tooltip-place="right"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           outline: "none",
           fontSize: "25px",
@@ -140,8 +140,8 @@ export const drawData = [
         data-tooltip-content="Scribble"
         data-tooltip-place="right"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           outline: "none",
           fontSize: "25px",
@@ -157,8 +157,8 @@ export const drawData = [
         data-tooltip-content="Rectangle layer"
         data-tooltip-place="right"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           outline: "none",
           fontSize: "25px",
@@ -174,8 +174,8 @@ export const drawData = [
         data-tooltip-content="Line"
         data-tooltip-place="right"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           outline: "none",
           fontSize: "25px",
@@ -191,8 +191,8 @@ export const drawData = [
         data-tooltip-content="Polygon"
         data-tooltip-place="right"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           outline: "none",
           fontSize: "25px",
@@ -212,8 +212,8 @@ export const drawData = [
         data-tooltip-content="Reset the canvas"
         data-tooltip-place="right"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           outline: "none",
           fontSize: "25px",
@@ -229,8 +229,8 @@ export const drawData = [
         data-tooltip-content="Upload"
         data-tooltip-place="right"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           outline: "none",
           fontSize: "25px",
@@ -246,8 +246,8 @@ export const drawData = [
         data-tooltip-content="Text"
         data-tooltip-place="right"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           fontSize: "25px",
           outline: "none",
@@ -263,8 +263,8 @@ export const drawData = [
         data-tooltip-content="Group"
         data-tooltip-place="right"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           fontSize: "25px",
           outline: "none",
@@ -282,8 +282,8 @@ export const extraShapes = [
       title="duplicate"
         fill="#242424"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           fontSize: "20px",
           outline: "none",
@@ -298,8 +298,8 @@ export const extraShapes = [
         title="copy"
         fill="#242424"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           fontSize: "20px",
           outline: "none",
@@ -314,8 +314,8 @@ export const extraShapes = [
         title="paste"
         fill="#242424"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           fontSize: "20px",
           outline: "none",

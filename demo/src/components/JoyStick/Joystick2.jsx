@@ -2,11 +2,7 @@ import React, { useContext, useState } from "react";
 import { Stage, Layer, Circle, Image as KonvaImage } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext";
 import useImage from "use-image";
-// import assets from "../../assets/assets";
 
-// const [DownArrow] = useImage();
-// const [LeftArrow] = useImage();
-// const [rightArrow] = useImage();
 const Joystick2 = () => {
   const [upArrow] = useImage("/arrows/up.svg");
   const [downArrow] = useImage("/arrows/down.svg");
@@ -24,7 +20,6 @@ const Joystick2 = () => {
     setOffset,
   } = useContext(globalStore);
 
-  const [angel, setAngle] = useState("");
   // const size = 200;
   // const radius = 50; // max movement radius for knob
   // const center = size / 2;
@@ -102,7 +97,6 @@ const Joystick2 = () => {
   // function for handleColor()
   function handleColor(e) {
     let direction = e.target?.attrs?.id;
-    console.log(direction);
     setJoystickBtnClick(true);
     if (direction === "up") {
       moveStage(90);
@@ -115,7 +109,6 @@ const Joystick2 = () => {
     }
   }
 
-  console.log("joystick", joystickBtnClick);
   return (
     <Stage width={size} height={size}>
       <Layer>

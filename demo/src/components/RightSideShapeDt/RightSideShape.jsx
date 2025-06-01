@@ -111,7 +111,8 @@ const RightSideShape = () => {
 
   return (
     <>
-      {((!stageVisible && idName.Name !== "rectLayer") || (stageVisible && idName.Name !=="rectLayer")) && (
+      {((!stageVisible && idName.Name !== "rectLayer") ||
+        (stageVisible && idName.Name !== "rectLayer")) && (
         <>
           {((idName.id && idName.Name && sideBarView) ||
             btnName === "image") && (
@@ -140,7 +141,8 @@ const RightSideShape = () => {
                         <hr />
                         {idName.Name !== "scrible" &&
                         idName.Name !== "line" &&
-                        idName.Name !== "line3" && idName.Name !=="rectLayer" ? (
+                        idName.Name !== "line3" &&
+                        idName.Name !== "rectLayer" ? (
                           <>
                             {" "}
                             <div className="fill-color">
@@ -159,7 +161,7 @@ const RightSideShape = () => {
                         )}
                         {/* -------------------------------- */}
 
-                        {idName.Name !=="rectLayer" && (
+                        {idName.Name !== "rectLayer" && (
                           <>
                             <div className="stroke-width">
                               <p>Stroke Width :</p>

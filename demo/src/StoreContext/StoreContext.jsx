@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { actions } from "../Actions/Action";
 import { v4 as uuidv4 } from "uuid";
+import { Line, Circle, Rect, RegularPolygon } from "react-konva";
 
 export const globalStore = createContext();
 const StoreContext = ({ children }) => {
@@ -144,6 +145,85 @@ const StoreContext = ({ children }) => {
 
   //-------------------------------------------------------------------------
 
+  // ------------------------copy state----------------------------------------
+  const [down, setDown] = useState(false); // for tracking the mouseDownhandletransform
+  const [copyBtn, SetCopyBtn] = useState(false); // for tracking the copy btn is clicked or not
+  const [pasteBtn, setPasteBtn] = useState(false); //for tracking the paste btn is clicked or not
+  const [duplicateBtn, setDuplicateBtn] = useState(false); //for tracking the duplicate btn is clicked or not
+  const [copiedShape, setCopiedShape] = useState(null); // for assigning the copied shape
+  // function for handle the bottomNav btn click function
+  let entireShapes = [
+    ...showSingleRect,
+    ...drawing,
+    ...drawCircle,
+    ...drawLine,
+    ...drawPolygon,
+    ...drawScribble,
+  ];
+
+  const [shape, setShape] = useState(entireShapes);
+
+  const shapeMap = {
+    Circle: Konva.Circle,
+    Line: Konva.Line,
+    Polygon: Konva.Line,
+    Path: Konva.Path,
+    Rectangle: Konva.Rect,
+  };
+
+  console.log("entire shapes", entireShapes);
+
+  // function for handle copy
+  function handleCopy(shape) {
+    setCopiedShape(shape);
+  }
+  console.log("copiedShape", copiedShape);
+  function handleBottomNavBtn(btn, name) {
+    const { Name, id } = name;
+    if (btn === "copy" && down === true) {
+      console.log("clicked copy");
+      let res = entireShapes.find((d) => d.id === id);
+      handleCopy(res);
+      console.log("result", res);
+    } else if (
+      btn === "paste" &&
+      down === true &&
+      copiedShape &&
+      stageRef.current
+    ) {
+      console.log("clicked paste");
+      const stage = stageRef.current.getStage();
+      const centerX = stage.width() / 2;
+      const centerY = stage.height() / 2;
+      let { id, ...shapeConfig } = copiedShape;
+
+      console.log("shapeConfi", shapeConfig);
+      const KonvaClass = shapeMap[copiedShape.type];
+      const tempShape = new KonvaClass(shapeConfig);
+      const bbox = tempShape.getClientRect();
+
+      const offsetX = bbox.x + bbox.width / 2;
+      const offsetY = bbox.y + bbox.height / 2;
+
+      const newShape = {
+        ...copiedShape,
+        // id: `shape-${Date.now()}`,
+        id: uuidv4(),
+        x: copiedShape.x + (centerX - offsetX),
+        y: copiedShape.y + (centerY - offsetY),
+      };
+
+      setShape([...shape, newShape]);
+    } else if (btn === "duplicate" && down === true) {
+      console.log("clicked duplicate");
+    } else {
+      console.log("no btn is clicked");
+    }
+  }
+
+
+  // ------------------------copy end----------------------------------------
+
   // useEffect for assigning the width and height for xy line
   useEffect(() => {
     setPoint({
@@ -181,7 +261,6 @@ const StoreContext = ({ children }) => {
       x: (pointer.x - stage.x()) / oldScale,
       y: (pointer.y - stage.y()) / oldScale,
     };
-    console.log(e.evt.deltaY);
     if (e.evt.deltaY > 0) {
       handleZoom(true);
     } else if (e.evt.deltaY < 0) {
@@ -653,6 +732,8 @@ const StoreContext = ({ children }) => {
     }
   }
 
+  console.log("Shape name", idName.Name, "shape id", idName.id, "down", down);
+
   // useEffect for pushing the image in to an array(-----------IMAGE---------)
   let op = sideBar.opacity;
   useEffect(() => {
@@ -694,11 +775,8 @@ const StoreContext = ({ children }) => {
 
   // function for handle the transformer mouse down in shape components
   function handleTransformetMouseDown(e, id, name, multiSel) {
-    // let len = multiSel !== undefined && multiSel.length > 1 ? true : false;
-
     if (btnName === actions.select) {
       const transformerNode = e.currentTarget;
-
       if (
         (multiSel === undefined &&
           Array.isArray(multiSel) === false &&
@@ -707,6 +785,7 @@ const StoreContext = ({ children }) => {
       ) {
         transformerRef.current.nodes([transformerNode]);
         setSideBarView(true);
+        setDown(true);
         setIdName((prev) => ({ ...prev, id: id, Name: name }));
         handleSelect(id, name);
       } else if (Array.isArray(multiSel) === true && stageVisible === false) {
@@ -812,6 +891,7 @@ const StoreContext = ({ children }) => {
         id: uuidv4(),
         x,
         y,
+        type: "Rectangle",
         name: btnName,
         width: 1,
         height: 1,
@@ -831,6 +911,7 @@ const StoreContext = ({ children }) => {
         id: uuidv4(),
         x: x,
         y: y,
+        type: "Circle",
         name: btnName,
         radius: 1,
         fill: sideBar.fill || "lightgrey",
@@ -848,6 +929,7 @@ const StoreContext = ({ children }) => {
       setScribble({
         id: uuidv4(),
         name: btnName,
+        type: "Path",
         points: [x, y, x, y],
         stroke: sideBar.stroke || "#000000",
         fill: sideBar.fill || "lightgray",
@@ -866,10 +948,11 @@ const StoreContext = ({ children }) => {
       setLines({
         id: uuidv4(),
         name: btnName,
+        type: "Line",
         points: [x, y, x, y],
         stroke: sideBar.stroke || "#000000",
         fill: sideBar.fill || "lightgray",
-        strokeWidth: 2,
+        strokeWidth: 5,
         lineJoin: "round",
         rotation: 0,
       });
@@ -884,6 +967,7 @@ const StoreContext = ({ children }) => {
           ...prev,
           name: btnName,
           id: uuidv4(),
+          type: "Polygon",
           points: Array.isArray(prev?.points) ? [...prev.points, x, y] : [x, y],
           fill: sideBar.fill || "lightgray",
           stroke: sideBar.stroke || "#000000",
@@ -1095,6 +1179,7 @@ const StoreContext = ({ children }) => {
   function transformUnSelect(e) {
     if (e.target === stageRef.current) {
       if (transformerRef.current) {
+        setDown(false);
         transformerRef.current.nodes([]);
         setSideBarView(false);
       }
@@ -1125,6 +1210,15 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    handleBottomNavBtn,
+    duplicateBtn,
+    setDuplicateBtn,
+    pasteBtn,
+    setPasteBtn,
+    copyBtn,
+    SetCopyBtn,
+    down,
+    setDown,
     inc,
     handleZoom,
     scale,
@@ -1263,6 +1357,8 @@ const StoreContext = ({ children }) => {
     rectRef,
     cirRef,
     lineRef,
+    shape,
+    setShape,
   };
 
   return (

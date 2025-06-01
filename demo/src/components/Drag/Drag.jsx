@@ -8,8 +8,8 @@ const Drag = () => {
         data-tooltip-content="Drag"
         data-tooltip-place="right"
         style={{
-          width: "100%",
-          height: "100%",
+          width: "80%",
+          height: "80%",
           border: "none",
           outline: "none",
           fontSize: "25px",

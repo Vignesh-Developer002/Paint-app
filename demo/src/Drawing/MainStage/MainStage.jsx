@@ -1,9 +1,10 @@
-import { Layer, Stage, Transformer, Group } from "react-konva";
+import { Layer, Stage, Transformer, Group, Shape } from "react-konva";
 import React, { useContext, useRef } from "react";
 import ShowComponent from "./ShowComponent";
 import { globalStore } from "../../StoreContext/StoreContext";
 import DrawingComponent from "./DrawingComponent";
 import SubStage from "./SubStage";
+import ShapeComponent from "../../components/ShapeComponent/ShapeComponent.jsx";
 
 const MainStage = () => {
   const {
@@ -24,6 +25,8 @@ const MainStage = () => {
     offset,
     setOffset,
     scale,
+    shape,
+    setShape,
   } = useContext(globalStore);
 
   let stage = document.getElementById("stageClass");
@@ -61,6 +64,16 @@ const MainStage = () => {
               x={joystickBtnClick === false ? 0 : offset.x}
               y={joystickBtnClick === false ? 0 : offset.y}
             >
+              {shape.map((d, idx) => (
+                <ShapeComponent
+                  key={idx}
+                  closed={true}
+                  draggable={true}
+                  shape={d}
+                  id={d.id}
+                  name={d.name}
+                />
+              ))}
               <ShowComponent />
               <DrawingComponent />
               <Transformer ref={transformerRef} resizeEnabled={false} />
@@ -69,6 +82,16 @@ const MainStage = () => {
           {joystickBtnClick === true && (
             <Layer>
               <Group x={offset.x} y={offset.y}>
+                {shape.map((d, idx) => (
+                  <ShapeComponent
+                    key={idx}
+                    closed={true}
+                    draggable={true}
+                    shape={d}
+                    id={d.id}
+                    name={d.name}
+                  />
+                ))}
                 <ShowComponent />
                 <DrawingComponent />
                 <Transformer ref={transformerRef} resizeEnabled={false} />
