@@ -22,7 +22,7 @@ const ShowPolygon = () => {
     let y = e.target.y();
     let rotate = e.target.rotation();
 
-    console.log("normal polygon rotation", rotate, x, y, id);
+  
     setDrawPolygon((prev) =>
       prev.map((d) =>
         d.id === id ? { ...d, x: x, y: y, rotation: rotate } : d

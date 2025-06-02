@@ -189,12 +189,17 @@ const StoreContext = ({ children }) => {
   console.log("copiedShape", copiedShape);
   function handleBottomNavBtn(btn, name) {
     const { Name, id } = name;
-
+    console.log("shape", shape);
     console.log(btn, Name, id);
     if (btn === "copy" && down === true) {
       toast.success("copied..");
       let res = entireShapes.find((d) => d.id === id);
-      handleCopy(res);
+      if (res) {
+        handleCopy(res);
+      } else {
+        let res = shape.map((d) => d.id === id);
+        handleCopy(res);
+      }
     } else if (
       btn === "paste" &&
       down === true &&
@@ -222,7 +227,6 @@ const StoreContext = ({ children }) => {
         x: copiedShape.x + (centerX - offsetX),
         y: copiedShape.y + (centerY - offsetY),
       };
-
       setShape([...shape, newShape]);
     } else if (btn === "duplicate" && down === true) {
       console.log("clicked duplicate");
@@ -230,7 +234,6 @@ const StoreContext = ({ children }) => {
       console.log("no btn is clicked");
     }
   }
-
   // ------------------------copy end----------------------------------------
 
   // useEffect for assigning the width and height for xy line
