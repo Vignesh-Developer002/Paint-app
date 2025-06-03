@@ -5,6 +5,7 @@ import { globalStore } from "../../StoreContext/StoreContext";
 import DrawingComponent from "./DrawingComponent";
 import SubStage from "./SubStage";
 import ShapeComponent from "../../components/ShapeComponent/ShapeComponent.jsx";
+import ShowDuplicateShape from "./ShowDuplicateShape.jsx";
 
 const MainStage = () => {
   const {
@@ -27,6 +28,7 @@ const MainStage = () => {
     scale,
     shape,
     setShape,
+    darkMode
   } = useContext(globalStore);
 
   let stage = document.getElementById("stageClass");
@@ -42,11 +44,11 @@ const MainStage = () => {
     }
   }
 
-
   return (
     <>
       {stageVisible === false ? (
         <Stage
+        style={{backgroundColor:darkMode?"#181a1b":"white"}}
           x={offset.x}
           y={offset.y}
           id="stageClass"
@@ -75,7 +77,9 @@ const MainStage = () => {
                   name={d.name}
                 />
               ))}
+
               <ShowComponent />
+              <ShowDuplicateShape />
               <DrawingComponent />
               <Transformer ref={transformerRef} resizeEnabled={false} />
             </Layer>

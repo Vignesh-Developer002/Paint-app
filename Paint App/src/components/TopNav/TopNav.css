@@ -63,7 +63,9 @@ span{
 }
 
 .exit-content{
-    width: auto;
+ display: flex;
+ align-items: center;
+ gap:20px
 }
 .top-content h1{
     font-size: 25px;
@@ -72,24 +74,67 @@ span{
 }
 .exit{
     display: flex;
-    gap:15px;
+    gap:6px;
     align-items: center;
-    padding: 10px 20px;
+    padding: 5px 20px;
     border-radius: 10px;
     cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.526);
+    /* border: 1px solid rgb(255, 255, 255); */
+    background-color: #ffffff;
+    transition: .4s ease-in-out;
 }
 .exit:hover{
-    background-color: #abaaaa;
+     background-color: #7db5df;
+     color: #ffffff;
+}
+.exit:hover p {
+    color: #ffffff;
+}
+
+.exit:hover .ext-btn{
+       color: #ffffff;
 }
 
 
 .exit p{
-    color: white;
-    font-size: 22px;
+    color: black;
+    font-size: 17px;
+    font-weight: 400;
 }
 
 .ext-btn{
-    font-size: 24px;
-    color: #ffffff;
+    font-size: 17px;
+    color: black;
+}
+
+/* open button */
+.menu-show-btn{
+    display: flex;
+    gap:15px;
+    align-items: center;
+    width: 100px;
+    height: 35px;
+    border-radius: 10px;
+    cursor: pointer;
+     background-color: rgb(255, 255, 255);
+   
+}
+
+.menu-show-btn button{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    transition: .4s ease-in-out;
+  
+}
+
+
+button:hover{
+   background-color: #7db5df;
+   color: #ffffff;
 }

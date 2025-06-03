@@ -4,8 +4,13 @@ import { Circle, Line } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext";
 
 const ShowPolygon = () => {
-  const { handleTransformetMouseDown, drawPolygon, setDrawPolygon, btnName } =
-    useContext(globalStore);
+  const {
+    handleTransformetMouseDown,
+    drawPolygon,
+    setDrawPolygon,
+    btnName,
+    isFlipped,
+  } = useContext(globalStore);
 
   function handlePolygonDrag(e, id) {
     let x = e.target.x();
@@ -22,7 +27,6 @@ const ShowPolygon = () => {
     let y = e.target.y();
     let rotate = e.target.rotation();
 
-  
     setDrawPolygon((prev) =>
       prev.map((d) =>
         d.id === id ? { ...d, x: x, y: y, rotation: rotate } : d
@@ -50,6 +54,8 @@ const ShowPolygon = () => {
             onDragEnd={(e) => handlePolygonDrag(e, p.id)}
             onTransformEnd={(e) => handletransformEnd(e, p.id, p.name)}
             onMouseDown={(e) => handleTransformetMouseDown(e, p.id, p.name)}
+            // scaleY={isFlipped ? -1 : 1}
+            // offsetY={50} // offset to flip around center
           />
         ))}
     </>

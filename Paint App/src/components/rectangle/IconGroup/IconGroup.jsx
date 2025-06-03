@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "../IconGroup/IconGroup.css";
-import { drawData } from "../../../Actions/Action.jsx";
+// import { drawData } from "../../../Actions/Action.jsx";
 import { globalStore } from "../../../StoreContext/StoreContext.jsx";
 
 const IconGroup = () => {
@@ -11,8 +11,11 @@ const IconGroup = () => {
     setBtn,
     handleClear,
     setCurrentShape,
+    darkMode,
+    shapeCollection
   } = useContext(globalStore);
 
+  
   //function for findinfd the name of the perticular clicked button
   function handleAction(id, e) {
     setBtnName(id);
@@ -40,18 +43,20 @@ const IconGroup = () => {
       setCurrentShape(id);
     }
   }
-
-  function handleBtn(icon) {
-    copnsole.log(icon);
-  }
+ 
 
   return (
-    <div className="icon-group">
-      {drawData.map((icon, idx) => (
+    <div
+      className="icon-group"
+      style={{ backgroundColor: darkMode ? "#232628" : "#ebebeb" }}
+    >
+      {shapeCollection().map((icon, idx) => (
         <button
+        // #ffffff
+          style={{ backgroundColor: darkMode ? "#181a1b" : "" }}
           id="btn"
           key={idx}
-          className={btnName === icon.id ? "bg-blue" : "icon"}
+          className={btnName === icon.id  ? "bg-blue" : "icon"}
           onClick={(e) => handleAction(icon.id, e)}
         >
           {icon.icons}

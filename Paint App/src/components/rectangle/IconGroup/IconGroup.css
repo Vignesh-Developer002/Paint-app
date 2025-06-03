@@ -1,6 +1,6 @@
 .icon-group{
     border: 1px solid #0000001d;
-    background-color: #ebebeb;
+    /* background-color: #ebebeb; */
     width:60px;
     padding: 10px ;
     display: flex;
@@ -13,7 +13,7 @@
     left:5px;
     top: 95px;
     z-index: 1;
-    transition: 3s ease-in;
+    transition: left 3s ease-in;
     animation-name: fadeIn ;
     animation-duration: 1s;
 
@@ -52,7 +52,7 @@
 
 }
 .icon:hover{
-    background-color:#0000002c;
+    background-color:#eae2e2 !important;
     color: #ffffff;
     font-weight: 700;
     border: 1px solid #00000017;

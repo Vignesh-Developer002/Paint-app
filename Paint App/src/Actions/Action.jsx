@@ -4,7 +4,7 @@ import { PiScribbleLight } from "react-icons/pi";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import { FaDrawPolygon } from "react-icons/fa";
 import { FaArrowPointer } from "react-icons/fa6";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { globalStore } from "../StoreContext/StoreContext";
 import Clear from "../components/Clear/Clear";
 import Drag from "../components/Drag/Drag";
@@ -15,6 +15,8 @@ import { RiRectangleFill } from "react-icons/ri";
 import { MdLibraryAdd } from "react-icons/md";
 import { FaCopy } from "react-icons/fa";
 import { FaPaste } from "react-icons/fa";
+import { PiFlipVerticalThin } from "react-icons/pi";
+import { PiFlipHorizontalThin } from "react-icons/pi";
 
 export const actions = {
   select: "select",
@@ -34,10 +36,12 @@ export const actions = {
   duplicate: "duplicate",
   copy: "copy",
   paste: "paste",
+  vertical: "vertical",
+  horizontal: "horizontal",
 };
 
 const StrokeColor = () => {
-  const { sideBar, handleInputValue } = useContext(globalStore);
+  const { sideBar, handleInputValue, darkMode } = useContext(globalStore);
   return (
     <>
       <input
@@ -49,8 +53,8 @@ const StrokeColor = () => {
           width: "80px",
           height: "50px",
           cursor: "pointer",
-           backgroundColor:"white",
-          border:"1px solid lightGrey"
+          backgroundColor: "white",
+          border: "1px solid lightGrey",
         }}
       />
     </>
@@ -69,259 +73,295 @@ export const FillColor = () => {
         name="fill"
         value={sideBar.fill}
         onChange={(e) => handleInputValue(e)}
-         style={{
+        style={{
           width: "80px",
           height: "50px",
           cursor: "pointer",
-           backgroundColor:"white",
-          border:"1px solid lightGrey"
+          backgroundColor: "white",
+          border: "1px solid lightGrey",
         }}
       />
     </>
   );
 };
 
-export const drawData = [
-  {
-    id: actions.select,
-    icons: (
-      <FaArrowPointer
-        data-tooltip-id="color"
-        data-tooltip-content="Select"
-        data-tooltip-place="right"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          outline: "none",
-          fontSize: "25px",
-        }}
-      />
-    ),
-  },
-  {
-    id: actions.circle,
-    icons: (
-      <FaRegCircle
-        data-tooltip-id="color"
-        data-tooltip-content="Circle"
-        data-tooltip-place="right"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          outline: "none",
-          fontSize: "25px",
-        }}
-      />
-    ),
-  },
-  {
-    id: actions.rectangle,
-    icons: (
-      <RiRectangleLine
-        data-tooltip-id="color"
-        data-tooltip-content="Rectangle"
-        data-tooltip-place="right"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          outline: "none",
-          fontSize: "25px",
-        }}
-      />
-    ),
-  },
-  {
-    id: actions.scribble,
-    icons: (
-      <PiScribbleLight
-        data-tooltip-id="color"
-        data-tooltip-content="Scribble"
-        data-tooltip-place="right"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          outline: "none",
-          fontSize: "25px",
-        }}
-      />
-    ),
-  },
-  {
-    id: actions.rectLayer,
-    icons: (
-      <RiRectangleFill
-        data-tooltip-id="color"
-        data-tooltip-content="Rectangle layer"
-        data-tooltip-place="right"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          outline: "none",
-          fontSize: "25px",
-        }}
-      />
-    ),
-  },
-  {
-    id: actions.line,
-    icons: (
-      <FaArrowTrendDown
-        data-tooltip-id="color"
-        data-tooltip-content="Line"
-        data-tooltip-place="right"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          outline: "none",
-          fontSize: "25px",
-        }}
-      />
-    ),
-  },
-  {
-    id: actions.polygon,
-    icons: (
-      <FaDrawPolygon
-        data-tooltip-id="color"
-        data-tooltip-content="Polygon"
-        data-tooltip-place="right"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          outline: "none",
-          fontSize: "25px",
-        }}
-      />
-    ),
-  },
-  {
-    id: actions.drag,
-    icons: <Drag />,
-  },
-  {
-    id: actions.Clear,
-    icons: (
-      <Clear
-        data-tooltip-id="color"
-        data-tooltip-content="Reset the canvas"
-        data-tooltip-place="right"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          outline: "none",
-          fontSize: "25px",
-        }}
-      />
-    ),
-  },
-  {
-    id: actions.upload,
-    icons: (
-      <FaUpload
-        data-tooltip-id="color"
-        data-tooltip-content="Upload"
-        data-tooltip-place="right"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          outline: "none",
-          fontSize: "25px",
-        }}
-      />
-    ),
-  },
-  {
-    id: actions.text,
-    icons: (
-      <MdTextIncrease
-        data-tooltip-id="color"
-        data-tooltip-content="Text"
-        data-tooltip-place="right"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          fontSize: "25px",
-          outline: "none",
-        }}
-      />
-    ),
-  },
-  {
-    id: actions.group,
-    icons: (
-      <FaObjectGroup
-        data-tooltip-id="color"
-        data-tooltip-content="Group"
-        data-tooltip-place="right"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          fontSize: "25px",
-          outline: "none",
-        }}
-      />
-    ),
-  },
-];
+// function shapeCollection() {
+//   const drawData = [
+//     {
+//       id: actions.select,
+//       icons: (
+//         <FaArrowPointer
+//           data-tooltip-id="color"
+//           data-tooltip-content="Select"
+//           data-tooltip-place="right"
+//           style={{
+//             // color: darkMode ? "#ffffff" : "#5d5d5d",
+//             width: "80%",
+//             height: "80%",
+//             border: "none",
+//             outline: "none",
+//             fontSize: "25px",
+//           }}
+//         />
+//       ),
+//     },
+//     {
+//       id: actions.circle,
+//       icons: (
+//         <FaRegCircle
+//           data-tooltip-id="color"
+//           data-tooltip-content="Circle"
+//           data-tooltip-place="right"
+//           style={{
+//             width: "80%",
+//             height: "80%",
+//             border: "none",
+//             outline: "none",
+//             fontSize: "25px",
+//           }}
+//         />
+//       ),
+//     },
+//     {
+//       id: actions.rectangle,
+//       icons: (
+//         <RiRectangleLine
+//           data-tooltip-id="color"
+//           data-tooltip-content="Rectangle"
+//           data-tooltip-place="right"
+//           style={{
+//             width: "80%",
+//             height: "80%",
+//             border: "none",
+//             outline: "none",
+//             fontSize: "25px",
+//           }}
+//         />
+//       ),
+//     },
+//     {
+//       id: actions.scribble,
+//       icons: (
+//         <PiScribbleLight
+//           data-tooltip-id="color"
+//           data-tooltip-content="Scribble"
+//           data-tooltip-place="right"
+//           style={{
+//             width: "80%",
+//             height: "80%",
+//             border: "none",
+//             outline: "none",
+//             fontSize: "25px",
+//           }}
+//         />
+//       ),
+//     },
+//     {
+//       id: actions.rectLayer,
+//       icons: (
+//         <RiRectangleFill
+//           data-tooltip-id="color"
+//           data-tooltip-content="Rectangle layer"
+//           data-tooltip-place="right"
+//           style={{
+//             width: "80%",
+//             height: "80%",
+//             border: "none",
+//             outline: "none",
+//             fontSize: "25px",
+//           }}
+//         />
+//       ),
+//     },
+//     {
+//       id: actions.line,
+//       icons: (
+//         <FaArrowTrendDown
+//           data-tooltip-id="color"
+//           data-tooltip-content="Line"
+//           data-tooltip-place="right"
+//           style={{
+//             width: "80%",
+//             height: "80%",
+//             border: "none",
+//             outline: "none",
+//             fontSize: "25px",
+//           }}
+//         />
+//       ),
+//     },
+//     {
+//       id: actions.polygon,
+//       icons: (
+//         <FaDrawPolygon
+//           data-tooltip-id="color"
+//           data-tooltip-content="Polygon"
+//           data-tooltip-place="right"
+//           style={{
+//             width: "80%",
+//             height: "80%",
+//             border: "none",
+//             outline: "none",
+//             fontSize: "25px",
+//           }}
+//         />
+//       ),
+//     },
+//     {
+//       id: actions.drag,
+//       icons: <Drag />,
+//     },
+//     {
+//       id: actions.Clear,
+//       icons: (
+//         <Clear
+//           data-tooltip-id="color"
+//           data-tooltip-content="Reset the canvas"
+//           data-tooltip-place="right"
+//           style={{
+//             width: "80%",
+//             height: "80%",
+//             border: "none",
+//             outline: "none",
+//             fontSize: "25px",
+//           }}
+//         />
+//       ),
+//     },
+//     {
+//       id: actions.upload,
+//       icons: (
+//         <FaUpload
+//           data-tooltip-id="color"
+//           data-tooltip-content="Upload"
+//           data-tooltip-place="right"
+//           style={{
+//             width: "80%",
+//             height: "80%",
+//             border: "none",
+//             outline: "none",
+//             fontSize: "25px",
+//           }}
+//         />
+//       ),
+//     },
+//     {
+//       id: actions.text,
+//       icons: (
+//         <MdTextIncrease
+//           data-tooltip-id="color"
+//           data-tooltip-content="Text"
+//           data-tooltip-place="right"
+//           style={{
+//             width: "80%",
+//             height: "80%",
+//             border: "none",
+//             fontSize: "25px",
+//             outline: "none",
+//           }}
+//         />
+//       ),
+//     },
+//     {
+//       id: actions.group,
+//       icons: (
+//         <FaObjectGroup
+//           data-tooltip-id="color"
+//           data-tooltip-content="Group"
+//           data-tooltip-place="right"
+//           style={{
+//             width: "80%",
+//             height: "80%",
+//             border: "none",
+//             fontSize: "25px",
+//             outline: "none",
+//           }}
+//         />
+//       ),
+//     },
+//   ];
+//   return drawData
+// }
 
-export const extraShapes = [
-  {
-    id: actions.duplicate,
-    icons: (
-      <MdLibraryAdd
-      title="duplicate"
-        fill="#242424"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          fontSize: "20px",
-          outline: "none",
-        }}
-      />
-    ),
-  },
-  {
-    id: actions.copy,
-    icons: (
-      <FaCopy
-        title="copy"
-        fill="#242424"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          fontSize: "20px",
-          outline: "none",
-        }}
-      />
-    ),
-  },
-  {
-    id: actions.paste,
-    icons: (
-      <FaPaste
-        title="paste"
-        fill="#242424"
-        style={{
-          width: "80%",
-          height: "80%",
-          border: "none",
-          fontSize: "20px",
-          outline: "none",
-        }}
-      />
-    ),
-  },
-];
+// export const extraShapes = [
+  // {
+  //   id: actions.duplicate,
+  //   icons: (
+  //     <MdLibraryAdd
+  //       title="duplicate"
+  //       fill="#242424"
+  //       style={{
+  //         width: "80%",
+  //         height: "80%",
+  //         border: "none",
+  //         fontSize: "20px",
+  //         outline: "none",
+  //       }}
+  //     />
+  //   ),
+  // },
+//   {
+//     id: actions.copy,
+//     icons: (
+//       <FaCopy
+//         title="copy"
+//         fill="#242424"
+//         style={{
+//           width: "80%",
+//           height: "80%",
+//           border: "none",
+//           fontSize: "20px",
+//           outline: "none",
+//         }}
+//       />
+//     ),
+//   },
+//   {
+//     id: actions.paste,
+//     icons: (
+//       <FaPaste
+//         title="paste"
+//         fill="#242424"
+//         style={{
+//           width: "80%",
+//           height: "80%",
+//           border: "none",
+//           fontSize: "20px",
+//           outline: "none",
+//         }}
+//       />
+//     ),
+//   },
+//   {
+//     id: actions.vertical,
+//     icons: (
+//       <PiFlipVerticalThin
+//         title="Flip vertically"
+//         fill="#242424"
+//         style={{
+//           width: "80%",
+//           height: "80%",
+//           border: "none",
+//           fontSize: "20px",
+//           outline: "none",
+//         }}
+//       />
+//     ),
+//   },
+//   {
+//     id: actions.horizontal,
+//     icons: (
+//       <PiFlipHorizontalThin
+//         title="Flip horizontally "
+//         fill="#242424"
+//         style={{
+//           width: "80%",
+//           height: "80%",
+//           border: "none",
+//           fontSize: "20px",
+//           outline: "none",
+//         }}
+//       />
+//     ),
+//   },
+// ];

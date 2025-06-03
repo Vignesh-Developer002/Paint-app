@@ -4,6 +4,24 @@ import { actions } from "../Actions/Action";
 import { v4 as uuidv4 } from "uuid";
 import toast from "react-hot-toast";
 
+import { FaRegCircle } from "react-icons/fa";
+import { RiRectangleLine } from "react-icons/ri";
+import { PiScribbleLight } from "react-icons/pi";
+import { FaArrowTrendDown } from "react-icons/fa6";
+import { FaDrawPolygon } from "react-icons/fa";
+import { FaArrowPointer } from "react-icons/fa6";
+import Clear from "../components/Clear/Clear";
+import Drag from "../components/Drag/Drag";
+import { FaUpload } from "react-icons/fa";
+import { MdTextIncrease } from "react-icons/md";
+import { FaObjectGroup } from "react-icons/fa";
+import { RiRectangleFill } from "react-icons/ri";
+import { MdLibraryAdd } from "react-icons/md";
+import { FaCopy } from "react-icons/fa";
+import { FaPaste } from "react-icons/fa";
+import { PiFlipVerticalThin } from "react-icons/pi";
+import { PiFlipHorizontalThin } from "react-icons/pi";
+
 export const globalStore = createContext();
 const StoreContext = ({ children }) => {
   let selectionArrowRef = useRef();
@@ -105,6 +123,12 @@ const StoreContext = ({ children }) => {
   let wd = Math.abs(selectBox?.width);
   let ht = Math.abs(selectBox?.height);
 
+  //  preview , dark mode state variable
+  const [cancelIconColor, setCancelIconColor] = useState(""); // for cancel icon
+  const [eyeColor, setEyeColor] = useState(false); // for preview icon
+  const [darkMode, setDarkMode] = useState(false); // for darkMode icon
+  const [closeBottomNav, setCloseBottomNav] = useState(true); // for open and closing the bottom navbar
+  const [darkModeValue, setDarkModeValue] = useState(null); // for set the darkmode state value
   //--------------------------------Zoom in and Zoom out functionality------------------------------------------------------
   // zoom in and zoom out functionality state variable for plus and minus btns
 
@@ -155,6 +179,35 @@ const StoreContext = ({ children }) => {
   };
 
   //-------------------------------------------------------------------------
+  // ---------------------------flip-start-----------------------------------
+
+  const [isFlipped, setIsFlipped] = useState(false); // for vertical flip
+  const [isHorizontalFlip, setIsHorizontalFlip] = useState(false); // for horizontal flip
+  const [angle, setAngle] = useState(0);
+  const [oppositAngle, setOppositeAngle] = useState(0);
+  // for vertical flip
+  const handleVerticalFlip = () => {
+    setIsFlipped((prev) => !prev);
+  };
+
+  function getOppositeAngle(angle) {
+    return (angle + 180) % 360;
+  }
+  // for horizontal flip
+  function HorizontalFlip() {
+    setIsHorizontalFlip((p) => !p);
+  }
+
+  function getOppHorizontalAngle(angle) {
+    if (angle === 0) {
+      return 0;
+    }
+    return 360 - angle;
+  }
+
+  //function for finding the opposite angle
+
+  // ----------------------flip-end-------------------------------------------
 
   // ------------------------copy state----------------------------------------
   const [down, setDown] = useState(false); // for tracking the mouseDownhandletransform
@@ -171,9 +224,15 @@ const StoreContext = ({ children }) => {
     ...drawPolygon,
     ...drawScribble,
   ];
+  // -----------------------duplicate-start----------------------------------------
+
+  const [entireDupShape, setEntireDupShapeShapes] = useState(entireShapes);
+  const [duplicateSelectedId, setDuplicateSelectedId] = useState(null); // for set the selected shape id
+  const lastShape = entireDupShape[entireDupShape.length - 1];
+
+  // -----------------------duplicate-end----------------------------------------
 
   const [shape, setShape] = useState(entireShapes);
-
   const shapeMap = {
     Circle: Konva.Circle,
     Line: Konva.Line,
@@ -186,11 +245,9 @@ const StoreContext = ({ children }) => {
   function handleCopy(shape) {
     setCopiedShape(shape);
   }
-  console.log("copiedShape", copiedShape);
+
   function handleBottomNavBtn(btn, name) {
     const { Name, id } = name;
-    console.log("shape", shape);
-    console.log(btn, Name, id);
     if (btn === "copy" && down === true) {
       toast.success("copied..");
       let res = entireShapes.find((d) => d.id === id);
@@ -228,14 +285,360 @@ const StoreContext = ({ children }) => {
         y: copiedShape.y + (centerY - offsetY),
       };
       setShape([...shape, newShape]);
-    } else if (btn === "duplicate" && down === true) {
-      console.log("clicked duplicate");
-    } else {
-      console.log("no btn is clicked");
+    }
+    //  else if (btn === "duplicate" && down === true) {
+    //   console.log("click duplicate");
+    //   if (duplicateSelectedId === null) {
+    //     console.log("no id selected");
+    //     return;
+    //   } else {
+    //     console.log("id available");
+    //     const original = entireShapes.find((d) => d.id === duplicateSelectedId); // find shape object
+
+    //     const newShape = {
+    //       ...original,
+    //       // id: `${original.id}-copy-${Date.now()}`, // unique id
+    //       id: uuidv4(),
+    //       x: lastShape?.x + 20,
+    //       y: lastShape?.y + 20,
+    //     };
+    //     setEntireDupShapeShapes((prev) => [...prev, newShape]);
+    //   }
+    // }
+    else if (btn === "vertical" && down === true) {
+      handleVerticalFlip();
+      setOppositeAngle(getOppositeAngle(angle));
+      if (idName.Name === "rectangle") {
+        if (isFlipped === true) {
+          setDrawing((prev) =>
+            prev.map((r) =>
+              r.id === id ? { ...r, rotation: oppositAngle } : r
+            )
+          );
+        } else {
+          setDrawing((prev) =>
+            prev.map((r) => (r.id === id ? { ...r, rotation: angle } : r))
+          );
+        }
+      }
+    } else if (btn === "horizontal" && down === true) {
+      HorizontalFlip();
+      setOppositeAngle(getOppHorizontalAngle(angle));
+      console.log("horizontal is clicked");
+      if (idName.Name === "rectangle") {
+        if (isHorizontalFlip === true) {
+          setDrawing((prev) =>
+            prev.map((r) =>
+              r.id === id ? { ...r, rotation: oppositAngle } : r
+            )
+          );
+        } else {
+          setDrawing((prev) =>
+            prev.map((r) => (r.id === id ? { ...r, rotation: angle } : r))
+          );
+        }
+      }
     }
   }
-  // ------------------------copy end----------------------------------------
 
+  // ------------------------copy end--------------------------------------
+
+  //-----------------------------se of icons function--------------------------------------------
+  function shapeCollection() {
+    const drawData = [
+      {
+        id: actions.select,
+        icons: (
+          <FaArrowPointer
+            data-tooltip-id="color"
+            data-tooltip-content="Select"
+            data-tooltip-place="right"
+            style={{
+              color: darkMode ? "#ada69c" : "#5d5d5d",
+              width: "80%",
+              height: "80%",
+              border: "none",
+              outline: "none",
+              fontSize: "25px",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.circle,
+        icons: (
+          <FaRegCircle
+            data-tooltip-id="color"
+            data-tooltip-content="Circle"
+            data-tooltip-place="right"
+            style={{
+              color: darkMode ? "#ada69c" : "#5d5d5d",
+              width: "80%",
+              height: "80%",
+              border: "none",
+              outline: "none",
+              fontSize: "25px",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.rectangle,
+        icons: (
+          <RiRectangleLine
+            data-tooltip-id="color"
+            data-tooltip-content="Rectangle"
+            data-tooltip-place="right"
+            style={{
+              color: darkMode ? "#ada69c" : "#5d5d5d",
+              width: "80%",
+              height: "80%",
+              border: "none",
+              outline: "none",
+              fontSize: "25px",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.scribble,
+        icons: (
+          <PiScribbleLight
+            data-tooltip-id="color"
+            data-tooltip-content="Scribble"
+            data-tooltip-place="right"
+            style={{
+              color: darkMode ? "#ada69c" : "#5d5d5d",
+              width: "80%",
+              height: "80%",
+              border: "none",
+              outline: "none",
+              fontSize: "25px",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.rectLayer,
+        icons: (
+          <RiRectangleFill
+            data-tooltip-id="color"
+            data-tooltip-content="Rectangle layer"
+            data-tooltip-place="right"
+            style={{
+              color: darkMode ? "#ada69c" : "#5d5d5d",
+              width: "80%",
+              height: "80%",
+              border: "none",
+              outline: "none",
+              fontSize: "25px",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.line,
+        icons: (
+          <FaArrowTrendDown
+            data-tooltip-id="color"
+            data-tooltip-content="Line"
+            data-tooltip-place="right"
+            style={{
+              color: darkMode ? "#ada69c" : "#5d5d5d",
+              width: "80%",
+              height: "80%",
+              border: "none",
+              outline: "none",
+              fontSize: "25px",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.polygon,
+        icons: (
+          <FaDrawPolygon
+            data-tooltip-id="color"
+            data-tooltip-content="Polygon"
+            data-tooltip-place="right"
+            style={{
+              color: darkMode ? "#ada69c" : "#5d5d5d",
+              width: "80%",
+              height: "80%",
+              border: "none",
+              outline: "none",
+              fontSize: "25px",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.drag,
+        icons: <Drag />,
+      },
+      {
+        id: actions.Clear,
+        icons: (
+          <Clear
+            data-tooltip-id="color"
+            data-tooltip-content="Reset the canvas"
+            data-tooltip-place="right"
+            style={{
+              color: darkMode ? "#ada69c" : "#5d5d5d",
+              width: "80%",
+              height: "80%",
+              border: "none",
+              outline: "none",
+              fontSize: "25px",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.upload,
+        icons: (
+          <FaUpload
+            data-tooltip-id="color"
+            data-tooltip-content="Upload"
+            data-tooltip-place="right"
+            style={{
+              color: darkMode ? "#ada69c" : "#5d5d5d",
+              width: "80%",
+              height: "80%",
+              border: "none",
+              outline: "none",
+              fontSize: "25px",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.text,
+        icons: (
+          <MdTextIncrease
+            data-tooltip-id="color"
+            data-tooltip-content="Text"
+            data-tooltip-place="right"
+            style={{
+              color: darkMode ? "#ada69c" : "#5d5d5d",
+              width: "80%",
+              height: "80%",
+              border: "none",
+              fontSize: "25px",
+              outline: "none",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.group,
+        icons: (
+          <FaObjectGroup
+            data-tooltip-id="color"
+            data-tooltip-content="Group"
+            data-tooltip-place="right"
+            style={{
+              color: darkMode ? "#ada69c" : "#5d5d5d",
+              width: "80%",
+              height: "80%",
+              border: "none",
+              fontSize: "25px",
+              outline: "none",
+            }}
+          />
+        ),
+      },
+    ];
+    return drawData;
+  }
+
+  // extra shapes for bottom nav
+  function extraShapes() {
+    const extraShapes = [
+      {
+        id: actions.duplicate,
+        icons: (
+          <MdLibraryAdd
+            title="duplicate"
+            fill={darkMode ? "#ada69c" : "#5d5d5d"}
+            style={{
+              width: "80%",
+              height: "80%",
+              border: "none",
+              fontSize: "20px",
+              outline: "none",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.copy,
+        icons: (
+          <FaCopy
+            title="copy"
+            fill={darkMode ? "#ada69c" : "#5d5d5d"}
+            style={{
+              width: "80%",
+              height: "80%",
+              border: "none",
+              fontSize: "20px",
+              outline: "none",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.paste,
+        icons: (
+          <FaPaste
+            title="paste"
+            fill={darkMode ? "#ada69c" : "#5d5d5d"}
+            style={{
+              width: "80%",
+              height: "80%",
+              border: "none",
+              fontSize: "20px",
+              outline: "none",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.vertical,
+        icons: (
+          <PiFlipVerticalThin
+            title="Flip vertically"
+            fill={darkMode ? "#ada69c" : "#5d5d5d"}
+            style={{
+              width: "80%",
+              height: "80%",
+              border: "none",
+              fontSize: "20px",
+              outline: "none",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.horizontal,
+        icons: (
+          <PiFlipHorizontalThin
+            title="Flip horizontally "
+            fill={darkMode ? "#ada69c" : "#5d5d5d"}
+            style={{
+              width: "80%",
+              height: "80%",
+              border: "none",
+              fontSize: "20px",
+              outline: "none",
+            }}
+          />
+        ),
+      },
+    ];
+    return extraShapes;
+  }
+  // -----------------------------------------------------------------------------------
   // useEffect for assigning the width and height for xy line
   useEffect(() => {
     setPoint({
@@ -794,6 +1197,7 @@ const StoreContext = ({ children }) => {
         stageVisible
       ) {
         transformerRef.current.nodes([transformerNode]);
+        setDuplicateSelectedId(id);
         setSideBarView(true);
         setDown(true);
         setIdName((prev) => ({ ...prev, id: id, Name: name }));
@@ -1220,6 +1624,27 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    extraShapes,
+    shapeCollection,
+    darkModeValue,
+    setDarkModeValue,
+    closeBottomNav,
+    setCloseBottomNav,
+    cancelIconColor,
+    setCancelIconColor,
+    eyeColor,
+    setEyeColor,
+    darkMode,
+    setDarkMode,
+    entireDupShape,
+    duplicateSelectedId,
+    setDuplicateSelectedId,
+    oppositAngle,
+    angle,
+    setAngle,
+    isFlipped,
+    setIsFlipped,
+    handleVerticalFlip,
     previewImage,
     setPreviewImage,
     handlePreviwImage,

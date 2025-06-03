@@ -17,10 +17,11 @@ const Preview = () => {
     drawLine,
     showSingleRec,
     drawText,
+    darkMode,
   } = useContext(globalStore);
   const [preTime, setPreTime] = useState(false);
   const { setPreview, preview } = useContext(globalStore);
-  console.log(drawText, "drawText");
+
   useEffect(() => {
     setTimeout(() => {
       setPreTime(true);
@@ -33,14 +34,24 @@ const Preview = () => {
     }, 1000);
   }, [preTime === true]);
 
+
+  // function for set the dark mode to 
   return (
-    <div className="preview-container">
+    <div
+      className="preview-container"
+      style={{ backgroundColor: darkMode ? "#1c1c1c" : "#ebebeb" }}
+    >
       <div className="preview-head">
         <ImCancelCircle
           className="prev-cancel"
           onClick={() => setPreview(false)}
         />
-        <p className="prev-title">Preview</p>
+        <p
+          className="prev-title"
+          style={{ color: darkMode ? "#797979" : "black" }}
+        >
+          Preview
+        </p>
       </div>
       <div className="img-content">
         {preTime === true && (
