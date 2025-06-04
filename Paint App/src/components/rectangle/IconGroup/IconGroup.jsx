@@ -12,10 +12,9 @@ const IconGroup = () => {
     handleClear,
     setCurrentShape,
     darkMode,
-    shapeCollection
+    shapeCollection,
   } = useContext(globalStore);
 
-  
   //function for findinfd the name of the perticular clicked button
   function handleAction(id, e) {
     setBtnName(id);
@@ -43,20 +42,20 @@ const IconGroup = () => {
       setCurrentShape(id);
     }
   }
- 
 
   return (
     <div
       className="icon-group"
+      id="icon-group"
       style={{ backgroundColor: darkMode ? "#232628" : "#ebebeb" }}
     >
       {shapeCollection().map((icon, idx) => (
         <button
-        // #ffffff
+          // #ffffff
           style={{ backgroundColor: darkMode ? "#181a1b" : "" }}
           id="btn"
           key={idx}
-          className={btnName === icon.id  ? "bg-blue" : "icon"}
+          className={btnName === icon.id ? "bg-blue" : "icon"}
           onClick={(e) => handleAction(icon.id, e)}
         >
           {icon.icons}

@@ -13,12 +13,34 @@ import { FaPlus } from "react-icons/fa";
 import Preview from "./components/Preview/Preview.jsx";
 import { Toaster } from "react-hot-toast";
 import Draggable from "react-draggable";
+import Joyride from "react-joyride";
+import step from "./components/TourComponent/TourSteps.jsx";
+import { IoMdPlay } from "react-icons/io";
 
 const App = () => {
-  const { handleZoom, scale, inc, preview } = useContext(globalStore);
+  const { handleZoom, scale, inc, preview, tutorialClick, setTutorialClick } =
+    useContext(globalStore);
   const nodeRef = createRef();
   return (
+    //  style={{backgroundColor:"#e6e6e6"}}
     <div className="app-container">
+      <Joyride
+        steps={step}
+        continuous
+        run={true}
+        styles={{
+          options: {
+            arrowColor: "red",
+            backgroundColor: "rgba(10, 10, 10, 0.27)",
+            overlayColor: "rgba(10, 10, 10, 0.27)",
+            primaryColor: "#ffffff",
+            textColor: "#004a14",
+            width: 200,
+            zIndex: 1000,
+            placement: "right",
+          },
+        }}
+      />
       <div id="drag-container">
         <TopNav />
         <div className="top-nav">
@@ -40,6 +62,17 @@ const App = () => {
         )}
 
         <MainStage />
+        {/* dropDown container */}
+        {tutorialClick && (
+          <div className="drop-down-container">
+            <div className="tutorial-play">
+              <IoMdPlay size={20} className="playlogo" />
+              <p className="PlayText" onClick={() => setTutorialClick(false)}>
+                Play tutorial
+              </p>
+            </div>
+          </div>
+        )}
         <div className="joystick-content">
           <div className="zoomer-content">
             <Joystick2 />

@@ -639,6 +639,11 @@ const StoreContext = ({ children }) => {
     return extraShapes;
   }
   // -----------------------------------------------------------------------------------
+
+  // -----------------------------tutorial dropdown start---------------------------------------
+  const [tutorialClick, setTutorialClick] = useState(false); // for toggle the tutorial container
+  // -----------------------------tutorial dropdown end-----------------------------------------
+
   // useEffect for assigning the width and height for xy line
   useEffect(() => {
     setPoint({
@@ -1624,6 +1629,8 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    tutorialClick,
+    setTutorialClick,
     extraShapes,
     shapeCollection,
     darkModeValue,

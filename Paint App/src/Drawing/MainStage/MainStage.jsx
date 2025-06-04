@@ -28,7 +28,8 @@ const MainStage = () => {
     scale,
     shape,
     setShape,
-    darkMode
+    darkMode,
+    tutorialClick,
   } = useContext(globalStore);
 
   let stage = document.getElementById("stageClass");
@@ -46,9 +47,12 @@ const MainStage = () => {
 
   return (
     <>
+      {/* style={{
+          backgroundColor: tutorialClick === true ? "#06060629" : "white",
+        }} */}
       {stageVisible === false ? (
         <Stage
-        style={{backgroundColor:darkMode?"#181a1b":"white"}}
+          style={{ backgroundColor: darkMode ? "#181a1b" :tutorialClick?"#06060629": "white" , transition:"background .3s ease-in"}}
           x={offset.x}
           y={offset.y}
           id="stageClass"

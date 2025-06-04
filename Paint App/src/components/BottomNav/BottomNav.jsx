@@ -6,6 +6,7 @@ import { TbBrightnessUpFilled } from "react-icons/tb";
 // import { extraShapes } from "../../Actions/Action";
 import { globalStore } from "../../StoreContext/StoreContext";
 import { MdNightlightRound } from "react-icons/md";
+import PlayTutorial from "../playTutorial/PlayTutorial";
 
 const BottomNav = () => {
   const {
@@ -24,6 +25,7 @@ const BottomNav = () => {
     darkModeValue,
     setDarkModeValue,
     extraShapes,
+    tutorialClick
   } = useContext(globalStore);
 
   //function for handle the preview setup
@@ -77,7 +79,7 @@ const BottomNav = () => {
           >
             <IoMdEye
               size={20}
-              fill={ preview === true ? "#1f8de3" : "black"}
+              fill={preview === true ? "#1f8de3" : "black"}
               className="eye"
               title="preview"
             />
@@ -106,20 +108,25 @@ const BottomNav = () => {
       </div>
       {/* New shapes */}
       <div className="additionalShape">
-        {extraShapes().map((d) => (
-          <button
-            id={d.id}
-            key={d.id}
-            onClick={() => handleBottomNavBtn(d.id, idName)}
-            className="bottom-icon-btn"
-            style={{
-              backgroundColor: darkMode ? "#232628" : "#ffffff",
-              border: darkMode ? "1px solid #ffffff" : "none",
-            }}
-          >
-            {d.icons}
-          </button>
-        ))}
+        <div className="bottom-right-side-content">
+          {extraShapes().map((d) => (
+            <button
+              id={d.id}
+              key={d.id}
+              onClick={() => handleBottomNavBtn(d.id, idName)}
+              className="bottom-icon-btn"
+              style={{
+                backgroundColor: darkMode ? "#232628" : "#ffffff",
+                border: darkMode ? "1px solid #ffffff" : "none",
+              }}
+            >
+              {d.icons}
+            </button>
+          ))}
+        </div>
+
+        <PlayTutorial />
+      
       </div>
     </div>
   );

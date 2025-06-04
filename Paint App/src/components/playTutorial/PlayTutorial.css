@@ -1,0 +1,14 @@
+.play-tutorial-content{
+    border: 1px solid white;
+    width:60px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 0px 10px;
+    border-radius: 6px;
+    position: relative;
+}
+
+.questionMark, .DropDown{
+    color: #242424;
+}
