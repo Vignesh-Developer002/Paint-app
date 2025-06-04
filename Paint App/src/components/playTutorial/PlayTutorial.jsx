@@ -19,6 +19,7 @@ const PlayTutorial = () => {
     <>
       {" "}
       <div
+        title="Help"
         className="play-tutorial-content"
         onClick={() => handleTutorialToggle()}
       >

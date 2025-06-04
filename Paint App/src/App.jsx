@@ -18,26 +18,41 @@ import step from "./components/TourComponent/TourSteps.jsx";
 import { IoMdPlay } from "react-icons/io";
 
 const App = () => {
-  const { handleZoom, scale, inc, preview, tutorialClick, setTutorialClick } =
-    useContext(globalStore);
+  const {
+    handleZoom,
+    scale,
+    inc,
+    preview,
+    tutorialClick,
+    setTutorialClick,
+    startTour,
+    setStartTour,
+  } = useContext(globalStore);
   const nodeRef = createRef();
+
+  function handleChanges() {
+    setTutorialClick(false);
+    setStartTour(true);
+  }
+
   return (
     //  style={{backgroundColor:"#e6e6e6"}}
     <div className="app-container">
       <Joyride
         steps={step}
         continuous
-        run={true}
+        run={startTour}
+        showProgress={false}
         styles={{
           options: {
-            arrowColor: "red",
-            backgroundColor: "rgba(10, 10, 10, 0.27)",
-            overlayColor: "rgba(10, 10, 10, 0.27)",
-            primaryColor: "#ffffff",
+            // arrowColor:green,
+            disableCloseOnEs: true,
+            backgroundColor: "#1a1a1a",
+            overlayColor: "#1a1a1a",
+            primaryColor: "red",
             textColor: "#004a14",
-            width: 200,
+            width: 500,
             zIndex: 1000,
-            placement: "right",
           },
         }}
       />
@@ -67,7 +82,7 @@ const App = () => {
           <div className="drop-down-container">
             <div className="tutorial-play">
               <IoMdPlay size={20} className="playlogo" />
-              <p className="PlayText" onClick={() => setTutorialClick(false)}>
+              <p className="PlayText" onClick={() => handleChanges()}>
                 Play tutorial
               </p>
             </div>

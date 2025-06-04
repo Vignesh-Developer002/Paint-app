@@ -642,6 +642,7 @@ const StoreContext = ({ children }) => {
 
   // -----------------------------tutorial dropdown start---------------------------------------
   const [tutorialClick, setTutorialClick] = useState(false); // for toggle the tutorial container
+  const [startTour, setStartTour] = useState(false); // for start the tour
   // -----------------------------tutorial dropdown end-----------------------------------------
 
   // useEffect for assigning the width and height for xy line
@@ -1629,6 +1630,8 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    startTour,
+    setStartTour,
     tutorialClick,
     setTutorialClick,
     extraShapes,

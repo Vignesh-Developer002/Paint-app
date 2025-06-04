@@ -13,6 +13,7 @@ const IconGroup = () => {
     setCurrentShape,
     darkMode,
     shapeCollection,
+    tutorialClick,
   } = useContext(globalStore);
 
   //function for findinfd the name of the perticular clicked button
@@ -47,7 +48,13 @@ const IconGroup = () => {
     <div
       className="icon-group"
       id="icon-group"
-      style={{ backgroundColor: darkMode ? "#232628" : "#ebebeb" }}
+      style={{
+        backgroundColor: darkMode
+          ? "#232628"
+          : tutorialClick
+          ? "#06060629"
+          : "#ebebeb",
+      }}
     >
       {shapeCollection().map((icon, idx) => (
         <button

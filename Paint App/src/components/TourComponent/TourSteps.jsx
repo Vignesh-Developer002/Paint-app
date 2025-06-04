@@ -5,9 +5,10 @@ const step = [
     target: "#icon-group",
     content: <ToolTour />,
     disableBeacon: true,
+    // offset: 300,
     placement: "right",
-    offset: 10000,
-    
+    hideCloseButton: true,
+    hideBackButton: true,
   },
 ];
 
