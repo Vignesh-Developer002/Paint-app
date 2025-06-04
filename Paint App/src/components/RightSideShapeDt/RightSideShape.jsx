@@ -20,6 +20,7 @@ const RightSideShape = () => {
     setDisble,
     setDrawText,
     stageVisible,
+    darkMode,
   } = useContext(globalStore);
 
   function handleShapeName(shape) {
@@ -116,7 +117,10 @@ const RightSideShape = () => {
         <>
           {((idName.id && idName.Name && sideBarView) ||
             btnName === "image") && (
-            <div className="right-side-container">
+            <div
+              className="right-side-container"
+              style={{ backgroundColor: darkMode ? "#232628" : "#f5f5f5" }}
+            >
               <div className="inner-content">
                 <h1 className="heading">
                   {handleShapeName(currentShap)

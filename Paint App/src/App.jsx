@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState, createRef } from "react";
 import IconGroup from "./components/rectangle/IconGroup/IconGroup.jsx";
 import "../src/App.css";
 import { Layer, Stage } from "react-konva";
@@ -12,60 +12,72 @@ import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa";
 import Preview from "./components/Preview/Preview.jsx";
 import { Toaster } from "react-hot-toast";
+import Draggable from "react-draggable";
 
 const App = () => {
   const { handleZoom, scale, inc, preview } = useContext(globalStore);
-
+  const nodeRef = createRef();
   return (
     <div className="app-container">
-      <TopNav />
-      <div className="top-nav">
-        <IconGroup />
-        <RightSideShape />
-      </div>
-      {preview && (
-        <div className="prev">
-          <Preview />
+      <div id="drag-container">
+        <TopNav />
+        <div className="top-nav">
+          <IconGroup />
+          <RightSideShape />
         </div>
-      )}
-      <MainStage />
-      <div className="joystick-content">
-        <div className="zoomer-content">
-          <Joystick2 />
-          {/* --- */}
-          <div className="bottomzoom" onSelect={(e) => e.preventDefault()}>
-            <div className="main-zoom">
-              <button
-                title="Zoom out"
-                className="inc"
-                disabled={inc === -200 ? true : false}
-                onClick={() => handleZoom(false)}
-              >
-                <FaMinus
-                  size={12}
-                  fill={inc === -200 ? "lightGrey" : "#030064"}
-                  className="incDec"
-                />
-              </button>
-              {/* <p className="zoomlevel">{inc}%</p> */}
-              <button
-                title="Zoom in"
-                className="dec"
-                disabled={inc === 500 ? true : false}
-                onClick={() => handleZoom(true)}
-              >
-                <FaPlus
-                  size={12}
-                  fill={inc < 500 ? "#030064" : "lightGrey"}
-                  className="incDec"
-                />
-              </button>
+
+        {preview && (
+          <Draggable
+            bounds="#drag-container"
+            nodeRef={nodeRef}
+            defaultPosition={{ x: 1010, y: 120 }}
+            handle={".preview-head"}
+          >
+            <div ref={nodeRef} className="prev">
+              <Preview />
             </div>
+          </Draggable>
+        )}
+
+        <MainStage />
+        <div className="joystick-content">
+          <div className="zoomer-content">
+            <Joystick2 />
+            {/* --- */}
+            <div className="bottomzoom" onSelect={(e) => e.preventDefault()}>
+              <div className="main-zoom">
+                <button
+                  title="Zoom out"
+                  className="inc"
+                  disabled={inc === -200 ? true : false}
+                  onClick={() => handleZoom(false)}
+                >
+                  <FaMinus
+                    size={12}
+                    fill={inc === -200 ? "lightGrey" : "#030064"}
+                    className="incDec"
+                  />
+                </button>
+                {/* <p className="zoomlevel">{inc}%</p> */}
+                <button
+                  title="Zoom in"
+                  className="dec"
+                  disabled={inc === 500 ? true : false}
+                  onClick={() => handleZoom(true)}
+                >
+                  <FaPlus
+                    size={12}
+                    fill={inc < 500 ? "#030064" : "lightGrey"}
+                    className="incDec"
+                  />
+                </button>
+              </div>
+            </div>
+            {/* ----- */}
           </div>
-          {/* ----- */}
         </div>
+        <Toaster />
       </div>
-      <Toaster />
     </div>
   );
 };

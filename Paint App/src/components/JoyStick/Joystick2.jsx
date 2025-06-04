@@ -14,9 +14,7 @@ const Joystick2 = () => {
     setPosition,
     size,
     center,
-    joystickBtnClick,
     setJoystickBtnClick,
-    offset,
     setOffset,
   } = useContext(globalStore);
 
@@ -28,7 +26,6 @@ const Joystick2 = () => {
 
   const handleDragMove = (e) => {
     const { x, y } = e.target.position();
-    // console.log("x", x, "y", y);
     const dx = x - center;
     const dy = y - center;
     const distance = Math.sqrt(dx * dx + dy * dy);

@@ -11,9 +11,6 @@
     top: 0px;
 }
 
-
-
-
 .top-content{
     display: flex;
     justify-content: space-between;
@@ -23,6 +20,9 @@
     display: flex;
     gap: 15px;
     align-items: center;
+    /* border: 1px solid red; */
+    width: 250px;
+    height: 150px;
 }
 
 span{

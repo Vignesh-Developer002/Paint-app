@@ -2,6 +2,9 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    scroll-behavior: smooth;
+   overflow-x: hidden;
+   overflow-y: hidden;
 }
 
 .top-nav{
@@ -10,12 +13,20 @@
     justify-content: center;
 }
 
+#drag-container{
+    width: 79%;
+    height: 100vh;
+    z-index: 10000;
+    /* border: 1px solid green; */
+}
+
 .joystick-content{
-    width: 200px;
-    height: 50px;
+    /* width: 200px;
+    height: 50px; */
     position: absolute;
-    left: 60px;
-    bottom: 170px;
+    left: 65px;
+    top:690px;
+    /* bottom: 170px; */
     z-index: 3;
     transition: 2s ease-in;
     animation-name: bottomToTop;
@@ -37,11 +48,11 @@
 }
 
 .bottomzoom{
-    top: 150px;
+    top: 160px;
     left: 39px;
     width: 60%;
     position: absolute;
-    height: 40px;
+    /* height: 200px; */
     z-index: 3;
     /* border: 1px solid lightgray; */
     border-radius: 8px;
@@ -55,7 +66,7 @@
     align-items: center;
     /* justify-content: space-between; */
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
     padding: 0 6px; 
   
 }
@@ -72,7 +83,7 @@
     align-items: center;
     border: none;
     background-color: #e0dfff;
-    /* border-radius: 50%; */
+    border-radius: 50%;
 
 }
 
@@ -80,13 +91,14 @@
 .prev{
     width: 500px;
     height: 500px;
+    z-index: 1;
     /* border: 1px solid green; */
-    position: absolute;
-    right:410px;
-    top: 120px;
-    transition: 2s ease-in;
+   position: absolute;
+    /* right:410px; */
+    /* top: 120px; */
+    /* transition: 2s ease-in;
     animation-name: prev;
-    animation-duration: 1s;
+    animation-duration: 1s; */
 }
 @keyframes prev {
     0%{

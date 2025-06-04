@@ -343,7 +343,7 @@ const StoreContext = ({ children }) => {
 
   // ------------------------copy end--------------------------------------
 
-  //-----------------------------se of icons function--------------------------------------------
+  //-----------------------------set of icons function--------------------------------------------
   function shapeCollection() {
     const drawData = [
       {
@@ -555,22 +555,22 @@ const StoreContext = ({ children }) => {
   // extra shapes for bottom nav
   function extraShapes() {
     const extraShapes = [
-      {
-        id: actions.duplicate,
-        icons: (
-          <MdLibraryAdd
-            title="duplicate"
-            fill={darkMode ? "#ada69c" : "#5d5d5d"}
-            style={{
-              width: "80%",
-              height: "80%",
-              border: "none",
-              fontSize: "20px",
-              outline: "none",
-            }}
-          />
-        ),
-      },
+      // {
+      //   id: actions.duplicate,
+      //   icons: (
+      //     <MdLibraryAdd
+      //       title="duplicate"
+      //       fill={darkMode ? "#ada69c" : "#5d5d5d"}
+      //       style={{
+      //         width: "80%",
+      //         height: "80%",
+      //         border: "none",
+      //         fontSize: "20px",
+      //         outline: "none",
+      //       }}
+      //     />
+      //   ),
+      // },
       {
         id: actions.copy,
         icons: (
