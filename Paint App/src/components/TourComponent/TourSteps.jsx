@@ -1,4 +1,6 @@
 import CopyPastTour from "./CopyPastTour/CopyPastTour.JSX";
+import JoyStickTour from "./JoyStickTour/JoyStickTour";
+import RightSideTour from "./RightSideTour/RightSideTour";
 import ToolBarMain from "./ToolBarMain/ToolBarMain";
 import ToolTour from "./ToolsTour/ToolTour";
 
@@ -29,14 +31,14 @@ const step = [
 
   {
     target: "#rightSideContent",
-    content: <ToolTour />,
+    content: <RightSideTour />,
     placement: "left",
     disableBeacon: true,
     type: 4,
   },
   {
     target: "#resetButton",
-    content: <ToolTour />,
+    content: <JoyStickTour />,
     placement: "left",
     disableBeacon: true,
     type: 5,

@@ -1,0 +1,14 @@
+.right-side-tour{
+    /* border: 1px solid ; */
+    margin-top:-20px;
+    margin-bottom: -25px;
+}
+.rightSideTitle{
+    font-size: 16px;
+    text-align: start;
+    margin-bottom: 3px;
+}
+.rightSidePara {
+    font-size: 14px;
+    text-align: start;
+}
