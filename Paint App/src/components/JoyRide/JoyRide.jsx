@@ -17,7 +17,12 @@ const JoyRide = () => {
       disableOverlayClose={false}
       spotlightPadding={0}
       hideCloseButton={true}
-      locale={{back: 'Back', close: 'Close', last: 'Get started', next: 'Next'}}
+      locale={{
+        back: "Back",
+        close: "Close",
+        last: "Get started",
+        next: "Next",
+      }}
       styles={{
         options: {
           arrowColor: "#ffffff",
@@ -32,7 +37,6 @@ const JoyRide = () => {
         if (data?.action === "reset") {
           setStartTour(false);
         }
-        console.log("data", data);
       }}
     />
   );
