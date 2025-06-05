@@ -883,6 +883,8 @@ const StoreContext = ({ children }) => {
     }
   }, [currentValue]);
 
+  console.log("startTour", startTour);
+
   // function for handle the perticular shape click
   function handleSelect(id, name) {
     if (name === "rectangle" || name === "rectangle3") {

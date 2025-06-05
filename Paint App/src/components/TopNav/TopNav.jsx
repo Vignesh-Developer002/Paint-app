@@ -12,11 +12,11 @@ const TopNav = () => {
 
   return (
     <>
-      <div className="top-container">
+      <div className="top-container" >
         <div className="top-content">
           <div className="left-head">
             <h1>Paint App</h1>{" "}
-            <span style={{ width: "30px", height: "30px" }}>
+            <span  className="glow" style={{ width: "30px", height: "30px" }}>
               <PiPaintBrushFill fill="white" fontSize={20} />
             </span>
           </div>

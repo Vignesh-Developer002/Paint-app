@@ -21,6 +21,7 @@ const RightSideShape = () => {
     setDrawText,
     stageVisible,
     darkMode,
+    startTour,
   } = useContext(globalStore);
 
   function handleShapeName(shape) {
@@ -116,8 +117,10 @@ const RightSideShape = () => {
         (stageVisible && idName.Name !== "rectLayer")) && (
         <>
           {((idName.id && idName.Name && sideBarView) ||
-            btnName === "image") && (
+            btnName === "image" ||
+            startTour) && (
             <div
+              id="rightSideContent"
               className="right-side-container"
               style={{ backgroundColor: darkMode ? "#232628" : "#f5f5f5" }}
             >

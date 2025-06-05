@@ -25,7 +25,7 @@
     height: 150px;
 }
 
-span{
+.glow{
     display: flex;
     justify-content: center;
     align-items: center;

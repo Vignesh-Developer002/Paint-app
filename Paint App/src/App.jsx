@@ -16,6 +16,7 @@ import Draggable from "react-draggable";
 import Joyride from "react-joyride";
 import step from "./components/TourComponent/TourSteps.jsx";
 import { IoMdPlay } from "react-icons/io";
+import JoyRide from "./components/JoyRide/JoyRide.jsx";
 
 const App = () => {
   const {
@@ -38,24 +39,7 @@ const App = () => {
   return (
     //  style={{backgroundColor:"#e6e6e6"}}
     <div className="app-container">
-      <Joyride
-        steps={step}
-        continuous
-        run={startTour}
-        showProgress={false}
-        styles={{
-          options: {
-            // arrowColor:green,
-            disableCloseOnEs: true,
-            backgroundColor: "#1a1a1a",
-            overlayColor: "#1a1a1a",
-            primaryColor: "red",
-            textColor: "#004a14",
-            width: 500,
-            zIndex: 1000,
-          },
-        }}
-      />
+      <JoyRide />
       <div id="drag-container">
         <TopNav />
         <div className="top-nav">

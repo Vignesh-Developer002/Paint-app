@@ -25,7 +25,7 @@ const BottomNav = () => {
     darkModeValue,
     setDarkModeValue,
     extraShapes,
-    tutorialClick
+    tutorialClick,
   } = useContext(globalStore);
 
   //function for handle the preview setup
@@ -57,7 +57,7 @@ const BottomNav = () => {
       style={{ backgroundColor: darkMode ? "#232628" : "#ebebeb" }}
     >
       <div className="sub-content">
-        <div className="left-side-cancel-content">
+        <div className="left-side-cancel-content" id="TopNavCancel">
           <MdOutlineCancel
             fill={cancelIconColor === "blue" ? "#1f8de3" : "black"}
             className="cancel"
@@ -107,7 +107,7 @@ const BottomNav = () => {
         </div>
       </div>
       {/* New shapes */}
-      <div className="additionalShape">
+      <div className="additionalShape" id="copyPaste">
         <div className="bottom-right-side-content">
           {extraShapes().map((d) => (
             <button
@@ -126,7 +126,6 @@ const BottomNav = () => {
         </div>
 
         <PlayTutorial />
-      
       </div>
     </div>
   );

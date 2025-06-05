@@ -107,7 +107,7 @@ const Joystick2 = () => {
   }
 
   return (
-    <Stage width={size} height={size}>
+    <Stage width={size} height={size} id="resetButton">
       <Layer>
         {/* Joystick base */}
         <Circle
