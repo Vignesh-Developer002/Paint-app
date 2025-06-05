@@ -1,0 +1,21 @@
+.toolbar-main{
+    /* border: 1px solid red; */
+    margin-bottom: -14px;
+    margin-top: -20px;
+    width: 100%;
+}
+.main-tool-title{
+    font-size: 18px;
+    text-align: start;
+    margin-bottom: 5px;
+    color: black;
+    font-weight: 600;
+}
+
+.main-para{
+    /* border: 1px solid; */
+}
+.main-content-para{
+    text-align: start;
+    font-size: 14px;
+}

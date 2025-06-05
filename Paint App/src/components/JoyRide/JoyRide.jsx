@@ -1,12 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Joyride from "react-joyride";
 
 import { globalStore } from "../../StoreContext/StoreContext.jsx";
-import step from "../TourComponent/TourSteps.jsx";
+// import step from "../TourComponent/TourSteps.jsx";
 
-const JoyRide = () => {
+const JoyRide = ({ step }) => {
   const { startTour, setStartTour } = useContext(globalStore);
-
+  const [joyRideState, setJoyRideState] = useState("");
+  console.log("joyRideState", joyRideState);
+  for (let i = 0; i < step.length; i++) {
+    console.log(step[i]["toolbarHeight"]);
+  }
   return (
     <Joyride
       steps={step}
@@ -25,15 +29,23 @@ const JoyRide = () => {
       }}
       styles={{
         options: {
-          arrowColor: "#ffffff",
-          overlayColor: "rgba(11, 11, 11, 0.45)",
-          primaryColor: "#000",
-          textColor: "#004a14",
-          width: 350,
+          arrowColor: "transperant",
+          overlayColor: "rgb(0, 0, 0)",
+          primaryColor: " #eca41a",
+          textColor: "black",
           zIndex: 1000,
+        },
+        tooltip: {
+          backgroundColor: "white",
+          height:150,
+        },
+        arrow: {
+          display: "none", // 👈 fully removes the arrow
         },
       }}
       callback={(data) => {
+        setJoyRideState(data?.action);
+        console.log(data);
         if (data?.action === "reset") {
           setStartTour(false);
         }

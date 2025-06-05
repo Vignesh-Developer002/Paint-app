@@ -1,3 +1,5 @@
+import CopyPastTour from "./CopyPastTour/CopyPastTour.JSX";
+import ToolBarMain from "./ToolBarMain/ToolBarMain";
 import ToolTour from "./ToolsTour/ToolTour";
 
 const step = [
@@ -7,18 +9,19 @@ const step = [
     placement: "left",
     disableBeacon: true,
     type: 1,
-    offset: 0,
+    toolbarHeight: 0,
+    backgroundColor: "red",
   },
   {
     target: "#copyPaste",
-    content: <ToolTour />,
+    content: <CopyPastTour />,
     placement: "right",
     disableBeacon: true,
     type: 2,
   },
   {
     target: "#icon-group",
-    content: <ToolTour />,
+    content: <ToolBarMain />,
     placement: "right",
     disableBeacon: true,
     type: 3,
@@ -37,7 +40,7 @@ const step = [
     placement: "left",
     disableBeacon: true,
     type: 5,
-    offset:0
+    offset: 0,
   },
 ];
 

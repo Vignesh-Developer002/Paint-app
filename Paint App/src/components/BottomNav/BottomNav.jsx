@@ -107,8 +107,8 @@ const BottomNav = () => {
         </div>
       </div>
       {/* New shapes */}
-      <div className="additionalShape" id="copyPaste">
-        <div className="bottom-right-side-content">
+      <div className="additionalShape">
+        <div className="bottom-right-side-content" id="copyPaste">
           {extraShapes().map((d) => (
             <button
               id={d.id}
@@ -124,7 +124,6 @@ const BottomNav = () => {
             </button>
           ))}
         </div>
-
         <PlayTutorial />
       </div>
     </div>

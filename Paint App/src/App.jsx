@@ -39,7 +39,7 @@ const App = () => {
   return (
     //  style={{backgroundColor:"#e6e6e6"}}
     <div className="app-container">
-      <JoyRide />
+      <JoyRide step={step} />
       <div id="drag-container">
         <TopNav />
         <div className="top-nav">
@@ -63,12 +63,10 @@ const App = () => {
         <MainStage />
         {/* dropDown container */}
         {tutorialClick && (
-          <div className="drop-down-container">
+          <div className="drop-down-container" onClick={() => handleChanges()}>
             <div className="tutorial-play">
               <IoMdPlay size={20} className="playlogo" />
-              <p className="PlayText" onClick={() => handleChanges()}>
-                Play tutorial
-              </p>
+              <p className="PlayText">Play tutorial</p>
             </div>
           </div>
         )}
