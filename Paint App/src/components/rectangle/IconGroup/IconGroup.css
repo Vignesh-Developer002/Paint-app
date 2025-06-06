@@ -57,3 +57,51 @@
     font-weight: 700;
     border: 1px solid #00000017;
 }
+
+/* media queries */
+
+@media(max-width:580px){
+.icon-group{
+   display: none;
+}
+
+@keyframes fadeIn {
+    0%{
+        left: -80px;
+
+    }100%{
+        left: 5px;
+        top: 95px;
+    }
+}
+
+
+.icon{
+    border: 1px solid #00000049;
+    padding: 5px ;
+    border-radius: 8px;
+    font-size: 10px;
+    cursor: pointer;
+    color: #000000a2;
+    background-color: #ffffff;
+}
+
+.bg-blue{
+    border: 1px solid #00000009;
+    padding: 5px;
+    border-radius: 8px;
+    font-size: 10px;
+    cursor: pointer;
+    color: black;
+    background-color:lightblue;
+    font-weight: 700;
+
+}
+.icon:hover{
+    background-color:#eae2e2 !important;
+    color: #ffffff;
+    font-weight: 700;
+    border: 1px solid #00000017;
+}
+
+}

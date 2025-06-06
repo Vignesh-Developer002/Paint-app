@@ -6,17 +6,18 @@ import { PiPaintBrushFill } from "react-icons/pi";
 // import { extraShapes } from "../../Actions/Action";
 import BottomNav from "../BottomNav/BottomNav";
 
+
 const TopNav = () => {
   const { stageVisible, handleExit, closeBottomNav, setCloseBottomNav } =
     useContext(globalStore);
 
   return (
     <>
-      <div className="top-container" >
+      <div className="top-container">
         <div className="top-content">
           <div className="left-head">
             <h1>Paint App</h1>{" "}
-            <span  className="glow" style={{ width: "30px", height: "30px" }}>
+            <span className="glow" style={{ width: "30px", height: "30px" }}>
               <PiPaintBrushFill fill="white" fontSize={20} />
             </span>
           </div>

@@ -7,6 +7,8 @@ import { TbBrightnessUpFilled } from "react-icons/tb";
 import { globalStore } from "../../StoreContext/StoreContext";
 import { MdNightlightRound } from "react-icons/md";
 import PlayTutorial from "../playTutorial/PlayTutorial";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { RxCross2 } from "react-icons/rx";
 
 const BottomNav = () => {
   const {
@@ -21,6 +23,9 @@ const BottomNav = () => {
     setDarkMode,
     setCloseBottomNav,
     extraShapes,
+    toggleMenu,
+    setToggleMenu,
+    shapeCollection,
   } = useContext(globalStore);
 
   //function for handle the preview setup
@@ -47,81 +52,84 @@ const BottomNav = () => {
   }, [darkMode]);
 
   return (
-    <div
-      className="bottomNav_main"
-      style={{ backgroundColor: darkMode ? "#232628" : "#ebebeb" }}
-    >
-      <div className="sub-content" id="TopNavCancel">
-        <div className="left-side-cancel-content">
-          <MdOutlineCancel
-            fill={cancelIconColor === "blue" ? "#1f8de3" : "black"}
-            className="cancel"
-            size={25}
-            title="Exit"
-            onMouseDown={() => setCancelIconColor("blue")}
-            onMouseUp={() => setCancelIconColor("")}
-            onClick={() => handleBottomNavClose()}
-          />
-          <p className="fullscreen">Full Screen</p>
-        </div>
-        <div className="left-side-prev">
-          <button
-            className="btn"
-            style={{
-              backgroundColor: preview === true ? "#3d4042" : "#ffffff",
-            }}
-            onClick={handlePreviewColor}
-          >
-            <IoMdEye
-              size={20}
-              fill={preview === true ? "#1f8de3" : "black"}
-              className="eye"
-              title="preview"
+    <>
+      {/* bootom nav */}
+      <div
+        className="bottomNav_main"
+        style={{ backgroundColor: darkMode ? "#232628" : "#ebebeb" }}
+      >
+        <div className="sub-content" id="TopNavCancel">
+          <div className="left-side-cancel-content">
+            <MdOutlineCancel
+              fill={cancelIconColor === "blue" ? "#1f8de3" : "black"}
+              className="cancel"
+              size={25}
+              title="Exit"
+              onMouseDown={() => setCancelIconColor("blue")}
+              onMouseUp={() => setCancelIconColor("")}
+              onClick={() => handleBottomNavClose()}
             />
-          </button>
-          <button
-            className="btn"
-            style={{ backgroundColor: darkMode ? "#3d4042" : "#ffffff" }}
-            onClick={() => handleDarkMode()}
-          >
-            {!darkMode && (
-              <TbBrightnessUpFilled
-                size={20}
-                fill={darkMode === true ? "#1f8de3" : "black"}
-                title="Toggle color Scheme"
-              />
-            )}
-            {darkMode && (
-              <MdNightlightRound
-                fill={darkMode === true ? "#1f8de3" : "black"}
-                size={20}
-                title="Toggle color Scheme"
-              />
-            )}
-          </button>
-        </div>
-      </div>
-      {/* New shapes */}
-      <div className="additionalShape">
-        <div className="bottom-right-side-content" id="copyPaste">
-          {extraShapes().map((d) => (
+            <p className="fullscreen">Full Screen</p>
+          </div>
+          <div className="left-side-prev">
             <button
-              id={d.id}
-              key={d.id}
-              onClick={() => handleBottomNavBtn(d.id, idName)}
-              className="bottom-icon-btn"
+              className="btn"
               style={{
-                backgroundColor: darkMode ? "#232628" : "#ffffff",
-                border: darkMode ? "1px solid #ffffff" : "none",
+                backgroundColor: preview === true ? "#3d4042" : "#ffffff",
               }}
+              onClick={handlePreviewColor}
             >
-              {d.icons}
+              <IoMdEye
+                size={18}
+                fill={preview === true ? "#1f8de3" : "black"}
+                className="eye"
+                title="preview"
+              />
             </button>
-          ))}
+            <button
+              className="btn"
+              style={{ backgroundColor: darkMode ? "#3d4042" : "#ffffff" }}
+              onClick={() => handleDarkMode()}
+            >
+              {!darkMode && (
+                <TbBrightnessUpFilled
+                  size={18}
+                  fill={darkMode === true ? "#1f8de3" : "black"}
+                  title="Toggle color Scheme"
+                />
+              )}
+              {darkMode && (
+                <MdNightlightRound
+                  fill={darkMode === true ? "#1f8de3" : "black"}
+                  size={20}
+                  title="Toggle color Scheme"
+                />
+              )}
+            </button>
+          </div>
         </div>
-        <PlayTutorial />
+        {/* New shapes */}
+        <div className="additionalShape">
+          <div className="bottom-right-side-content" id="copyPaste">
+            {extraShapes().map((d) => (
+              <button
+                id={d.id}
+                key={d.id}
+                onClick={() => handleBottomNavBtn(d.id, idName)}
+                className="bottom-icon-btn"
+                style={{
+                  backgroundColor: darkMode ? "#232628" : "#ffffff",
+                  border: darkMode ? "1px solid #ffffff" : "none",
+                }}
+              >
+                {d.icons}
+              </button>
+            ))}
+          </div>
+          <PlayTutorial />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

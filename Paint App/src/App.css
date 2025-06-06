@@ -27,7 +27,7 @@
     left: 65px;
     top:690px;
     /* bottom: 170px; */
-    z-index: 3;
+    z-index: 1;
     transition: 2s ease-in;
     animation-name: bottomToTop;
     animation-duration: 3s;
@@ -44,7 +44,7 @@
     
 }
 .zoomer-content{
-     z-index: 3;
+     z-index: 1;
 }
 
 
@@ -56,7 +56,7 @@
     width: 60%;
     position: absolute;
     /* height: 200px; */
-    z-index: 3;
+    z-index: 1;
     /* border: 1px solid lightgray; */
     border-radius: 8px;
      display: flex;
@@ -155,4 +155,175 @@ background-color: #1c91e6;
 
 .tutorial-play:hover .playlogo{
  color:#ffffff;
+}
+.small-screen-msg{
+    display: block;
+}
+ .small-screen-msg{
+    display: none;
+ }
+
+
+@media(max-width:580px){
+    .shaow-content{
+        display: none;
+    }
+    .small-screen-msg{
+        width: 100%;
+        height: 100vh;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .small-screen-center{
+        height: 300px;
+        background-color: rgb(255, 255, 255);
+        z-index: 1;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+     .small-screen-center .alert-para{
+      font-size: 20px;
+      color: grey;
+      font-weight: 500;
+     }
+
+
+}
+@media(max-width:504px){
+    .shaow-content{
+        display: none;
+    }
+    .small-screen-msg{
+        width: 100%;
+        height: 100vh;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .small-screen-center{
+        height: 300px;
+        background-color: rgb(255, 255, 255);
+        z-index: 4;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+     .small-screen-center .alert-para{
+      font-size: 17px;
+      color: grey;
+      font-weight: 500;
+     }
+     .alert-title{
+        font-size: 30px;
+     }
+
+
+}
+@media(max-width:430px){
+    .shaow-content{
+        display: none;
+    }
+    .small-screen-msg{
+        width: 100%;
+        height: 100vh;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .small-screen-center{
+        height: 300px;
+        background-color: rgb(255, 255, 255);
+        z-index: 4;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+     .small-screen-center .alert-para{
+      font-size: 15px;
+      color: grey;
+      font-weight: 400;
+     }
+     .alert-title{
+        font-size: 25px;
+     }
+}
+
+@media(max-width:374px){
+    .shaow-content{
+        display: none;
+    }
+    .small-screen-msg{
+        width: 100%;
+        height: 100vh;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .small-screen-center{
+        height: 300px;
+        background-color: rgb(255, 255, 255);
+        z-index: 4;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+     .small-screen-center .alert-para{
+      font-size: 14px;
+      color: grey;
+      font-weight: 400;
+     }
+     .alert-title{
+        font-size: 20px;
+     }
+}
+
+@media(max-width:346px){
+ .shaow-content{
+        display: none;
+    }
+    .small-screen-msg{
+        width: 100%;
+        height: 100vh;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       
+    }
+    .small-screen-center{
+        height: 300px;
+        background-color: rgb(255, 255, 255);
+        z-index: 4;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+     .small-screen-center .alert-para{
+      font-size: 14px;
+      text-align: center;
+      color: grey;
+      /* font-weight: 400; */
+     }
+     .alert-title{
+        font-size: 18px;
+     }
 }

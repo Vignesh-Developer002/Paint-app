@@ -123,6 +123,12 @@ const StoreContext = ({ children }) => {
   let wd = Math.abs(selectBox?.width);
   let ht = Math.abs(selectBox?.height);
 
+  // -------------------menu bar toggle-------------------
+
+  const [toggleMenu, setToggleMenu] = useState(false);
+
+  console.log("toggleMenu", toggleMenu);
+  //-------------------menu bar toggle end----------------
   //  preview , dark mode state variable
   const [cancelIconColor, setCancelIconColor] = useState(""); // for cancel icon
   const [eyeColor, setEyeColor] = useState(false); // for preview icon
@@ -1629,6 +1635,8 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    toggleMenu,
+    setToggleMenu,
     startTour,
     setStartTour,
     tutorialClick,

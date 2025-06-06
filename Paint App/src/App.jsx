@@ -39,75 +39,94 @@ const App = () => {
   return (
     //  style={{backgroundColor:"#e6e6e6"}}
     <div className="app-container">
-      <JoyRide step={step} />
-      <div id="drag-container">
-        <TopNav />
-        <div className="top-nav">
-          <IconGroup />
-          <RightSideShape />
-        </div>
-
-        {preview && (
-          <Draggable
-            bounds="#drag-container"
-            nodeRef={nodeRef}
-            defaultPosition={{ x: 1010, y: 120 }}
-            handle={".preview-head"}
-          >
-            <div ref={nodeRef} className="prev">
-              <Preview />
-            </div>
-          </Draggable>
-        )}
-
-        <MainStage />
-        {/* dropDown container */}
-        {tutorialClick && (
-          <div className="drop-down-container" onClick={() => handleChanges()}>
-            <div className="tutorial-play">
-              <IoMdPlay size={20} className="playlogo" />
-              <p className="PlayText">Play tutorial</p>
-            </div>
+      {/* ----------------------------------------- */}
+      <div className="shaow-content">
+        <JoyRide step={step} />
+        <div id="drag-container">
+          <TopNav />
+          <div className="top-nav">
+            <IconGroup />
+            <RightSideShape />
           </div>
-        )}
-        <div className="joystick-content">
-          <div className="zoomer-content">
-            <Joystick2 />
-            {/* --- */}
-            <div className="bottomzoom" onSelect={(e) => e.preventDefault()}>
-              <div className="main-zoom">
-                <button
-                  title="Zoom out"
-                  className="inc"
-                  disabled={inc === -200 ? true : false}
-                  onClick={() => handleZoom(false)}
-                >
-                  <FaMinus
-                    size={12}
-                    fill={inc === -200 ? "lightGrey" : "#030064"}
-                    className="incDec"
-                  />
-                </button>
-                {/* <p className="zoomlevel">{inc}%</p> */}
-                <button
-                  title="Zoom in"
-                  className="dec"
-                  disabled={inc === 500 ? true : false}
-                  onClick={() => handleZoom(true)}
-                >
-                  <FaPlus
-                    size={12}
-                    fill={inc < 500 ? "#030064" : "lightGrey"}
-                    className="incDec"
-                  />
-                </button>
+
+          {preview && (
+            <Draggable
+              bounds="#drag-container"
+              nodeRef={nodeRef}
+              defaultPosition={{ x: 1010, y: 120 }}
+              handle={".preview-head"}
+            >
+              <div ref={nodeRef} className="prev">
+                <Preview />
+              </div>
+            </Draggable>
+          )}
+
+          <MainStage />
+          {/* dropDown container */}
+          {tutorialClick && (
+            <div
+              className="drop-down-container"
+              onClick={() => handleChanges()}
+            >
+              <div className="tutorial-play">
+                <IoMdPlay size={20} className="playlogo" />
+                <p className="PlayText">Play tutorial</p>
               </div>
             </div>
-            {/* ----- */}
+          )}
+          <div className="joystick-content">
+            <div className="zoomer-content">
+              <Joystick2 />
+              {/* --- */}
+              <div className="bottomzoom" onSelect={(e) => e.preventDefault()}>
+                <div className="main-zoom">
+                  <button
+                    title="Zoom out"
+                    className="inc"
+                    disabled={inc === -200 ? true : false}
+                    onClick={() => handleZoom(false)}
+                  >
+                    <FaMinus
+                      size={12}
+                      fill={inc === -200 ? "lightGrey" : "#030064"}
+                      className="incDec"
+                    />
+                  </button>
+                  {/* <p className="zoomlevel">{inc}%</p> */}
+                  <button
+                    title="Zoom in"
+                    className="dec"
+                    disabled={inc === 500 ? true : false}
+                    onClick={() => handleZoom(true)}
+                  >
+                    <FaPlus
+                      size={12}
+                      fill={inc < 500 ? "#030064" : "lightGrey"}
+                      className="incDec"
+                    />
+                  </button>
+                </div>
+              </div>
+              {/* ----- */}
+            </div>
+          </div>
+          <Toaster />
+        </div>
+      </div>
+      {/* ----------------------------------------- */}
+      <div className="alert-main">
+        <TopNav />
+        <div className="small-screen-msg">
+          <div className="small-screen-center">
+            <h1 className="alert-title">Screen size too small.</h1>
+            <p className="alert-para">
+              A bigger screen is required to use this application
+            </p>
           </div>
         </div>
-        <Toaster />
       </div>
+      {/* ------------------------------------------ */}
     </div>
   );
 };
