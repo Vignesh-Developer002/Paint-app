@@ -35,7 +35,7 @@ const TopNav = () => {
                 className="menu-show-btn"
                 onClick={() => setCloseBottomNav(true)}
               >
-                <button>Open Menu</button>
+                <button>Open Tool</button>
               </div>
             )}
           </div>

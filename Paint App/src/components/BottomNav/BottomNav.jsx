@@ -14,18 +14,13 @@ const BottomNav = () => {
     idName,
     preview,
     setPreview,
-    handlePreviwImage,
     cancelIconColor,
     setCancelIconColor,
-    eyeColor,
     setEyeColor,
     darkMode,
     setDarkMode,
     setCloseBottomNav,
-    darkModeValue,
-    setDarkModeValue,
     extraShapes,
-    tutorialClick,
   } = useContext(globalStore);
 
   //function for handle the preview setup
@@ -56,8 +51,8 @@ const BottomNav = () => {
       className="bottomNav_main"
       style={{ backgroundColor: darkMode ? "#232628" : "#ebebeb" }}
     >
-      <div className="sub-content">
-        <div className="left-side-cancel-content" id="TopNavCancel">
+      <div className="sub-content" id="TopNavCancel">
+        <div className="left-side-cancel-content">
           <MdOutlineCancel
             fill={cancelIconColor === "blue" ? "#1f8de3" : "black"}
             className="cancel"

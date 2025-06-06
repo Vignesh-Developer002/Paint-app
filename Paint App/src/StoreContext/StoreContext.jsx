@@ -324,7 +324,6 @@ const StoreContext = ({ children }) => {
     } else if (btn === "horizontal" && down === true) {
       HorizontalFlip();
       setOppositeAngle(getOppHorizontalAngle(angle));
-      console.log("horizontal is clicked");
       if (idName.Name === "rectangle") {
         if (isHorizontalFlip === true) {
           setDrawing((prev) =>
@@ -882,8 +881,6 @@ const StoreContext = ({ children }) => {
       );
     }
   }, [currentValue]);
-
-  console.log("startTour", startTour);
 
   // function for handle the perticular shape click
   function handleSelect(id, name) {

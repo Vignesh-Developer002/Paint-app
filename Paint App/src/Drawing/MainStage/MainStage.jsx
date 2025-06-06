@@ -20,14 +20,9 @@ const MainStage = () => {
     transformUnSelect,
     handleCircleWheel,
     stageVisible,
-    position,
     joystickBtnClick,
-    setJoystickBtnClick,
     offset,
-    setOffset,
-    scale,
     shape,
-    setShape,
     darkMode,
     tutorialClick,
   } = useContext(globalStore);
@@ -52,7 +47,14 @@ const MainStage = () => {
         }} */}
       {stageVisible === false ? (
         <Stage
-          style={{ backgroundColor: darkMode ? "#181a1b" :tutorialClick?"#06060629": "white" , transition:"background .3s ease-in"}}
+          style={{
+            backgroundColor: darkMode
+              ? "#181a1b"
+              : tutorialClick
+              ? "#06060629"
+              : "white",
+            transition: "background .3s ease-in",
+          }}
           x={offset.x}
           y={offset.y}
           id="stageClass"

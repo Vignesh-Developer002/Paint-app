@@ -8,16 +8,15 @@ import { Stage, Layer, Rect, Circle, Line } from "react-konva";
 
 const Preview = () => {
   const {
-    previewImage,
     btnName,
     drawCircle,
     drawing,
     drawPolygon,
     drawScribble,
     drawLine,
-    showSingleRec,
-    drawText,
     darkMode,
+    handleCircleWheel,
+    stageRef,
   } = useContext(globalStore);
   const [preTime, setPreTime] = useState(false);
   const { setPreview, preview } = useContext(globalStore);
@@ -34,8 +33,7 @@ const Preview = () => {
     }, 1000);
   }, [preTime === true]);
 
-
-  // function for set the dark mode to 
+  // function for set the dark mode to
   return (
     <div
       className="preview-container"
@@ -66,7 +64,14 @@ const Preview = () => {
         {preTime === false && (
           <div className="pre-img">
             {/* style={{ border: "1px solid" }} */}
-            <Stage scaleX={0.5} scaleY={0.5} width={500} height={475}>
+            <Stage
+              ref={stageRef}
+              scaleX={0.5}
+              scaleY={0.5}
+              width={500}
+              height={475}
+              onWheel={(e) => handleCircleWheel(e)}
+            >
               <Layer>
                 {/* Circle */}
                 {Array.isArray(drawCircle) &&
