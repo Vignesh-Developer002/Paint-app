@@ -124,3 +124,13 @@
    background-color:rgba(57, 55, 55, 0.149);
     color: #ffffff;
 }
+
+
+/* -------------new input----------------------- */
+.input-content{
+    border: 2px solid white;
+    padding: 5px 10px;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}

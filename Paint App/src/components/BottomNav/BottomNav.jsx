@@ -111,10 +111,10 @@ const BottomNav = () => {
         {/* New shapes */}
         <div className="additionalShape">
           <div className="bottom-right-side-content" id="copyPaste">
-            {extraShapes().map((d) => (
+            {extraShapes().map((d, idx) => (
               <button
                 id={d.id}
-                key={d.id}
+                key={idx}
                 onClick={() => handleBottomNavBtn(d.id, idName)}
                 className="bottom-icon-btn"
                 style={{

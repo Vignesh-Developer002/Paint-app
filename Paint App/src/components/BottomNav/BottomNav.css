@@ -66,7 +66,7 @@
     display: flex;
     gap: 12px;
     align-items: center;
-    max-width: 350px;
+    max-width: 450px;
     width: 100%;
     /* border: 1px solid red; */
     justify-content:space-between;
@@ -96,7 +96,7 @@
 
 /* media queries */
 
-@media(max-width:704px){
+@media(max-width:800px){
 .bottomNav_main{
     position: fixed;
     width: 100%;
@@ -109,7 +109,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px 10px 20px ;
+    padding: 10px 20px 10px 10px ;
     transition: top 2s ease-in;
     animation:  fade 1s  ;
 }
@@ -117,7 +117,7 @@
 .sub-content{
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 20px;
     /* padding: 10px 20px; */
     /* border: 1px solid; */
 }
@@ -165,7 +165,7 @@
     display: flex;
     gap: 15px;
     align-items: center;
-    max-width: 330px;
+    max-width: 400px;
     width: 100%;
     /* border: 1px solid red; */
     justify-content:space-between;
@@ -190,7 +190,7 @@
 }
 }
 
-@media(max-width:638px){
+@media(max-width:704px){
 .bottomNav_main{
     position: fixed;
     width: 100%;
@@ -211,7 +211,101 @@
 .sub-content{
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 15px;
+    /* padding: 10px 20px; */
+    /* border: 1px solid; */
+}
+.left-side-cancel-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.cancel{
+    cursor: pointer;
+    z-index: 1;
+    user-select: none;
+}
+
+.cancelBlue{
+    cursor: pointer;
+     z-index: 1;
+     user-select: none;
+}
+.fullscreen{
+    color: #96a1b2;
+    display: inline-block;
+}
+.btn,.bottom-icon-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    /* background-color:#ffffff; */
+    border:none;
+    border-radius: 5px;
+    z-index: 1
+    /* cursor: pointer; */
+}
+.left-side-prev{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* additional shape  */
+.additionalShape{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    max-width: 400px;
+    width: 100%;
+    /* border: 1px solid red; */
+    justify-content:space-between;
+}
+
+.bottom-right-side-content{
+     display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+@keyframes fade {
+    0%{
+        opacity: 0;
+       top:0px
+    }100%{
+        opacity: 1;
+          top: 60px;
+        /* transform: translateY(20px); */
+        /* top: 65px */
+    }
+}
+}
+
+@media(max-width:678px){
+.bottomNav_main{
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    /* border:1px solid rgba(0, 0, 0, 0.184); */
+    /* background-color: #ebebeb; */
+    z-index: 1;
+    /* top: 0px; */
+    top: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5px 10px 5px ;
+    transition: top 2s ease-in;
+    animation:  fade 1s  ;
+}
+
+.sub-content{
+    display: flex;
+    align-items: center;
+    gap: 9px;
     /* padding: 10px 20px; */
     /* border: 1px solid; */
 }
@@ -257,9 +351,9 @@
 /* additional shape  */
 .additionalShape{
     display: flex;
-    gap: 15px;
+    gap: 10px;
     align-items: center;
-    max-width: 300px;
+    max-width: 400px;
     width: 100%;
     /* border: 1px solid red; */
     justify-content:space-between;
@@ -284,7 +378,7 @@
 }
 }
 
-@media(max-width:580px){
+@media(max-width:662px){
 .bottomNav_main{
     display: none;
 }

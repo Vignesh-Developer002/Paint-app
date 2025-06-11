@@ -21,6 +21,8 @@ import { FaCopy } from "react-icons/fa";
 import { FaPaste } from "react-icons/fa";
 import { PiFlipVerticalThin } from "react-icons/pi";
 import { PiFlipHorizontalThin } from "react-icons/pi";
+import { MdUndo } from "react-icons/md";
+import { MdRedo } from "react-icons/md";
 
 export const globalStore = createContext();
 const StoreContext = ({ children }) => {
@@ -131,7 +133,6 @@ const StoreContext = ({ children }) => {
 
   const [toggleMenu, setToggleMenu] = useState(false);
 
-  console.log("toggleMenu", toggleMenu);
   //-------------------menu bar toggle end----------------
   //  preview , dark mode state variable
   const [cancelIconColor, setCancelIconColor] = useState(""); // for cancel icon
@@ -580,6 +581,39 @@ const StoreContext = ({ children }) => {
       //     />
       //   ),
       // },
+
+      {
+        id: actions.undo,
+        icons: (
+          <MdUndo
+            title="undo"
+            fill={darkMode ? "#ada69c" : "#5d5d5d"}
+            style={{
+              width: "80%",
+              height: "80%",
+              border: "none",
+              fontSize: "20px",
+              outline: "none",
+            }}
+          />
+        ),
+      },
+      {
+        id: actions.undo,
+        icons: (
+          <MdRedo
+            title="Redo"
+            fill={darkMode ? "#ada69c" : "#5d5d5d"}
+            style={{
+              width: "80%",
+              height: "80%",
+              border: "none",
+              fontSize: "20px",
+              outline: "none",
+            }}
+          />
+        ),
+      },
       {
         id: actions.copy,
         icons: (
@@ -648,6 +682,10 @@ const StoreContext = ({ children }) => {
     return extraShapes;
   }
   // -----------------------------------------------------------------------------------
+
+  // ----------------------------------undo-redo----------------------------------------
+
+  // ------------------------------------------------------------------------------------
 
   // -----------------------------tutorial dropdown start---------------------------------------
   const [tutorialClick, setTutorialClick] = useState(false); // for toggle the tutorial container
@@ -893,6 +931,7 @@ const StoreContext = ({ children }) => {
   }, [currentValue]);
 
   // function for handle the perticular shape click
+  const [rad, setRad] = useState(0);
   function handleSelect(id, name) {
     if (name === "rectangle" || name === "rectangle3") {
       if (
@@ -1187,7 +1226,6 @@ const StoreContext = ({ children }) => {
   // function for clearing all the shapes
   //  setDrawing,setDrawCircle,setDrawScribble, setDrawLine,setDrawPolygon,setDrawText,setShowGroup
   function handleClear(Shapeid) {
-    console.log("inside function", Shapeid);
     if (Shapeid?.Name === "circle") {
       setDrawCircle((prev) => prev.filter((d) => d.id !== Shapeid?.id));
       setIdName({ id: "", Name: "" });
@@ -1663,9 +1701,41 @@ const StoreContext = ({ children }) => {
     localStorage.removeItem("singleRectColor");
   }
 
+  // ---------------------------------input scrubbing-------------------------------------
+  // const [value, setValue] = useState(0);
+  // const isDragging = useRef(false);
+  // const startX = useRef(0);
+  // const startValue = useRef(0);
+
+  // console.log("value", value);
+
+  // const handleMouseDown = (e) => {
+  //   console.log("mouseDown happens");
+  //   isDragging.current = true;
+  //   startX.current = e.clientX;
+  //   startValue.current = value;
+
+  //   document.addEventListener("mousemove", handleMouseMove);
+  //   document.addEventListener("mouseup", handleMouseUp);
+  // };
+
+  // const handleMouseMove = (e) => {
+  //   if (!isDragging.current) return;
+
+  //   const deltaX = e.clientX - startX.current;
+  //   const sensitivity = 0.5; // adjust for faster/slower scrubbing
+  //   const newValue = Math.round(startValue.current + deltaX * sensitivity);
+  //   setValue(newValue);
+  // };
+
+  // const handleMouseUp = () => {
+  //   isDragging.current = false;
+  //   document.removeEventListener("mousemove", handleMouseMove);
+  //   document.removeEventListener("mouseup", handleMouseUp);
+  // };
+
   const contextValue = {
-    float,
-    setFloat,
+    // handleMouseDown,
     toggleMenu,
     setToggleMenu,
     startTour,

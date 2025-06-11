@@ -7,9 +7,8 @@ import { globalStore } from "../../StoreContext/StoreContext.jsx";
 const JoyRide = ({ step }) => {
   const { startTour, setStartTour } = useContext(globalStore);
   const [joyRideState, setJoyRideState] = useState("");
-  console.log("joyRideState", joyRideState);
   for (let i = 0; i < step.length; i++) {
-    console.log(step[i]["toolbarHeight"]);
+
   }
   return (
     <Joyride

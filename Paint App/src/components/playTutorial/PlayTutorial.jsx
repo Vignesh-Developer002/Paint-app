@@ -13,8 +13,6 @@ const PlayTutorial = () => {
     console.log("click");
     setTutorialClick((prev) => !prev);
   }
-
-  console.log("tutorial click", tutorialClick);
   return (
     <>
       {" "}
