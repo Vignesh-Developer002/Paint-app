@@ -1223,6 +1223,7 @@ const StoreContext = ({ children }) => {
     }
   }
 
+
   // polygon circle onClick
   function handleAnchorClick() {
     if (polygons["points"].length > 4) {
