@@ -14,6 +14,9 @@ const IconGroup = () => {
     darkMode,
     shapeCollection,
     tutorialClick,
+    idName,
+    float,
+    setFloat,
   } = useContext(globalStore);
 
   //function for findinfd the name of the perticular clicked button
@@ -37,7 +40,8 @@ const IconGroup = () => {
       setBtn("grab");
     }
     if (id === "clear") {
-      handleClear();
+      console.log("idName", idName);
+      handleClear(idName);
     }
     if (id === "image") {
       setCurrentShape(id);
@@ -45,30 +49,32 @@ const IconGroup = () => {
   }
 
   return (
-    <div
-      className="icon-group"
-      id="icon-group"
-      style={{
-        backgroundColor: darkMode
-          ? "#232628"
-          : tutorialClick
-          ? "#06060629"
-          : "#ebebeb",
-      }}
-    >
-      {shapeCollection().map((icon, idx) => (
-        <button
-          // #ffffff
-          style={{ backgroundColor: darkMode ? "#181a1b" : "" }}
-          id="btn"
-          key={idx}
-          className={btnName === icon.id ? "bg-blue" : "icon"}
-          onClick={(e) => handleAction(icon.id, e)}
-        >
-          {icon.icons}
-        </button>
-      ))}
-    </div>
+    <>
+      <div
+        className="icon-group"
+        id="icon-group"
+        style={{
+          backgroundColor: darkMode
+            ? "#232628"
+            : tutorialClick
+            ? "#06060629"
+            : "#ebebeb",
+        }}
+      >
+        {shapeCollection().map((icon, idx) => (
+          <button
+            // #ffffff
+            style={{ backgroundColor: darkMode ? "#181a1b" : "" }}
+            id="btn"
+            key={idx}
+            className={btnName === icon.id ? "bg-blue" : "icon"}
+            onClick={(e) => handleAction(icon.id, e)}
+          >
+            {icon.icons}
+          </button>
+        ))}
+      </div>
+    </>
   );
 };
 

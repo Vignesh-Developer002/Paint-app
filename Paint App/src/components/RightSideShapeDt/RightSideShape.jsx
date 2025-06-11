@@ -189,14 +189,17 @@ const RightSideShape = () => {
 
                   {(idName.Name === "circle" && btnName !== "image") ||
                   idName.Name === "circle3" ? (
+                    // <div className="circle-radius">
+                    //   <p> Radius :</p>
+                    //   <input
+                    //     type="number"
+                    //     name="radius"
+                    //     value={sideBar.radius}
+                    //     onChange={(e) => handleInputValue(e)}
+                    //   />
+                    // </div>
                     <div className="circle-radius">
                       <p> Radius :</p>
-                      <input
-                        type="number"
-                        name="radius"
-                        value={sideBar.radius}
-                        onChange={(e) => handleInputValue(e)}
-                      />
                     </div>
                   ) : (
                     <></>
@@ -351,3 +354,77 @@ const RightSideShape = () => {
 };
 
 export default RightSideShape;
+
+{
+  /*
+  import React, { useState, useRef } from "react";
+
+const DragAdjustableInput = () => {
+  const [value, setValue] = useState(50);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+
+  const handleMouseDown = (e) => {
+    isDragging.current = true;
+    startX.current = e.clientX;
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging.current) return;
+
+    const deltaX = e.clientX - startX.current;
+    if (Math.abs(deltaX) >= 5) {
+      setValue((prev) => Math.max(0, prev + Math.floor(deltaX / 5)));
+      startX.current = e.clientX; // reset reference point
+    }
+  };
+
+  const handleMouseUp = () => {
+    isDragging.current = false;
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleInputChange = (e) => {
+    const newValue = parseInt(e.target.value);
+    if (!isNaN(newValue)) {
+      setValue(newValue);
+    }
+  };
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "20px" }}>
+      <input
+        type="number"
+        value={value}
+        onChange={handleInputChange}
+        style={{ width: "60px" }}
+      />
+      <div
+        onMouseDown={handleMouseDown}
+        style={{
+          width: "30px",
+          height: "30px",
+          background: "#888",
+          borderRadius: "4px",
+          cursor: "ew-resize",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#fff",
+          userSelect: "none"
+        }}
+        title="Drag to adjust value"
+      >
+        ⇄
+      </div>
+    </div>
+  );
+};
+
+export default DragAdjustableInput;
+ */
+}

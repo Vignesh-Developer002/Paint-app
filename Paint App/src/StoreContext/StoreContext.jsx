@@ -61,6 +61,7 @@ const StoreContext = ({ children }) => {
   let rectRef = useRef(null); // single rect inside circles shape
   let cirRef = useRef(null); // single rect inside cirRef shape
   let lineRef = useRef(null); // // single rect inside line shape
+  const [float, setFloat] = useState(false); // for display the float right side delete
   const [listern, setListern] = useState("");
   let [Stage2ShapeColor, setStage2ShapeColor] = useState(true);
   let [stage2PolyClosed, setStage2PolygonClosed] = useState(false); // for tracking the  stage 2 polygon is closed
@@ -86,6 +87,9 @@ const StoreContext = ({ children }) => {
   const [drawsingleRect, setDrawSingleRect] = useState({}); // object for store the initial value
   const [showSingleRect, setShowSingleRect] = useState([]); // array for push the object
   const [currentlyDrawnShap, setCurrentlyDrawnShape] = useState({}); // rectangles
+
+  // drawing , drawCircle, drawScribble,drawLine,drawPolygon,drawText,ShowGroup
+  // setDrawing,setDrawCircle,setDrawScribble, setDrawLine,setDrawPolygon,setDrawText,setShowGroup
   const [drawing, setDrawing] = useState([]); // rectangle
   const [draggable, setDraggable] = useState(false);
   const [currentlyDrawnCircle, setCurrentlyDrawnCircle] = useState({}); //circle
@@ -486,7 +490,7 @@ const StoreContext = ({ children }) => {
         icons: (
           <Clear
             data-tooltip-id="color"
-            data-tooltip-content="Reset the canvas"
+            data-tooltip-content="Delete"
             data-tooltip-place="right"
             style={{
               color: darkMode ? "#ada69c" : "#5d5d5d",
@@ -1181,20 +1185,45 @@ const StoreContext = ({ children }) => {
   }, [image]);
 
   // function for clearing all the shapes
-  function handleClear() {
-    setDrawing([]);
-    setDrawCircle([]);
-    setDrawScribble([]);
-    setDrawLine([]);
-    setDrawPolygon([]);
-    setImages([]);
-    setDrawText([]);
-    setShowGroup([]);
-    setShowSingleRect([]);
-    setShowObRect([]);
-    setShowObCirlce([]);
-    setShowObLine([]);
-    setShowObpoly([]);
+  //  setDrawing,setDrawCircle,setDrawScribble, setDrawLine,setDrawPolygon,setDrawText,setShowGroup
+  function handleClear(Shapeid) {
+    console.log("inside function", Shapeid);
+    if (Shapeid?.Name === "circle") {
+      setDrawCircle((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setIdName({ id: "", Name: "" });
+    } else if (Shapeid?.Name === "rectangle") {
+      setDrawing((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setIdName({ id: "", Name: "" });
+    } else if (Shapeid?.Name === "scrible") {
+      setDrawScribble((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setIdName({ id: "", Name: "" });
+    } else if (Shapeid?.Name === "line") {
+      setDrawLine((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setIdName({ id: "", Name: "" });
+    } else if (Shapeid?.Name === "polygon") {
+      setDrawPolygon((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setIdName({ id: "", Name: "" });
+    } else if (Shapeid?.Name === "text") {
+      setDrawText((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setIdName({ id: "", Name: "" });
+    } else if (Shapeid?.Name === "group") {
+      setShowGroup((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setIdName({ id: "", Name: "" });
+    } else if (idName?.Name.length === 0 && idName.id.length === 0) {
+      setDrawing([]);
+      setDrawCircle([]);
+      setDrawScribble([]);
+      setDrawLine([]);
+      setDrawPolygon([]);
+      setImages([]);
+      setDrawText([]);
+      setShowGroup([]);
+      setShowSingleRect([]);
+      setShowObRect([]);
+      setShowObCirlce([]);
+      setShowObLine([]);
+      setShowObpoly([]);
+    }
   }
 
   // function for handle the transformer mouse down in shape components
@@ -1222,7 +1251,6 @@ const StoreContext = ({ children }) => {
       return;
     }
   }
-
 
   // polygon circle onClick
   function handleAnchorClick() {
@@ -1636,6 +1664,8 @@ const StoreContext = ({ children }) => {
   }
 
   const contextValue = {
+    float,
+    setFloat,
     toggleMenu,
     setToggleMenu,
     startTour,
