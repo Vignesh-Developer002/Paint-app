@@ -1723,6 +1723,8 @@ const StoreContext = ({ children }) => {
   const [history, setHistory] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
 
+  console.log("redostack length", redoStack.length);
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       const isCtrlOrCmd = e.ctrlKey || e.metaKey;
@@ -1803,6 +1805,7 @@ const StoreContext = ({ children }) => {
 
   const contextValue = {
     // handleMouseDown,
+    redoStack,
     shapes,
     setShapes,
     handleUndo,
