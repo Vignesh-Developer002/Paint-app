@@ -257,7 +257,6 @@ const StoreContext = ({ children }) => {
     setCopiedShape(shape);
   }
 
-
   function handleBottomNavBtn(btn, name) {
     const { Name, id } = name;
     if (btn === "copy" && down === true) {
@@ -322,13 +321,13 @@ const StoreContext = ({ children }) => {
       setOppositeAngle(getOppositeAngle(angle));
       if (idName.Name === "rectangle") {
         if (isFlipped === true) {
-          setDrawing((prev) =>
+          setShapes((prev) =>
             prev.map((r) =>
               r.id === id ? { ...r, rotation: oppositAngle } : r
             )
           );
         } else {
-          setDrawing((prev) =>
+          setShapes((prev) =>
             prev.map((r) => (r.id === id ? { ...r, rotation: angle } : r))
           );
         }
@@ -338,13 +337,13 @@ const StoreContext = ({ children }) => {
       setOppositeAngle(getOppHorizontalAngle(angle));
       if (idName.Name === "rectangle") {
         if (isHorizontalFlip === true) {
-          setDrawing((prev) =>
+          setShapes((prev) =>
             prev.map((r) =>
               r.id === id ? { ...r, rotation: oppositAngle } : r
             )
           );
         } else {
-          setDrawing((prev) =>
+          setShapes((prev) =>
             prev.map((r) => (r.id === id ? { ...r, rotation: angle } : r))
           );
         }
@@ -588,11 +587,11 @@ const StoreContext = ({ children }) => {
         icons: (
           <MdUndo
             onClick={() => handleUndo()}
-            title="undo"
+            title="undo(Ctrl+Z)"
             fill={darkMode ? "#ada69c" : "#5d5d5d"}
             style={{
-              width: "80%",
-              height: "80%",
+              width: "90%",
+              height: "90%",
               border: "none",
               fontSize: "20px",
               outline: "none",
@@ -604,12 +603,12 @@ const StoreContext = ({ children }) => {
         id: actions.undo,
         icons: (
           <MdRedo
-            title="Redo"
+            title="Redo(Ctrl+Y or Ctrl+shift+Z)"
             onClick={() => handleRedo()}
             fill={darkMode ? "#ada69c" : "#5d5d5d"}
             style={{
-              width: "80%",
-              height: "80%",
+              width: "90%",
+              height: "90%",
               border: "none",
               fontSize: "20px",
               outline: "none",
@@ -773,7 +772,7 @@ const StoreContext = ({ children }) => {
   useEffect(() => {
     if (names === "rectangle" || names === "rectangle3") {
       if (drawing.length !== 0 && Stage2ShapeColor) {
-        setDrawing((prev) =>
+        setShapes((prev) =>
           prev.map((d) =>
             d.id === ids
               ? {
@@ -805,7 +804,7 @@ const StoreContext = ({ children }) => {
       }
     } else if (names === "circle" || names === "circle3") {
       if (drawCircle.length !== 0 && Stage2ShapeColor) {
-        setDrawCircle((prev) =>
+        setShapes((prev) =>
           prev.map((d) =>
             d.id === ids
               ? {
@@ -834,7 +833,7 @@ const StoreContext = ({ children }) => {
         );
       }
     } else if (names === "scrible") {
-      setDrawScribble((prev) =>
+      setShapes((prev) =>
         prev.map((d) =>
           d.id === ids
             ? {
@@ -848,7 +847,7 @@ const StoreContext = ({ children }) => {
       );
     } else if (names === "line" || names === "line3") {
       if (drawLine.length !== 0 && Stage2ShapeColor) {
-        setDrawLine((prev) =>
+        setShapes((prev) =>
           prev.map((d) =>
             d.id === ids
               ? {
@@ -871,7 +870,7 @@ const StoreContext = ({ children }) => {
       }
     } else if (names === "polygon" || names === "polygon3") {
       if (drawPolygon.length !== 0 && Stage2ShapeColor) {
-        setDrawPolygon((prev) =>
+        setShapes((prev) =>
           prev.map((d) =>
             d.id === ids
               ? { ...d, strokeWidth: strokeWidth, stroke: stroke, fill: fill }
@@ -901,7 +900,7 @@ const StoreContext = ({ children }) => {
         )
       );
     } else if (names === "text") {
-      setDrawText((prev) =>
+      setShapes((prev) =>
         prev.map((d) =>
           d.id === ids
             ? {
@@ -916,7 +915,7 @@ const StoreContext = ({ children }) => {
         )
       );
     } else if (names === "group") {
-      setShowGroup((prev) =>
+      setShapes((prev) =>
         prev.map((d) =>
           d.id === ids
             ? {
@@ -1227,7 +1226,6 @@ const StoreContext = ({ children }) => {
       ]);
     }
   }, [image]);
-
 
   // function for clearing all the shapes
   //  setDrawing,setDrawCircle,setDrawScribble, setDrawLine,setDrawPolygon,setDrawText,setShowGroup
@@ -1725,7 +1723,27 @@ const StoreContext = ({ children }) => {
   const [history, setHistory] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
 
- 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const isCtrlOrCmd = e.ctrlKey || e.metaKey;
+
+      if (isCtrlOrCmd && e.key === "z") {
+        e.preventDefault();
+        handleUndo();
+      }
+
+      if (
+        (isCtrlOrCmd && e.key === "y") ||
+        (isCtrlOrCmd && e.shiftKey && e.key === "Z")
+      ) {
+        e.preventDefault();
+        handleRedo();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [shapes, history, redoStack]);
 
   const addShape = (newShape) => {
     setHistory([...history, shapes]);
@@ -1748,7 +1766,6 @@ const StoreContext = ({ children }) => {
     setShapes(next);
     setRedoStack(redoStack.slice(1));
   };
-
 
   // -----------------------------------------------------------------------------------------
   // ---------------------------------input scrubbing-------------------------------------
