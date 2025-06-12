@@ -257,7 +257,7 @@ const StoreContext = ({ children }) => {
     setCopiedShape(shape);
   }
 
-  
+
   function handleBottomNavBtn(btn, name) {
     const { Name, id } = name;
     if (btn === "copy" && down === true) {
@@ -1725,17 +1725,15 @@ const StoreContext = ({ children }) => {
   const [history, setHistory] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
 
-  console.log("shapes", shapes, "history", history, "redoStack", redoStack);
+ 
 
   const addShape = (newShape) => {
-    console.log("shapes", newShape);
     setHistory([...history, shapes]);
     setRedoStack([]); // clear redo when new action happens
     setShapes([...shapes, newShape]);
   };
 
   const handleUndo = () => {
-    console.log("undo clicked");
     if (history.length === 0) return;
     const prev = history[history.length - 1];
     setRedoStack([shapes, ...redoStack]);
@@ -1744,20 +1742,13 @@ const StoreContext = ({ children }) => {
   };
 
   const handleRedo = () => {
-    console.log("redo click");
     if (redoStack.length === 0) return;
-
     const next = redoStack[0];
     setHistory([...history, shapes]);
     setShapes(next);
     setRedoStack(redoStack.slice(1));
   };
 
-  // rectangle
-  // circle
-  // scrible
-  // text
-  // line
 
   // -----------------------------------------------------------------------------------------
   // ---------------------------------input scrubbing-------------------------------------

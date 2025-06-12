@@ -7,7 +7,6 @@ const ShowText = () => {
     useContext(globalStore);
 
   let res = shapes.filter((d) => d.name === "text");
-  console.log("text", res);
   return (
     <>
       {Array.isArray(res) &&

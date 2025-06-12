@@ -20,6 +20,7 @@ const ShowRectangle = () => {
   } = useContext(globalStore);
 
   let res = shapes.filter((d) => d.name === "rectangle");
+  
   // function for handle rectangle drag
   function handleRectDrag(e, id) {
     let x = e.target.x();

@@ -6,7 +6,7 @@ const ShowGroup = () => {
   const { ShowGroup, handleTransformetMouseDown, shapes } =
     useContext(globalStore);
   let res = shapes.filter((d) => d.name === "group");
-  console.log("group", res);
+
   return (
     <>
       {Array.isArray(res) &&

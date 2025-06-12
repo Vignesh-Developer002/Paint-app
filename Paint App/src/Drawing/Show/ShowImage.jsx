@@ -7,7 +7,6 @@ const ShowImage = () => {
     useContext(globalStore);
 
   let res = shapes.filter((d) => d.name === "image");
-  console.log("images", res);
 
   return (
     <>

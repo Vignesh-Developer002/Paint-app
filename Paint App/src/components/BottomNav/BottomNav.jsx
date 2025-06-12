@@ -47,7 +47,6 @@ const BottomNav = () => {
 
   // useEffect for set the darkmode state
   useEffect(() => {
-    console.log("useEffect runs local storage value setted");
     localStorage.setItem("darkmode", JSON.stringify(darkMode));
   }, [darkMode]);
 

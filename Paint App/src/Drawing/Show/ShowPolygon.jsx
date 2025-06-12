@@ -14,7 +14,6 @@ const ShowPolygon = () => {
   } = useContext(globalStore);
 
   let res = shapes.filter((d) => d.name === "polygon");
-  console.log("polygon", res);
   function handlePolygonDrag(e, id) {
     let x = e.target.x();
     let y = e.target.y();

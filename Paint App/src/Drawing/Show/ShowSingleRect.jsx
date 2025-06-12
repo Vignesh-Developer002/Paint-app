@@ -18,7 +18,7 @@ const ShowSingleRect = () => {
   const [drag, setDrag] = useState(false);
 
   let res = shapes.filter((d) => d.name === "rectLayer");
-  console.log("rectLayer", res);
+
   function handleSingleRectDrag(e, id) {
     setDrag(true);
     let x = e.target.x();
