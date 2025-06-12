@@ -3,12 +3,14 @@ import { globalStore } from "../../StoreContext/StoreContext";
 import { Group, Rect, Line, Circle } from "react-konva";
 
 const ShowGroup = () => {
-  const { ShowGroup,  handleTransformetMouseDown } =
+  const { ShowGroup, handleTransformetMouseDown, shapes } =
     useContext(globalStore);
+  let res = shapes.filter((d) => d.name === "group");
+  console.log("group", res);
   return (
     <>
-      {Array.isArray(ShowGroup) &&
-        ShowGroup.map((d) => (
+      {Array.isArray(res) &&
+        res.map((d) => (
           <Group
             x={0}
             y={0}

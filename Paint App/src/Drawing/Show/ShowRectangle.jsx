@@ -16,8 +16,10 @@ const ShowRectangle = () => {
     oppositAngle,
     xy,
     setXy,
+    shapes,
   } = useContext(globalStore);
 
+  let res = shapes.filter((d) => d.name === "rectangle");
   // function for handle rectangle drag
   function handleRectDrag(e, id) {
     let x = e.target.x();
@@ -44,8 +46,8 @@ const ShowRectangle = () => {
 
   return (
     <>
-      {Array.isArray(drawing) &&
-        drawing.map((r, idx) => {
+      {Array.isArray(res) &&
+        res.map((r, idx) => {
           return (
             <Rect
               key={idx}
@@ -70,4 +72,3 @@ const ShowRectangle = () => {
 };
 
 export default ShowRectangle;
-

@@ -4,18 +4,16 @@ import { Line } from "react-konva";
 import { globalStore } from "../../StoreContext/StoreContext";
 
 const ShowLine = () => {
-  const {
-    handleTransformetMouseDown,
-    drawLine,
-    setDrawLine,
-   
-  } = useContext(globalStore);
+  const { handleTransformetMouseDown, drawLine, setDrawLine, shapes } =
+    useContext(globalStore);
+
+  let res = shapes.filter((d) => d.name === "line");
 
   function handleDrag(e, id) {
     let x = e.target.x();
     let y = e.target.y();
     setDrawLine((prev) =>
-      prev.map((l) => (l.id === id ? { ...l, x:x, y:y } : l))
+      prev.map((l) => (l.id === id ? { ...l, x: x, y: y } : l))
     );
   }
 
@@ -32,8 +30,8 @@ const ShowLine = () => {
 
   return (
     <>
-      {Array.isArray(drawLine) &&
-        drawLine.map((l, idx) => (
+      {Array.isArray(res) &&
+        res.map((l, idx) => (
           <Line
             x={l?.x}
             y={l?.y}

@@ -3,11 +3,15 @@ import { globalStore } from "../../StoreContext/StoreContext";
 import { Text } from "react-konva";
 
 const ShowText = () => {
-  const { drawText, handleTransformetMouseDown } = useContext(globalStore);
+  const { drawText, handleTransformetMouseDown, shapes } =
+    useContext(globalStore);
+
+  let res = shapes.filter((d) => d.name === "text");
+  console.log("text", res);
   return (
     <>
-      {Array.isArray(drawText) &&
-        drawText.map((d) => (
+      {Array.isArray(res) &&
+        res.map((d) => (
           <Text
             key={d.id}
             x={d?.x}

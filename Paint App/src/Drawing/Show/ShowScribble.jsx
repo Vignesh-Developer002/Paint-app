@@ -8,7 +8,10 @@ const ShowScribble = () => {
     handleTransformetMouseDown,
     setDrawScribble,
     btnName,
+    shapes,
   } = useContext(globalStore);
+
+  let res = shapes.filter((d) => d.name === "scrible");
 
   function handleRectDrag(e, id) {
     const x = e.target.x();
@@ -31,8 +34,8 @@ const ShowScribble = () => {
 
   return (
     <>
-      {Array.isArray(drawScribble) &&
-        drawScribble.map((d, idx) => (
+      {Array.isArray(res) &&
+        res.map((d, idx) => (
           <Line
             x={d?.x}
             y={d?.y}

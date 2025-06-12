@@ -9,7 +9,11 @@ const ShowCircle = () => {
     setDrawCircle,
     btnName,
     isFlipped,
+    shapes,
+    setShapes,
   } = useContext(globalStore);
+
+  let res = shapes.filter((d) => d.name === "circle");
 
   function handleDragEnd(e, id) {
     let x = e.target.x();
@@ -33,8 +37,8 @@ const ShowCircle = () => {
 
   return (
     <>
-      {Array.isArray(drawCircle) &&
-        drawCircle.map((c, idx) => (
+      {Array.isArray(res) &&
+        res.map((c, idx) => (
           <Circle
             key={idx}
             id={c.id}

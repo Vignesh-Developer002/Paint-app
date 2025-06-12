@@ -12,10 +12,13 @@ const ShowSingleRect = () => {
     handleTransformetMouseDown,
     setShowSingleRect,
     btnName,
+    shapes,
   } = useContext(globalStore);
 
   const [drag, setDrag] = useState(false);
 
+  let res = shapes.filter((d) => d.name === "rectLayer");
+  console.log("rectLayer", res);
   function handleSingleRectDrag(e, id) {
     setDrag(true);
     let x = e.target.x();
@@ -29,8 +32,8 @@ const ShowSingleRect = () => {
 
   return (
     <>
-      {Array.isArray(showSingleRect) &&
-        showSingleRect.map((d) => (
+      {Array.isArray(res) &&
+        res.map((d) => (
           <Group
             ref={groupRef}
             key={d.id}

@@ -257,6 +257,7 @@ const StoreContext = ({ children }) => {
     setCopiedShape(shape);
   }
 
+  
   function handleBottomNavBtn(btn, name) {
     const { Name, id } = name;
     if (btn === "copy" && down === true) {
@@ -586,6 +587,7 @@ const StoreContext = ({ children }) => {
         id: actions.undo,
         icons: (
           <MdUndo
+            onClick={() => handleUndo()}
             title="undo"
             fill={darkMode ? "#ada69c" : "#5d5d5d"}
             style={{
@@ -603,6 +605,7 @@ const StoreContext = ({ children }) => {
         icons: (
           <MdRedo
             title="Redo"
+            onClick={() => handleRedo()}
             fill={darkMode ? "#ada69c" : "#5d5d5d"}
             style={{
               width: "80%",
@@ -1218,49 +1221,57 @@ const StoreContext = ({ children }) => {
           img,
           height,
           width,
+          x: 300,
+          y: 300,
         },
       ]);
     }
   }, [image]);
 
+
   // function for clearing all the shapes
   //  setDrawing,setDrawCircle,setDrawScribble, setDrawLine,setDrawPolygon,setDrawText,setShowGroup
   function handleClear(Shapeid) {
     if (Shapeid?.Name === "circle") {
-      setDrawCircle((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setShapes((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      // setDrawCircle((prev) => prev.filter((d) => d.id !== Shapeid?.id));
       setIdName({ id: "", Name: "" });
     } else if (Shapeid?.Name === "rectangle") {
-      setDrawing((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setShapes((prev) => prev.filter((d) => d.id !== Shapeid?.id));
       setIdName({ id: "", Name: "" });
     } else if (Shapeid?.Name === "scrible") {
-      setDrawScribble((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setShapes((prev) => prev.filter((d) => d.id !== Shapeid?.id));
       setIdName({ id: "", Name: "" });
     } else if (Shapeid?.Name === "line") {
-      setDrawLine((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setShapes((prev) => prev.filter((d) => d.id !== Shapeid?.id));
       setIdName({ id: "", Name: "" });
     } else if (Shapeid?.Name === "polygon") {
-      setDrawPolygon((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setShapes((prev) => prev.filter((d) => d.id !== Shapeid?.id));
       setIdName({ id: "", Name: "" });
     } else if (Shapeid?.Name === "text") {
-      setDrawText((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setShapes((prev) => prev.filter((d) => d.id !== Shapeid?.id));
       setIdName({ id: "", Name: "" });
     } else if (Shapeid?.Name === "group") {
-      setShowGroup((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setShapes((prev) => prev.filter((d) => d.id !== Shapeid?.id));
+      setIdName({ id: "", Name: "" });
+    } else if (Shapeid?.Name === "rectLayer") {
+      setShapes((prev) => prev.filter((d) => d.id !== Shapeid?.id));
       setIdName({ id: "", Name: "" });
     } else if (idName?.Name.length === 0 && idName.id.length === 0) {
-      setDrawing([]);
-      setDrawCircle([]);
-      setDrawScribble([]);
-      setDrawLine([]);
-      setDrawPolygon([]);
-      setImages([]);
-      setDrawText([]);
-      setShowGroup([]);
-      setShowSingleRect([]);
-      setShowObRect([]);
-      setShowObCirlce([]);
-      setShowObLine([]);
-      setShowObpoly([]);
+      // setDrawing([]);
+      // setDrawCircle([]);
+      setShapes([]); //clear all the shapes on the stage
+      // setDrawScribble([]);
+      // setDrawLine([]);
+      // setDrawPolygon([]);
+      // setImages([]);
+      // setDrawText([]);
+      // setShowGroup([]);
+      // setShowSingleRect([]);
+      // setShowObRect([]);
+      // setShowObCirlce([]);
+      // setShowObLine([]);
+      // setShowObpoly([]);
     }
   }
 
@@ -1330,6 +1341,7 @@ const StoreContext = ({ children }) => {
     if (Object.keys(polygons).length > 0) {
       if (polygons["points"].length > 4) {
         setDrawPolygon((prev) => [...prev, polygons]);
+        addShape(polygons); //-------------------------------------------
         setPolygons({});
       }
     }
@@ -1489,6 +1501,7 @@ const StoreContext = ({ children }) => {
       });
     } else if (btnName === actions.group) {
       setShowGroup((prev) => [...prev, group]);
+      addShape(group); //-------------------------------------------
     } else if (btnName === actions.rectLayer) {
       let pos = e.target.getStage().getRelativePointerPosition();
       let x = pos.x || 0;
@@ -1636,32 +1649,38 @@ const StoreContext = ({ children }) => {
         Math.abs(currentlyDrawnShap["height"]) > 5
       ) {
         setDrawing((prev) => [...prev, currentlyDrawnShap]);
+        addShape(currentlyDrawnShap); //-------------------------------------------
       }
       setCurrentlyDrawnShape({}); // resetting the currently drawn shape
     } else if (btnName === actions.circle) {
       isPaint.current = false;
       if (currentlyDrawnCircle["radius"] > 5) {
         setDrawCircle((prev) => [...prev, currentlyDrawnCircle]);
+        addShape(currentlyDrawnCircle); //--------------------------------------------
       }
       setCurrentlyDrawnCircle({}); // resetting the currently drawn circle shape
     } else if (btnName === actions.scribble) {
       if (scribble["points"].length > 20) {
         setDrawScribble((prev) => [...prev, scribble]);
+        addShape(scribble); //--------------------------------------------
       }
       setScribble({}); // resetting the currently drawn scribble shape
     } else if (btnName === actions.line) {
       setDrawLine((prev) => [...prev, lines]);
+      addShape(lines); // -----------------------------------------------------
       setLines({});
     } else if (btnName === "drag") {
       setBtn("grab");
     } else if (btnName === "text") {
       setDrawText((prev) => [...prev, text]);
+      addShape(text); //-------------------------------------------------------
       setText({});
     } else if (btnName === "group") {
       setGroup({});
     } else if (btnName === "rectLayer") {
       if (drawsingleRect["width"] > 20 && drawsingleRect["height"] > 20) {
         setShowSingleRect((pre) => [...pre, drawsingleRect]);
+        addShape(drawsingleRect); //----------------------------------------
       }
       setDrawSingleRect({});
     }
@@ -1686,7 +1705,7 @@ const StoreContext = ({ children }) => {
     localStorage.setItem("shape", JSON.stringify(true));
     setBtnEnable(true);
     setStage2ShapeColor(false);
-    setDragHappens(false); //------------------------------------------------------------------
+    setDragHappens(false); //--------------------------------------------------------------
     // setListern(true);
   }
 
@@ -1697,10 +1716,50 @@ const StoreContext = ({ children }) => {
     setStageVisible(false);
     setBtnEnable(false);
     setStage2ShapeColor(true);
-    setDragHappens(true); //------------------------------------------------------------------
+    setDragHappens(true); //-----------------------------------------------------------------
     localStorage.removeItem("singleRectColor");
   }
 
+  // ----------------------  undo and redo functionality-------------------------------------
+  const [shapes, setShapes] = useState([]);
+  const [history, setHistory] = useState([]);
+  const [redoStack, setRedoStack] = useState([]);
+
+  console.log("shapes", shapes, "history", history, "redoStack", redoStack);
+
+  const addShape = (newShape) => {
+    console.log("shapes", newShape);
+    setHistory([...history, shapes]);
+    setRedoStack([]); // clear redo when new action happens
+    setShapes([...shapes, newShape]);
+  };
+
+  const handleUndo = () => {
+    console.log("undo clicked");
+    if (history.length === 0) return;
+    const prev = history[history.length - 1];
+    setRedoStack([shapes, ...redoStack]);
+    setShapes(prev);
+    setHistory(history.slice(0, history.length - 1));
+  };
+
+  const handleRedo = () => {
+    console.log("redo click");
+    if (redoStack.length === 0) return;
+
+    const next = redoStack[0];
+    setHistory([...history, shapes]);
+    setShapes(next);
+    setRedoStack(redoStack.slice(1));
+  };
+
+  // rectangle
+  // circle
+  // scrible
+  // text
+  // line
+
+  // -----------------------------------------------------------------------------------------
   // ---------------------------------input scrubbing-------------------------------------
   // const [value, setValue] = useState(0);
   // const isDragging = useRef(false);
@@ -1736,6 +1795,9 @@ const StoreContext = ({ children }) => {
 
   const contextValue = {
     // handleMouseDown,
+    shapes,
+    setShapes,
+    handleUndo,
     toggleMenu,
     setToggleMenu,
     startTour,

@@ -10,8 +10,11 @@ const ShowPolygon = () => {
     setDrawPolygon,
     btnName,
     isFlipped,
+    shapes,
   } = useContext(globalStore);
 
+  let res = shapes.filter((d) => d.name === "polygon");
+  console.log("polygon", res);
   function handlePolygonDrag(e, id) {
     let x = e.target.x();
     let y = e.target.y();
@@ -36,8 +39,8 @@ const ShowPolygon = () => {
 
   return (
     <>
-      {Array.isArray(drawPolygon) &&
-        drawPolygon.map((p, idx) => (
+      {Array.isArray(res) &&
+        res.map((p, idx) => (
           <Line
             x={p?.x}
             y={p?.y}
